@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statute Book | Equity Crew 26</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: radial-gradient(circle at top, #064e3b, #022c22);
+            --primary-green: #10b981;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+        [data-theme="dark"] { --bg-gradient: radial-gradient(circle at top, #020617, #000000); }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-gradient); color: var(--text-main);
+            margin: 0; min-height: 100vh; transition: 0.5s;
+        }
+
+        .nav { padding: 20px 8%; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--glass-border); }
+        .back-btn { color: var(--primary-green); text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+
+        .container { padding: 40px 8%; max-width: 900px; margin: auto; }
+        
+        .search-box {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            padding: 15px 25px; border-radius: 20px; display: flex; align-items: center; gap: 15px; margin-bottom: 40px;
+        }
+        .search-box input {
+            background: none; border: none; color: white; width: 100%; outline: none; font-size: 1rem;
+        }
+
+        .rule-card {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            padding: 25px; border-radius: 20px; margin-bottom: 20px;
+            transition: 0.3s; border-left: 4px solid var(--primary-green);
+        }
+        .rule-card:hover { transform: translateX(10px); background: rgba(255,255,255,0.08); }
+        .rule-num { color: var(--primary-green); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .rule-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; display: block; }
+        .rule-content { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <div class="nav">
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> RETURN TO HUB</a>
+        <div style="font-weight: 800;">STATUTE <span style="color:var(--primary-green)">BOOK</span></div>
+    </div>
+
+    <div class="container">
+        <header style="text-align: center; margin-bottom: 50px;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Parliamentary Orders</h1>
+            <p style="color:var(--text-muted)">Constitutional Guidelines for the 2026 Academic Session</p>
+        </header>
+
+        <div class="search-box">
+            <i class="fas fa-search" style="color:var(--primary-green)"></i>
+            <input type="text" id="ruleSearch" placeholder="Search rules (e.g., 'Dues', 'Conduct', 'Quorum')..." onkeyup="filterRules()">
+        </div>
+
+        <div id="rulesList">
+            </div>
+    </div>
+
+    <script>
+        document.body.setAttribute('data-theme', localStorage.getItem('hub-theme') || 'light');
+
+        const rules = [
+            { id: 1, title: "Sovereignty of the House", content: "The supreme authority of the student body is vested in the Parliamentary Sitting when properly constituted." },
+            { id: 2, title: "Financial Obligations", content: "All members must fulfill their session dues within the first 4 weeks of the semester to maintain voting rights." },
+            { id: 3, title: "Quorum", content: "No resolution shall be passed unless one-third of the registered honorable members are present." },
+            { id: 4, title: "Code of Conduct", content: "Honorable members must maintain professional decorum. Use of unparliamentary language is strictly prohibited." },
+            { id: 5, title: "Emergency Sittings", content: "The Speaker may convene an emergency sitting with a 24-hour notice via official digital channels." }
+        ];
+
+        function displayRules(data) {
+            const container = document.getElementById('rulesList');
+            container.innerHTML = data.map(rule => `
+                <div class="rule-card">
+                    <span class="rule-num">Standing Order #${rule.id}</span>
+                    <span class="rule-title">${rule.title}</span>
+                    <p class="rule-content">${rule.content}</p>
+                </div>
+            `).join('');
+        }
+
+        function filterRules() {
+            const query = document.getElementById('ruleSearch').value.toLowerCase();
+            const filtered = rules.filter(r => 
+                r.title.toLowerCase().includes(query) || 
+                r.content.toLowerCase().includes(query)
+            );
+            displayRules(filtered);
+        }
+
+        // Initialize
+        displayRules(rules);
+    </script>
+</body>
+</html>

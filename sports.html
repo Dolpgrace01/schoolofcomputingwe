@@ -3,272 +3,359 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Equity Sports | Elite Control 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Faculty Board | 9-Member Persistent Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary: #ccff00; /* Electric Lime */
-            --primary-dark: #aacc00;
-            --bg-black: #0a0a0a;
-            --card-bg: #151515;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
-            --gold: #ffcc00;
+            --bg-overlay: rgba(6, 78, 59, 0.9);
+            --card-bg: rgba(22, 66, 10, 0.95);
+            --text-main: #ffffff;
+            --emerald: #10b981;
+            --deep-green: #064e3b;
         }
 
-        body { 
-            font-family: 'Inter', sans-serif; background: var(--bg-black); color: #fff; 
-            margin: 0; overflow-x: hidden; line-height: 1.6;
+        [data-theme="light"] {
+            --bg-overlay: rgba(240, 253, 244, 0.95);
+            --card-bg: #ffffff;
+            --text-main: #064e3b;
+            --emerald: #059669;
         }
 
-        /* Speed Lines Background Effect */
-        body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: repeating-linear-gradient(45deg, transparent, transparent 100px, rgba(204, 255, 0, 0.01) 100px, rgba(204, 255, 0, 0.01) 101px);
-            z-index: -1;
+        body, html { margin: 0; padding: 0; min-height: 100vh; font-family: 'Poppins', sans-serif; transition: 0.3s; overflow-x: hidden; }
+
+        .page-container {
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), 
+                        url('https://images.unsplash.com/photo-1541339907198-e08756ebafe3?auto=format&fit=crop&w=1950&q=80');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding-bottom: 80px;
         }
 
-        /* --- NAVIGATION --- */
-        .nav-bar { 
-            background: rgba(0,0,0,0.95); padding: 20px 5%; position: sticky; top: 0; z-index: 1000; 
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 3px solid var(--primary);
-        }
-        .logo { font-family: 'Archivo Black', sans-serif; font-size: 1.8rem; letter-spacing: -1px; text-transform: uppercase; }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a { color: #888; text-decoration: none; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; transition: 0.3s; }
-        .nav-links a:hover { color: var(--primary); }
+        .quote-box {
+    font-family: 'Cambria', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: white;
+    border-left: 2px solid hsl(111, 88%, 64%);
+    padding-left: 15px;
+    margin-top: 10px;
+    opacity: 0.9;
+}
+/* .member-node {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: #94a3b8;
+} */
 
-        /* --- HERO --- */
-        header {
-            height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-            padding: 0 10%; position: relative;
-            background: linear-gradient(90deg, #000 20%, transparent), url('https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&w=1500&q=80');
-            background-size: cover; background-position: center;
-        }
-        header h1 { 
-            font-family: 'Archivo Black', sans-serif; font-size: 6rem; margin: 0; line-height: 0.9; 
-            text-transform: uppercase; font-style: italic; transform: skewX(-5deg);
-        }
-        header p { background: var(--primary); color: #000; padding: 5px 15px; font-weight: 900; margin-top: 10px; transform: skewX(-5deg); }
-
-        .container { width: 90%; max-width: 1200px; margin: -50px auto 0; position: relative; z-index: 10; }
-
-        /* --- CARDS & GRID --- */
-        .section-title { 
-            font-family: 'Archivo Black', sans-serif; font-size: 2rem; text-transform: uppercase; 
-            margin: 60px 0 20px; display: flex; align-items: center; gap: 15px;
-        }
-        .section-title::before { content: ""; width: 40px; height: 10px; background: var(--primary); display: inline-block; }
-
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .controls { position: absolute; top: 30px; left: 30px; display: flex; gap: 10px; z-index: 1000; }
+        .user-info { position: absolute; top: 30px; right: 30px; color: var(--text-main); font-weight: 600; display: flex; align-items: center; gap: 10px; }
         
-        .sport-card { 
-            background: var(--card-bg); border: 1px solid var(--border); padding: 30px; 
-            border-radius: 4px; position: relative; transition: 0.3s;
-        }
-        .sport-card:hover { border-color: var(--primary); transform: scale(1.02); }
-        .sport-card h3 { font-family: 'Archivo Black'; margin-top: 0; color: var(--primary); }
+        .btn-ui { background: rgba(255, 255, 255, 0.1); color: var(--text-main); border: 1px solid var(--emerald); padding: 10px 20px; border-radius: 8px; cursor: pointer; backdrop-filter: blur(10px); font-weight: 600; font-size: 0.8rem; transition: 0.3s; text-decoration: none; }
+        .btn-ui:hover { background: var(--emerald); color: white; }
 
-        /* --- FORMS --- */
-        .register-box { 
-            background: #111; padding: 50px; border-radius: 0; border-left: 8px solid var(--primary);
-            box-shadow: 20px 20px 0px rgba(204, 255, 0, 0.05);
-        }
+        /* Gallery System (9 Members) */
+        .gallery-wrapper { width: 95%; max-width: 1300px; margin-top: 120px; position: relative; display: flex; align-items: center; }
+        .faculty-gallery { display: flex; overflow-x: auto; gap: 20px; padding: 20px 0; scroll-behavior: smooth; scrollbar-width: none; width: 100%; }
+        .faculty-gallery::-webkit-scrollbar { display: none; }
         
-        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        input, select { 
-            width: 100%; padding: 18px; background: #1a1a1a; border: 1px solid #333; 
-            color: #fff; border-radius: 0; margin-bottom: 20px; box-sizing: border-box;
-            font-family: 'Inter'; font-weight: 700;
-        }
-        input:focus { border-color: var(--primary); outline: none; }
+        .scroll-btn { background: var(--emerald); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 10; font-weight: bold; position: absolute; }
+        .scroll-left { left: -20px; }
+        .scroll-right { right: -20px; }
 
-        .btn-action {
-            background: var(--primary); color: #000; border: none; padding: 20px;
-            font-weight: 900; width: 100%; cursor: pointer;
-            text-transform: uppercase; font-family: 'Archivo Black'; transition: 0.2s;
-            clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
-        }
-        .btn-action:hover { background: #fff; transform: translateY(-3px); }
+        .member-card { flex: 0 0 280px; background: var(--card-bg); border-radius: 20px; padding: 30px 20px; text-align: center; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .member-image { width: 120px; height: 120px; border-radius: 20px; object-fit: cover; border: 4px solid var(--emerald); margin-bottom: 20px; }
+        .member-name { color: var(--emerald); font-size: 1.1rem; font-weight: 700; margin: 0; }
+        .member-role { color: #aaa; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
 
-        /* --- TABLE --- */
-        #storageSection { display: none; margin-top: 60px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 30px; }
-        th { background: #1a1a1a; padding: 20px; text-align: left; font-family: 'Archivo Black'; font-size: 0.7rem; color: #555; text-transform: uppercase; }
-        td { padding: 20px; border-bottom: 1px solid #222; background: #0f0f0f; }
-        .ref-id { color: var(--primary); font-family: 'Archivo Black'; }
+        /* Panels */
+        .panel-box { width: 90%; max-width: 1000px; margin-top: 40px; background: var(--card-bg); border-radius: 20px; padding: 25px; border: 1px solid var(--emerald); }
+        table { width: 100%; border-collapse: collapse; color: white; margin-top: 15px; }
+        th { text-align: left; color: var(--emerald); border-bottom: 2px solid var(--emerald); padding: 12px; }
+        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
 
-        /* --- FOOTER --- */
-        footer { background: #000; padding: 80px 5%; text-align: center; border-top: 1px solid #222; margin-top: 100px; }
-        .footer-logo { font-family: 'Archivo Black'; font-size: 2rem; color: #222; }
+        .badge { padding: 5px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; }
+        .pending { background: #f59e0b; color: #000; }
+        .approved { background: #10b981; color: #fff; }
+
+        /* Modals */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 5000; justify-content: center; align-items: center; }
+        .modal-box { background: var(--card-bg); padding: 40px; border-radius: 25px; text-align: center; width: 400px; border: 1px solid var(--emerald); position: relative; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid var(--emerald); background: rgba(0,0,0,0.2); color: white; box-sizing: border-box; }
+        .back-modal { position: absolute; top: 20px; left: 20px; cursor: pointer; color: var(--emerald); font-size: 0.8rem; border: none; background: none; }
     </style>
 </head>
-<body>
+<body data-theme="dark">
 
-    <nav class="nav-bar">
-        <div class="logo">EQUITY<span style="color:var(--primary)">SPORTS</span></div>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="#register">Registry</a>
-            <a href="#adminArea" style="color:var(--primary)">Gen Sec Access</a>
-        </div>
-    </nav>
-
-    <header>
-        <p>SESSION 2026 OFFICIAL</p>
-        <h1>ENTER<br>THE ARENA</h1>
-    </header>
-
-    <div class="container">
-        
-        <h2 class="section-title">Updates</h2>
-        <div class="grid-3">
-            <div class="sport-card">
-                <h3>MATCH DAY</h3>
-                <p>Inter-Dept Finals: Software vs Cloud. Friday Night Lights. Be there.</p>
-            </div>
-            <div class="sport-card" style="border-color: var(--gold);">
-                <h3 style="color:var(--gold)">FIFA REWARDS</h3>
-                <p>Top 3 winners get the 2026 Gold Jersey + Cash Bonus.</p>
-            </div>
-        </div>
-
-        <h2 class="section-title" id="register">FIFA 26 Tournament</h2>
-        <div class="register-box" style="border-color: var(--gold);">
-            <form id="fifaForm">
-                <div class="input-row">
-                    <input type="text" id="fName" placeholder="GAMER TAG" required>
-                    <input type="text" id="fMatric" placeholder="MATRIC NUMBER" required>
-                </div>
-                <button type="button" class="btn-action" style="background:var(--gold)" onclick="saveData('fifa')">Confirm Entry</button>
-            </form>
-        </div>
-
-        <h2 class="section-title">Athlete Registry</h2>
-        <div class="register-box">
-            <form id="athleteForm">
-                <div class="input-row">
-                    <input type="text" id="aName" placeholder="FULL NAME" required>
-                    <input type="text" id="aMatric" placeholder="MATRIC NUMBER" required>
-                </div>
-                <select id="aDept">
-                    <option>Software and Web Development</option>
-                    <option>Cloud Networking</option>
-                    <option>Computer Science</option>
-                </select>
-                <select id="aSport">
-                    <option>Football</option>
-                    <option>Basketball</option>
-                    <option>Athletics</option>
-                    <option>Volleyball</option>
-                </select>
-                <button type="button" class="btn-action" onclick="saveData('general')">Lock In Registration</button>
-            </form>
-        </div>
-
-        <div id="adminArea">
-            <h2 class="section-title">Secure Archives</h2>
-            <div id="loginBox" class="sport-card" style="max-width: 500px; margin: 0 auto; text-align: center;">
-                <p style="font-weight: 900; letter-spacing: 2px;">ENCRYPTED STORAGE</p>
-                <input type="password" id="adminPass" placeholder="KEY CODE">
-                <button class="btn-action" onclick="unlockStorage()">Unlock Data</button>
-            </div>
-
-            <div id="storageSection">
-                <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-                    <h3 style="font-family: 'Archivo Black'; margin: 0;">LOGGED ATHLETES</h3>
-                    <button class="btn-action" style="width: auto; padding: 10px 30px;" onclick="exportToExcel()">Export CSV</button>
-                </div>
-                <input type="text" id="search" placeholder="Filter records..." onkeyup="searchLogs()" style="margin-top:30px;">
-                <table>
-                    <thead>
-                        <tr><th>REF ID</th><th>Athlete Name</th><th>Dept / Sport</th><th>Status</th></tr>
-                    </thead>
-                    <tbody id="logTable"></tbody>
-                </table>
-            </div>
+    <div id="authModal" class="modal-overlay" style="display: flex;">
+        <div class="modal-box">
+            <h2 style="color: var(--emerald); margin-top:0;">Student Access</h2>
+            <p style="color: #888; font-size: 0.85rem;">Login with your username to see your requests</p>
+            <input type="text" id="loginUser" placeholder="Username (e.g., Alex_2026)">
+            <button class="btn-ui" style="width: 100%; margin-top:10px;" onclick="handleLogin()">Login / Enter</button>
         </div>
     </div>
 
-    <footer>
-        <div class="footer-logo">EQUITY CREW '26</div>
-        <p style="font-weight: 700; color: #444; margin-top: 20px;">MASTER VERIFIED SPORTS PORTAL</p>
-    </footer>
+    <div class="page-container">
+        <div class="controls">
+            <a href="index.html" class="btn-ui">🏠 HOME</a>
+            <button class="btn-ui" onclick="toggleTheme()">🌓 THEME</button>
+            <button class="btn-ui" onclick="adminLogin()" style="border-color: #f59e0b;">🔑 GEN SEC LOGIN</button>
+        </div>
+
+        <div class="user-info">
+            <span id="displayUser" style="color: var(--emerald);">Guest</span>
+            <button class="btn-ui" onclick="logout()" style="padding: 5px 10px; border-color: #ff4444;">Logout</button>
+        </div>
+
+        <h1 style="color: white; margin-top: 100px; text-align: center;">Faculty Executive Board</h1>
+
+        <div class="gallery-wrapper">
+    <button class="scroll-btn scroll-left" onclick="sideScroll('left')">&#10094;</button>
+    <div class="faculty-gallery" id="gallery">
+        
+        <div class="member-card" style="box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); border: 2px solid #d4af37;">
+            <img src="ajii.jpg" class="member-image">
+            <p class="member-role">President</p>
+            <div class="member-info">
+                <h4 class="member-name">Ajiferuke Ridwanullahi Olamide</h4>
+                <p class="member-details">P.K.A AJII | Level: HNDII<br>Software and Web Development</p>
+            </div>
+            <p class="quote-box">"Leadership is not a title, but the standard of excellence we set for others to follow."</p>
+        </div>
+
+        <div class="member-card">
+            <img src="armani.jpg" class="member-image">
+            <p class="member-role">Vice President</p>
+            <div class="member-info">
+                <h4 class="member-name">Olaniyan Kehinde Nasirudeen</h4>
+                <p class="member-details">P.K.A ARMANI | Level: NDII PT<br>Computer Science</p>
+            </div>
+            <p class="quote-box">"Accuracy is our mandate; honor is our guide. We ensure the standard never drops."</p>
+        </div>
+
+        <div class="member-card">
+            <img src="dolapo.jpg" class="member-image">
+            <p class="member-role">General Secretary</p>
+            <div class="member-info">
+                <h4 class="member-name">Obidare Ibrahim Boluwatife</h4>
+                <p class="member-details">P.K.A AJII | Level: HNDII<br>Software and Web Development</p>
+            </div>
+            <p class="quote-box">"Organization is the silent engine of greatness."</p>
+        </div>
+
+        <div class="member-card">
+            <img src="Muslimah.jpg" class="member-image">
+            <p class="member-role">Asst. Gen Secretary</p>
+            <div class="member-info">
+                <h4 class="member-name">Salaudeen Oyindamola Muslimah</h4>
+                <p class="member-details">P.K.A MUSLIMAH | Level: NDII FT<br>Computer Science</p>
+            </div>
+            <p class="quote-box">"Every great vision requires meticulous execution."</p>
+        </div>
+
+        <div class="member-card">
+            <img src="oyenike.jpg" class="member-image">
+            <p class="member-role">Financial Secretary</p>
+            <div class="member-info">
+                <h4 class="member-name">Oyebode Blessing Oyenike</h4>
+                <p class="member-details">P.K.A IRON LADY | Level: HNDII<br>Software and Web Development</p>
+            </div>
+            <p class="quote-box">"Integrity in every transaction."</p>
+        </div>
+
+        <div class="member-card">
+            <img src="editor.jpg" class="member-image">
+            <p class="member-role">Welfare Director</p>
+            <div class="member-info">
+                <h4 class="member-name">Adeyemi AbdulAzeez</h4>
+                <p class="member-details">P.K.A EDITOR | Level: HNDII<br>Software and Web Development</p>
+            </div>
+            <p class="quote-box">"The strength of the Crew is measured by its most silent member."</p>
+        </div>
+
+        <div class="member-card">
+            <img src="Mubest.jpg" class="member-image">
+            <p class="member-role">PRO</p>
+            <div class="member-info">
+                <h4 class="member-name">Yusuf Mubarak Ayinde</h4>
+                <p class="member-details">P.K.A MUBEST | Level: NDII FT<br>Computer Science</p>
+            </div>
+            <p class="quote-box">"We curate the image of a generation destined for impact."</p>
+        </div>
+
+        <div class="member-card">
+            <img src="marcos.jpg" class="member-image">
+            <p class="member-role">Sports Director</p>
+            <div class="member-info">
+                <h4 class="member-name">Adewolu Adesola Adetunji</h4>
+                <p class="member-details">P.K.A MARCOS | Level: HNDII<br>Networking and Cloud Networking</p>
+            </div>
+            <p class="quote-box">"Discipline on the field translates to dominance."</p>
+        </div>
+
+        <div class="member-card">
+            <img src="zacch.jpg" class="member-image">
+            <p class="member-role">Social Director</p>
+            <div class="member-info">
+                <h4 class="member-name">Adesoji Ayobami Zaccheaus</h4>
+                <p class="member-details">P.K.A ZACCH | Level: HNDII<br>Networking and Cloud Computing</p>
+            </div>
+            <p class="quote-box">"Elite social life is refined networking and celebration."</p>
+        </div>
+
+        <div class="member-card">
+            <img src="muller.jpg" class="member-image">
+            <p class="member-role">Treasurer</p>
+            <div class="member-info">
+                <h4 class="member-name">Oladimeji Obaloluwa Damilola</h4>
+                <p clascs="member-details">P.K.A MULLER | Level: NDII FT<br>Computer Science</p>
+            </div>
+            <p class="quote-box">"Fiscal responsibility is the foundation of trust."</p>
+        </div>
+
+        <div class="member-card">
+            <img src="newbg.JPG" class="member-image">
+            <p class="member-role">Speaker</p>
+            <div class="member-info">
+                <h4 class="member-name">White</h4>
+                <p class="member-details">P.K.A WHITE | Level: HNDII<br>Networking and Cloud Computing</p>
+            </div>
+            <p class="quote-box">"Unity is our greatest currency in the pursuit of greatness."</p>
+        </div>
+
+    </div>
+    <button class="scroll-btn scroll-right" onclick="sideScroll('right')">&#10095;</button>
+</div>
+
+        <div class="panel-box">
+            <h3 style="margin-top:0; color:var(--emerald);">My Request History</h3>
+            <div id="userTracker"></div>
+        </div>
+
+        <div id="adminPanel" class="panel-box" style="display: none; border-color: #f59e0b;">
+            <h3 style="margin-top:0; color:#f59e0b;">Gen Sec Master Control (All Users)</h3>
+            <table>
+                <thead>
+                    <tr><th>User</th><th>Gmail</th><th>Details</th><th>Status</th><th>Action</th></tr>
+                </thead>
+                <tbody id="adminBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <button class="btn-ui" style="position: fixed; bottom: 30px; right: 30px; padding: 18px 30px; border-radius: 50px; background: var(--deep-green); box-shadow: 0 10px 30px rgba(0,0,0,0.5);" onclick="openDesk()">
+        💬 GEN SEC LIVE DESK
+    </button>
+
+    <div id="deskModal" class="modal-overlay">
+        <div class="modal-box" style="width: 450px;">
+            <button class="back-modal" onclick="closeDesk()">&#8592; BACK</button>
+            <h3 style="color: var(--emerald); margin-top: 30px;">New Request</h3>
+            <input type="email" id="reqEmail" placeholder="Your Gmail">
+            <textarea id="reqDetails" placeholder="Details..."></textarea>
+            <button class="btn-ui" style="width: 100%; margin-top:20px;" onclick="submitRequest()">Submit</button>
+        </div>
+    </div>
 
     <script>
-        // CORE LOGIC (Kept exactly as requested)
-        function saveData(type) {
-            let name, matric, dept, sport;
-            if(type === 'fifa') {
-                name = document.getElementById('fName').value;
-                matric = document.getElementById('fMatric').value;
-                dept = "E-Sports"; sport = "FIFA 26";
-            } else {
-                name = document.getElementById('aName').value;
-                matric = document.getElementById('aMatric').value;
-                dept = document.getElementById('aDept').value;
-                sport = document.getElementById('aSport').value;
+        let currentUser = "";
+        // Load data from localStorage or start with empty array
+        let db = JSON.parse(localStorage.getItem('faculty_db')) || [];
+
+        function handleLogin() {
+            const user = document.getElementById('loginUser').value.trim();
+            if(user.length < 3) return alert("Username too short!");
+            currentUser = user;
+            document.getElementById('authModal').style.display = 'none';
+            document.getElementById('displayUser').innerText = "👤 " + currentUser;
+            renderUI();
+        }
+
+        function logout() {
+            currentUser = "";
+            document.getElementById('authModal').style.display = 'flex';
+            document.getElementById('loginUser').value = "";
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+
+        function adminLogin() {
+            if(prompt("Enter Gen Sec Password:") === "1234") {
+                document.getElementById('adminPanel').style.display = 'block';
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             }
-
-            if(!name || !matric) return alert("All fields required.");
-
-            let logs = JSON.parse(localStorage.getItem('equity_data_2026') || '[]');
-            const refID = `EQ26-${(logs.length + 1).toString().padStart(3, '0')}`;
-            logs.push({ id: refID, name, matric, dept, sport, date: new Date().toLocaleDateString() });
-            localStorage.setItem('equity_data_2026', JSON.stringify(logs));
-
-            alert(`Entry Secured. ID: ${refID}`);
-            document.getElementById(type === 'fifa' ? 'fifaForm' : 'athleteForm').reset();
         }
 
-        function unlockStorage() {
-            if(document.getElementById('adminPass').value === "dolpgrace01") {
-                document.getElementById('loginBox').style.display = 'none';
-                document.getElementById('storageSection').style.display = 'block';
-                renderTable();
-            } else { alert("ACCESS DENIED"); }
+        function sideScroll(dir) {
+            const gallery = document.getElementById('gallery');
+            gallery.scrollBy({ left: dir === 'left' ? -300 : 300, behavior: 'smooth' });
         }
 
-        function renderTable() {
-            const logs = JSON.parse(localStorage.getItem('equity_data_2026') || '[]');
-            document.getElementById('logTable').innerHTML = logs.map((l, i) => `
+        function openDesk() { document.getElementById('deskModal').style.display = 'flex'; }
+        function closeDesk() { document.getElementById('deskModal').style.display = 'none'; }
+
+        function submitRequest() {
+            const email = document.getElementById('reqEmail').value;
+            const details = document.getElementById('reqDetails').value;
+            if(!email.includes('@')) return alert("Invalid Email");
+
+            db.push({
+                id: Date.now(),
+                user: currentUser,
+                email: email,
+                details: details,
+                status: 'Pending'
+            });
+
+            saveAndRender();
+            closeDesk();
+        }
+
+        function approve(id) {
+            const index = db.findIndex(item => item.id === id);
+            if(index !== -1) {
+                db[index].status = 'Approved';
+                saveAndRender();
+            }
+        }
+
+        function saveAndRender() {
+            localStorage.setItem('faculty_db', JSON.stringify(db));
+            renderUI();
+        }
+
+        function renderUI() {
+            // User Specific Tracker
+            const tracker = document.getElementById('userTracker');
+            const myData = db.filter(item => item.user === currentUser);
+            
+            tracker.innerHTML = myData.length === 0 
+                ? `<p style="opacity:0.5; font-size:0.85rem;">No history found for "${currentUser}".</p>`
+                : myData.map(item => `
+                    
+                        <span class="badge ${item.status === 'Pending' ? 'pending' : 'approved'}">${item.status}</span>
+                    </div>
+                `).join('');
+
+            // Admin Panel
+            const adminBody = document.getElementById('adminBody');
+            adminBody.innerHTML = db.map(item => `
                 <tr>
-                    <td class="ref-id">${l.id}</td>
-                    <td><div style="font-weight:900">${l.name}</div><small style="color:#555">${l.matric}</small></td>
-                    <td><span style="color:#888">${l.dept}</span><br><b>${l.sport}</b></td>
-                    <td><button onclick="deleteEntry(${i})" style="color:red; background:none; border:none; cursor:pointer;">REMOVE</button></td>
+                    <td><strong>${item.user}</strong></td>
+                    <td>${item.email}</td>
+                    <td>${item.details}</td>
+                    <td><span class="badge ${item.status === 'Pending' ? 'pending' : 'approved'}">${item.status}</span></td>
+                    <td>
+                        ${item.status === 'Pending' ? `<button onclick="approve(${item.id})" style="background:#10b981; border:none; color:white; padding:5px 10px; border-radius:4px; cursor:pointer;">Approve</button>` : '✅'}
+                    </td>
                 </tr>
             `).join('');
         }
 
-        function deleteEntry(i) {
-            if(confirm("Wipe this record?")) {
-                let logs = JSON.parse(localStorage.getItem('equity_data_2026') || '[]');
-                logs.splice(i, 1);
-                localStorage.setItem('equity_data_2026', JSON.stringify(logs));
-                renderTable();
-            }
-        }
-
-        function exportToExcel() {
-            const logs = JSON.parse(localStorage.getItem('equity_data_2026') || '[]');
-            if(logs.length === 0) return alert("Empty archives.");
-            let csv = "ID,Name,Matric,Dept,Sport,Date\n";
-            logs.forEach(l => { csv += `${l.id},${l.name},${l.matric},${l.dept},${l.sport},${l.date}\n`; });
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Equity_Sports_2026.csv';
-            a.click();
-        }
-
-        function searchLogs() {
-            const q = document.getElementById('search').value.toLowerCase();
-            const rows = document.querySelectorAll('#logTable tr');
-            rows.forEach(r => r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none');
+        function toggleTheme() {
+            const body = document.body;
+            body.setAttribute('data-theme', body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
         }
     </script>
 </body>

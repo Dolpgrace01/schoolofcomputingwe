@@ -45,129 +45,29 @@
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--glass); display: flex; justify-content: space-around; padding: 12px 10px 25px; border-top: 1px solid var(--border); z-index: 1000; }
         .nav-link { color: #777; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
         .nav-link.active { color: var(--gold); }
-        .exec-badge { background: var(--gold); color: rgb(44, 45, 4); font-size:0.6rem; padding: 10px 6px; border-radius: 4px; font-weight: 800; }
+        .exec-badge { background: var(--gold); color: rgb(44, 45, 4); font-size:0.6rem; padding: 4px 6px; border-radius: 4px; font-weight: 800; }
         
         #chat-drawer { position: fixed; inset: 0; background: #021a14; z-index: 2000; display: flex; flex-direction: column; }
         .chat-bubble { padding: 10px 14px; border-radius: 15px; margin-bottom: 8px; max-width: 80%; font-size: 0.85rem; }
         .sent { align-self: flex-end; background: var(--gold); color: black; }
         .received { align-self: flex-start; background: rgba(255,255,255,0.1); }
-    .comment-item:active {
-    background: rgba(212, 175, 55, 0.1) !important;
-    transform: scale(0.98);
-    transition: transform 0.2s ease;
-}
-    .market-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border);
-    border-radius: 15px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-.post-author-name {
-    color: var(--gold);
-    text-decoration: none;
-    cursor: pointer;
-}
-.post-author-name:hover {
-    text-decoration: underline;
-}
-.market-img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-    border-bottom: 1px solid var(--border);
-}
-.price-tag {
-    background: var(--gold);
-    color: black;
-    font-weight: 800;
-    font-size: 0.7rem;
-    padding: 2px 8px;
-    border-radius: 5px;
-}
-        /* Comment Vault Styling */
-.comment-vault {
-    max-height: 120px; /* Adjusted for better fit */
-    overflow-y: auto;
-    margin-top: 10px;
-    padding-right: 5px;
-    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-}
-/* Custom Slim Scrollbar for the comments */
-.comment-vault::-webkit-scrollbar {
-    width: 4px;
-}
-.comment-vault::-webkit-scrollbar-thumb {
-    background: var(--gold);
-    border-radius: 10px;
-}
 
-.comment-item {
-    font-size: 0.7rem;
-    margin-bottom: 6px;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 8px;
-    border-radius: 8px;
-    border-left: 2px solid var(--border);
-}
-    
-/* Glassmorphism Profile Card */
-.membership-card {
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(2, 44, 34, 0.8) 100%);
-    border: 1px solid var(--gold);
-    border-radius: 25px;
-    padding: 30px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
+        .price-tag { background: var(--gold); color: black; font-weight: 800; font-size: 0.7rem; padding: 2px 8px; border-radius: 5px; }
 
-/* Shimmer animation for that "Elite" feel */
-.membership-card::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-    transform: rotate(45deg);
-    animation: shimmer 6s infinite;
-}
+        .comment-vault { max-height: 120px; overflow-y: auto; margin-top: 10px; padding-right: 5px; }
+        .comment-item { font-size: 0.7rem; margin-bottom: 6px; background: rgba(255, 255, 255, 0.03); padding: 8px; border-radius: 8px; border-left: 2px solid var(--border); }
 
-@keyframes shimmer {
-    0% { transform: translateX(-100%) rotate(45deg); }
-    100% { transform: translateX(100%) rotate(45deg); }
-}
+        .membership-card {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(2, 44, 34, 0.8) 100%);
+            border: 1px solid var(--gold); border-radius: 25px; padding: 30px; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .profile-stats-container { display: flex; justify-content: space-around; margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(212, 175, 55, 0.2); }
+        .stat-number { display: block; font-size: 1.4rem; font-weight: 800; color: var(--gold); }
+        .stat-label { font-size: 0.5rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; }
 
-.profile-stats-container {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(212, 175, 55, 0.2);
-}
-
-.stat-item {
-    text-align: center;
-}
-
-.stat-number {
-    display: block;
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: var(--gold);
-    text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-}
-
-.stat-label {
-    font-size: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    opacity: 0.6;
-}
+        .action-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 15px; margin-bottom: 10px; border: 1px solid var(--border); }
+        
+        #public-profile-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 20px; }
     </style>
 </head>
 <body>
@@ -175,20 +75,13 @@
 <div id="auth-screen" class="container" style="padding-top: 50px;">
     <div class="elite-card" style="text-align:center;">
         <h1 class="cambria" style="color:var(--gold); font-size: 2.2rem;"> EQUITY 2026</h1>
-        
         <div id="auth-choice">
-            <button class="btn-luxury" style="margin-top:20px;" onclick="showReg('Student')">Student Entrance</button>
+            <button class="btn-luxury" style="margin-top:20px;" onclick="showReg()">Student Entrance</button>
             <button class="btn-luxury" style="margin-top:10px; background:transparent; color:var(--gold); border:1px solid var(--gold);" onclick="gate()">Executive Portal</button>
         </div>
-
         <div id="reg-form" class="hidden" style="margin-top: 20px;">
             <input type="text" id="reg-name" class="form-input" placeholder="Full Name">
             <input type="text" id="reg-matric" class="form-input" placeholder="Matric No">
-            
-            <div id="exec-fields" class="hidden">
-                <p style="font-size: 0.7rem; color: var(--gold); margin-bottom: 5px;">Executive Verification Active</p>
-            </div>
-            
             <button class="btn-luxury" id="auth-submit-btn" onclick="handleAuth()">Access Hub</button>
             <p onclick="location.reload()" style="font-size:0.7rem; margin-top:15px; cursor:pointer; opacity:0.5;">← Back</p>
         </div>
@@ -202,47 +95,36 @@
     </header>
 
     <div class="container">
-        
         <section id="tab-market" class="hidden">
-    <div class="elite-card">
-        <h3 class="cambria" style="color:var(--gold); margin-bottom:5px;">Marketplace</h3>
-        <p style="font-size:0.6rem; opacity:0.7; margin-bottom:15px;">List items for sale to the crew.</p>
-        
-        <input type="text" id="market-item-name" class="form-input" placeholder="What are you selling?">
-        <input type="number" id="market-item-price" class="form-input" placeholder="Price (₦)">
-        <textarea id="market-item-desc" class="form-input" placeholder="Short description..." style="height:60px; resize:none;"></textarea>
-        
-        <div style="display:flex; justify-content: space-between; align-items: center;">
-            <label style="cursor:pointer; color:var(--gold); font-size:0.7rem;">
-                <i data-lucide="camera" style="width:16px; vertical-align:middle;"></i> Add Photo
-                <input type="file" id="market-file-input" class="hidden" accept="image/*" onchange="handleMarketFile(this)">
-            </label>
-            <button class="btn-luxury" style="width:auto; padding: 5px 20px;" onclick="publishMarketItem()">List Item</button>
-        </div>
-        <div id="market-progress" style="font-size:0.6rem; margin-top:5px; color:var(--gold);"></div>
-    </div>
+            <div class="elite-card">
+                <h3 class="cambria" style="color:var(--gold); margin-bottom:5px;">Marketplace</h3>
+                <input type="text" id="market-item-name" class="form-input" placeholder="What are you selling?">
+                <input type="number" id="market-item-price" class="form-input" placeholder="Price (₦)">
+                <textarea id="market-item-desc" class="form-input" placeholder="Short description..." style="height:60px; resize:none;"></textarea>
+                <div style="display:flex; justify-content: space-between; align-items: center;">
+                    <label style="cursor:pointer; color:var(--gold); font-size:0.7rem;">
+                        <i data-lucide="camera" style="width:16px; vertical-align:middle;"></i> Add Photo
+                        <input type="file" id="market-file-input" class="hidden" accept="image/*" onchange="handleMarketFile(this)">
+                    </label>
+                    <button class="btn-luxury" style="width:auto; padding: 5px 20px;" onclick="publishMarketItem()">List Item</button>
+                </div>
+                <div id="market-progress" style="font-size:0.6rem; margin-top:5px; color:var(--gold);"></div>
+            </div>
+            <div id="market-display" style="display: grid; grid-template-columns: 1fr; gap: 15px;"></div>
+        </section>
 
-    <div id="market-display"></div>
-</section>
-
-    <div id="market-display" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-        </div>
-</section>
         <section id="tab-feed">
             <div class="gallery-wrapper">
-                <button onclick="sideScroll('left')" style="position: absolute; left: -10px; z-index: 10; background: var(--gold); border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;">&#10094;</button>
+                <button onclick="sideScroll('left')" style="position: absolute; left: -10px; z-index: 10; background: var(--gold); border: none; border-radius: 50%; width: 30px; height: 30px;">&#10094;</button>
                 <div class="faculty-gallery" id="exec-gallery"></div>
-                <button onclick="sideScroll('right')" style="position: absolute; right: -10px; z-index: 10; background: var(--gold); border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;">&#10095;</button>
+                <button onclick="sideScroll('right')" style="position: absolute; right: -10px; z-index: 10; background: var(--gold); border: none; border-radius: 50%; width: 30px; height: 30px;">&#10095;</button>
             </div>
-
             <div class="elite-card">
                 <textarea id="post-text" class="form-input" placeholder="Post an update..." style="height:60px; resize:none;"></textarea>
                 <div style="display:flex; justify-content: space-between; align-items: center;">
-                    <div style="display:flex; gap:10px;">
-                        <label style="cursor:pointer; color:var(--gold);"><i data-lucide="paperclip"></i>
-                            <input type="file" id="post-file" class="hidden" accept="image/*" onchange="handleFile(this)">
-                        </label>
-                    </div>
+                    <label style="cursor:pointer; color:var(--gold);"><i data-lucide="paperclip"></i>
+                        <input type="file" id="post-file" class="hidden" accept="image/*" onchange="handleFile(this)">
+                    </label>
                     <button class="btn-luxury" id="post-btn" style="width:auto; padding: 5px 20px;" onclick="publishPost()">Post</button>
                 </div>
                 <div id="upload-progress" style="font-size:0.6rem; margin-top:5px; color:var(--gold);"></div>
@@ -268,69 +150,32 @@
         </section>
 
         <section id="tab-profile" class="hidden">
-    <div class="membership-card">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div style="z-index: 1;">
-                <p style="font-size: 0.5rem; letter-spacing: 3px; color: var(--gold); margin-bottom: 10px;">OFFICIAL MEMBER</p>
-                <h2 id="p-name" class="cambria" style="font-size: 1.5rem; margin: 0;"></h2>
-                <span id="p-role" class="exec-badge" style="margin-top: 10px; display: inline-block;"></span>
-            </div>
-            <div style="position: relative; z-index: 1;">
-                <img id="p-img" style="width: 85px; height: 85px; border-radius: 20px; border: 2px solid var(--gold); object-fit: cover;">
-                <div style="position: absolute; -top: 5px; -right: 5px; background: var(--gold); color: #022c22; font-size: 10px; padding: 2px 6px; border-radius: 5px; font-weight: 900;">'26</div>
-            </div>
-        </div>
-
-        <div style="margin-top: 20px;">
-            <p id="p-matric-display" style="font-family: monospace; font-size: 0.8rem; letter-spacing: 2px; opacity: 0.8;"></p>
-        </div>
-
-        <div class="profile-stats-container">
-            <div class="stat-item">
-                <span class="stat-number" id="stat-posts">0</span>
-                <span class="stat-label">Contributions</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number" id="stat-gp">0.00</span>
-                <span class="stat-label">Academic GP</span>
-            </div>
-        </div>
-    </div>
-
-    <div style="margin-top: 25px;">
-        <h3 class="cambria" style="font-size: 0.8rem; color: var(--gold); margin-bottom: 15px; letter-spacing: 1px;">CONTROL CENTER</h3>
-        
-        <div class="profile-action-list">
-            <div class="action-item" onclick="switchTab('market')">
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <div style="background: rgba(212, 175, 55, 0.1); padding: 10px; border-radius: 10px;"><i data-lucide="package" style="color: var(--gold);"></i></div>
+            <div class="membership-card">
+                <div style="display: flex; justify-content: space-between;">
                     <div>
-                        <b style="font-size: 0.8rem;">My Marketplace</b>
-                        <p style="font-size: 0.6rem; opacity: 0.5;">Manage your listed items</p>
+                        <p style="font-size: 0.5rem; letter-spacing: 3px; color: var(--gold);">OFFICIAL MEMBER</p>
+                        <h2 id="p-name" class="cambria"></h2>
+                        <span id="p-role" class="exec-badge"></span>
                     </div>
+                    <img id="p-img" style="width: 80px; height: 80px; border-radius: 20px; border: 2px solid var(--gold); object-fit: cover;">
                 </div>
-                <i data-lucide="chevron-right" style="width: 16px; opacity: 0.4;"></i>
-            </div>
-
-            <div class="action-item" onclick="logout()" style="margin-top: 15px; border: 1px solid rgba(239, 68, 68, 0.3);">
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <div style="background: rgba(239, 68, 68, 0.1); padding: 10px; border-radius: 10px;"><i data-lucide="power" style="color: #ef4444;"></i></div>
-                    <div>
-                        <b style="font-size: 0.8rem; color: #ef4444;">Logout</b>
-                        <p style="font-size: 0.6rem; opacity: 0.5;">End your current session</p>
-                    </div>
+                <p id="p-matric-display" style="margin-top:15px; font-family: monospace; opacity: 0.7;"></p>
+                <div class="profile-stats-container">
+                    <div class="stat-item"><span class="stat-number" id="stat-posts">0</span><span class="stat-label">Posts</span></div>
+                    <div class="stat-item"><span class="stat-number" id="stat-gp">0.00</span><span class="stat-label">GPA</span></div>
                 </div>
             </div>
-        </div>
+            <div style="margin-top: 25px;">
+                <div class="action-item" onclick="logout()" style="border-color: rgba(239, 68, 68, 0.3); color: #ef4444;">
+                    <span>Logout Session</span><i data-lucide="power"></i>
+                </div>
+            </div>
+        </section>
     </div>
-</section>
 
     <nav class="bottom-nav">
         <div class="nav-link active" onclick="switchTab('feed')"><i data-lucide="home"></i><small>Feed</small></div>
-        <div class="nav-link" onclick="switchTab('market')">
-    <i data-lucide="shopping-bag"></i>
-    <small>Market</small>
-</div>
+        <div class="nav-link" onclick="switchTab('market')"><i data-lucide="shopping-bag"></i><small>Market</small></div>
         <div class="nav-link" onclick="switchTab('gp')"><i data-lucide="calculator"></i><small>GP</small></div>
         <div class="nav-link" onclick="switchTab('chat')"><i data-lucide="message-circle"></i><small>Chat</small></div>
         <div class="nav-link" onclick="switchTab('profile')"><i data-lucide="user"></i><small>Profile</small></div>
@@ -339,76 +184,28 @@
 
 <div id="chat-drawer" class="hidden">
     <div style="padding:20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background: var(--glass);">
-        <div style="display:flex; align-items:center; gap:10px;">
-            <div id="target-status-dot" style="width:8px; height:8px; background:gray; border-radius:50%;"></div>
-            <b id="chat-target" class="cambria" style="color:var(--gold);"></b>
-        </div>
-        <i data-lucide="x" onclick="closeChat()" style="cursor:pointer; color:var(--gold);"></i>
+        <b id="chat-target" class="cambria" style="color:var(--gold);"></b>
+        <i data-lucide="x" onclick="closeChat()"></i>
     </div>
-
-    <div id="chat-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:10px; background: #021a14;">
-        </div>
-
-    <div style="padding:15px; display:flex; gap:10px; background: #021a14; align-items: center; border-top: 1px solid var(--border);">
-        <label style="cursor:pointer; color:var(--gold); display: flex; align-items: center;">
-            <i data-lucide="image" style="width:22px;"></i>
-            <input type="file" id="chat-file-input" class="hidden" accept="image/*" onchange="handleChatFile(this)">
-        </label>
-        
-        <div style="flex:1; position:relative;">
-            <input type="text" id="msg-input" class="form-input" style="margin:0; padding-right:40px;" placeholder="Type a message..." onkeypress="if(event.key==='Enter') sendMsg()">
-            <div id="chat-img-preview" class="hidden" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); width:25px; height:25px; border-radius:4px; border:1px solid var(--gold); background-size:cover;"></div>
-        </div>
-
-        <button class="btn-luxury" style="width:auto; padding:10px 15px; display:flex; align-items:center; justify-content:center;" onclick="sendMsg()">
-            <i data-lucide="send" style="width:18px;"></i>
-        </button>
+    <div id="chat-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:10px;"></div>
+    <div style="padding:15px; display:flex; gap:10px; border-top: 1px solid var(--border);">
+        <input type="text" id="msg-input" class="form-input" style="margin:0;" placeholder="Message..." onkeypress="if(event.key==='Enter') sendMsg()">
+        <button class="btn-luxury" style="width:auto; padding:10px 15px;" onclick="sendMsg()"><i data-lucide="send"></i></button>
     </div>
 </div>
-<section id="tab-profile" class="hidden">
-    <div class="elite-card" style="text-align:center; padding: 30px 20px; position: relative; overflow: hidden; background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.2));">
-        <div style="position: absolute; top: -10px; right: -10px; opacity: 0.1;"><i data-lucide="shield-check" style="width: 80px; height: 80px;"></i></div>
-        
-        <div style="position: relative;">
-            <div style="position: relative; display: inline-block;">
-                <img id="p-img" style="width:90px; height:90px; border-radius:50%; border:3px solid var(--gold); padding: 3px; background: #022c22;">
-                <div style="position: absolute; bottom: 5px; right: 5px; background: #22c55e; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #022c22;"></div>
-            </div>
-            <h2 id="p-name" class="cambria" style="margin-top:10px; letter-spacing: 1px;"></h2>
-            <div id="p-role" class="exec-badge" style="display:inline-block; margin-top: 5px; padding: 4px 12px;"></div>
-            <p id="p-matric-display" style="font-size: 0.6rem; opacity: 0.5; margin-top: 8px; font-family: monospace;"></p>
-        </div>
 
-        <div class="profile-stats-grid">
-            <div class="stat-box">
-                <span class="stat-val" id="stat-posts">0</span>
-                <span class="stat-label">Posts</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-val" id="stat-gp">0.00</span>
-                <span class="stat-label">Current GP</span>
-            </div>
-        </div>
+<div id="public-profile-modal" class="hidden">
+    <div class="elite-card" style="width: 100%; max-width: 350px; text-align: center;">
+        <img id="view-p-img" style="width:100px; height:100px; border-radius:50%; border:3px solid var(--gold);">
+        <h2 id="view-p-name" class="cambria" style="margin-top:10px;"></h2>
+        <p id="view-p-role" class="exec-badge" style="display:inline-block;"></p>
+        <p id="view-p-matric" style="margin:10px 0; opacity:0.6;"></p>
+        <button id="view-p-chat-btn" class="btn-luxury">Send Message</button>
+        <button class="btn-luxury" style="background:transparent; color:white; border:1px solid var(--border); margin-top:10px;" onclick="closePublicProfile()">Close</button>
     </div>
-
-    <div class="profile-action-list">
-        <div class="action-item" onclick="switchTab('market')">
-            <span><i data-lucide="shopping-cart" style="width:16px; vertical-align:middle; margin-right:10px;"></i> My Listings</span>
-            <i data-lucide="chevron-right" style="width:14px;"></i>
-        </div>
-        <div class="action-item" onclick="alert('Digital ID Feature coming soon!')">
-            <span><i data-lucide="qr-code" style="width:16px; vertical-align:middle; margin-right:10px;"></i> Generate Entry QR</span>
-            <i data-lucide="chevron-right" style="width:14px;"></i>
-        </div>
-        <div class="action-item" onclick="logout()" style="margin-top: 10px; border-color: rgba(239, 68, 68, 0.2); color: #f87171;">
-            <span><i data-lucide="log-out" style="width:16px; vertical-align:middle; margin-right:10px;"></i> Logout Session</span>
-        </div>
-    </div>
-</section>
 </div>
 
 <script>
-    // 1. FIREBASE INITIALIZATION
     const firebaseConfig = {
         apiKey: "AIzaSyBLrdBzHOhsJW4_ixghTx96XpHT4QMS8s8",
         authDomain: "executo-4ecd7.firebaseapp.com",
@@ -421,670 +218,281 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // 2. STATE
     let user = JSON.parse(localStorage.getItem('ec26_user'));
     let isExecLogin = false;
     let verifiedMediaUrl = "";
     let activeChatId = null;
+    let activeChatListener = null;
 
     const EXECS = [
-    { name: "Ajiferuke Ridwanullahi", role: "President", key: "PREZ26-AJ", pka: "AJII", img: "ajii.jpg", quote: "Leadership is the standard." },
-    { name: "Olaniyan Kehinde", role: "Vice President", key: "VP26-AR", pka: "ARMANI", img: "armani.jpg", quote: "Accuracy is our mandate." },
-    { name: "Obidare Ibrahim", role: "General Secretary", key: "SEC26-IB", pka: "AJII", img: "dolapo.JPG", quote: "Organization is greatness." },
-    { name: "Oyebode Blessing", role: "Financial Secretary", key: "FIN26-BL", pka: "IRON LADY", img: "oyenike.JPG", quote: "Integrity is key." },
-    { name: "Executive Member 5", role: "Treasurer", key: "TRE26-EX5", pka: "N/A", img: "muller.jpg", quote: "Prudence first." },
-    { name: "Executive Member 6", role: "PRO", key: "PRO26-EX6", pka: "N/A", img: "mubest.jpg", quote: "Voice of Equity." },
-    { name: "Executive Member 7", role: "Social Director", key: "SOC26-EX7", pka: "N/A", img: "zacch.jpg", quote: "Balance is life." },
-    { name: "Executive Member 8", role: "Welfare Director", key: "WEL26-EX8", pka: "N/A", img: "editor.jpg", quote: "Care is priority." },
-    { name: "Executive Member 9", role: "Sport Director", key: "SPT26-EX9", pka: "N/A", img: "marcos.jpg", quote: "Strength and Honor." },
-    { name: "Executive Member 10", role: "Assistant Gen Sec", key: "AGS26-E10", pka: "N/A", img: "muslimah.jpg", quote: "Efficiency in support." },
-    { name: "Executive Member 11", role: "Auditor", key: "AUD26-E11", pka: "N/A", img: "placeholder.jpg", quote: "Transparency always." }
-];
+        { name: "Ajiferuke Ridwanullahi", role: "President", key: "PREZ26-AJ", pka: "AJII", img: "ajii.jpg", quote: "Leadership is the standard." },
+        { name: "Olaniyan Kehinde", role: "Vice President", key: "VP26-AR", pka: "ARMANI", img: "armani.jpg", quote: "Accuracy is our mandate." },
+        { name: "Obidare Ibrahim", role: "General Secretary", key: "SEC26-IB", pka: "AJII", img: "dolapo.JPG", quote: "Organization is greatness." },
+        { name: "Oyebode Blessing", role: "Financial Secretary", key: "FIN26-BL", pka: "IRON LADY", img: "oyenike.JPG", quote: "Integrity is key." }
+    ];
 
-    // 3. STARTUP
     window.onload = () => { 
         if(user) showApp(); 
         addCourseRow(); 
         lucide.createIcons(); 
     };
 
-    // 4. AUTH FUNCTIONS
     function gate() { 
-    const pass = prompt("Enter Executive Access Key:");
-    const foundExec = EXECS.find(e => e.key === pass);
-
-    if(foundExec) { 
-        isExecLogin = true; 
-        // Pre-fill the name field for the executive
-        document.getElementById('reg-name').value = foundExec.name;
-        showReg(); 
-        alert("Welcome, " + foundExec.name);
-    } else {
-        alert("Invalid Executive Key");
+        const pass = prompt("Enter Executive Access Key:");
+        const foundExec = EXECS.find(e => e.key === pass);
+        if(foundExec) { 
+            isExecLogin = true; 
+            document.getElementById('reg-name').value = foundExec.name;
+            showReg(); 
+        } else alert("Invalid Key");
     }
-}
+
     function showReg() {
         document.getElementById('auth-choice').classList.add('hidden');
         document.getElementById('reg-form').classList.remove('hidden');
-        if(isExecLogin) document.getElementById('exec-fields').classList.remove('hidden');
     }
 
     async function handleAuth() {
-    const n = document.getElementById('reg-name').value.trim();
-    const m = document.getElementById('reg-matric').value.trim().toUpperCase(); // Normalize to uppercase
-    const btn = document.getElementById('auth-submit-btn');
-
-    // 1. Basic Validation
-    if(!n) return alert("Please enter your Full Name");
-    if(!m) return alert("Please enter your Matric No");
-
-    btn.innerText = "VERIFYING...";
-    btn.disabled = true;
-
-    try {
-        // 2. CHECK FOR DUPLICATE MATRIC NO
-        // We look through the 'users' collection for anyone with this matric
-        const duplicateCheck = await db.collection("users")
-            .where("matric", "==", m)
-            .get();
-
-        if (!duplicateCheck.empty) {
-            alert("⚠️ This Matric Number is already registered. If this is you, please use your original device or contact an Executive.");
-            btn.innerText = "ACCESS HUB";
-            btn.disabled = false;
-            return; // STOP the registration
-        }
-
-        // 3. PROCEED IF UNIQUE
-        const userData = { 
-            id: "U" + Date.now(), 
-            name: n, 
-            matric: m, 
-            isExec: isExecLogin, 
-            pic: `https://api.dicebear.com/7.x/avataaars/svg?seed=${n}`, 
-            role: isExecLogin ? "Executive" : "Student",
-            joined: firebase.firestore.FieldValue.serverTimestamp()
-        };
-
-        // Save to Database
-        await db.collection("users").doc(userData.id).set(userData);
+        const n = document.getElementById('reg-name').value.trim();
+        const m = document.getElementById('reg-matric').value.trim().toUpperCase();
+        if(!n || !m) return alert("Fill all fields");
         
-        // Save locally
+        const userData = { 
+            id: "U" + Date.now(), name: n, matric: m, isExec: isExecLogin, 
+            pic: `https://api.dicebear.com/7.x/avataaars/svg?seed=${n}`, 
+            role: isExecLogin ? "Executive" : "Student" 
+        };
+        
+        await db.collection("users").doc(userData.id).set(userData);
         localStorage.setItem('ec26_user', JSON.stringify(userData));
         user = userData;
         showApp();
-
-    } catch (e) {
-        console.error(e);
-        alert("Verification Error: " + e.message);
-        btn.innerText = "ACCESS HUB";
-        btn.disabled = false;
     }
-}
 
     function showApp() {
-    document.getElementById('auth-screen').classList.add('hidden');
-    document.getElementById('main-app').classList.remove('hidden');
-    document.getElementById('u-pfp').src = user.pic;
-    document.getElementById('p-img').src = user.pic;
-    document.getElementById('p-name').innerText = user.name;
-    document.getElementById('p-role').innerText = user.role;
-    
-    // Initializing all feeds
-    renderGallery(); 
-    renderFeed(); 
-    renderChatList();
-    renderMarketplace(); // <--- Added this
-}
+        document.getElementById('auth-screen').classList.add('hidden');
+        document.getElementById('main-app').classList.remove('hidden');
+        document.getElementById('u-pfp').src = user.pic;
+        renderGallery(); 
+        renderFeed(); 
+        renderChatList();
+        renderMarketplace();
+    }
 
-    // 5. FEED FUNCTIONS
     function renderGallery() {
-        const gal = document.getElementById('exec-gallery');
-        gal.innerHTML = EXECS.map(e => `
+        document.getElementById('exec-gallery').innerHTML = EXECS.map(e => `
             <div class="member-card">
                 <img src="${e.img}" class="member-image" onerror="this.src='https://via.placeholder.com/80'">
                 <p class="exec-badge">${e.role}</p>
-                <h4 class="cambria" style="margin:5px 0;">${e.name}</h4>
+                <h4 class="cambria">${e.name}</h4>
                 <p style="font-size:0.6rem; opacity:0.6;">"${e.quote}"</p>
             </div>
         `).join('');
     }
 
-    function sideScroll(dir) {
-        document.getElementById('exec-gallery').scrollLeft += (dir === 'left' ? -250 : 250);
-    }
+    function sideScroll(dir) { document.getElementById('exec-gallery').scrollLeft += (dir === 'left' ? -250 : 250); }
 
     function handleFile(input) {
-        const file = input.files[0];
-        if (!file) return;
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = (e) => { 
             verifiedMediaUrl = e.target.result;
-            document.getElementById('upload-progress').innerText = "✅ Image Ready";
+            document.getElementById('upload-progress').innerText = "✅ Ready";
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(input.files[0]);
     }
 
     async function publishPost() {
-        const txt = document.getElementById('post-text').value;
-        if(!txt && !verifiedMediaUrl) return;
-        
+        if(!document.getElementById('post-text').value && !verifiedMediaUrl) return;
         await db.collection("posts").add({
             uid: user.id, name: user.name, role: user.role, pic: user.pic,
-            txt: txt, file: verifiedMediaUrl, likes: [], comments: [],
-            time: firebase.firestore.FieldValue.serverTimestamp()
+            txt: document.getElementById('post-text').value, file: verifiedMediaUrl, 
+            likes: [], comments: [], time: firebase.firestore.FieldValue.serverTimestamp()
         });
-        
         document.getElementById('post-text').value = "";
         verifiedMediaUrl = "";
         document.getElementById('upload-progress').innerText = "";
     }
-    async function deletePost(postId) {
-    if(confirm("Are you sure you want to delete this post?")) {
-        try {
-            await db.collection("posts").doc(postId).delete();
-        } catch (e) {
-            alert("Error deleting: " + e.message);
-        }
-    }
-}
 
-function renderFeed() {
-    db.collection("posts").orderBy("time", "desc").onSnapshot(snap => {
-        const f = document.getElementById('feed-display');
-        if (!f) return; // Safety check
-        f.innerHTML = ""; 
-        
-        snap.forEach(doc => {
-            const d = doc.data();
-            const comments = d.comments || [];
-            const canDelete = d.uid === user.id || user.isExec;
-            const postTime = timeAgo(d.time);
-
-            // FIXED: Added 'f.' before innerHTML
-            f.innerHTML += `
-                <div class="elite-card">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                        <div style="display:flex; gap:8px; align-items:center;">
+    function renderFeed() {
+        db.collection("posts").orderBy("time", "desc").onSnapshot(snap => {
+            const f = document.getElementById('feed-display');
+            f.innerHTML = "";
+            snap.forEach(doc => {
+                const d = doc.data();
+                f.innerHTML += `
+                    <div class="elite-card">
+                        <div style="display:flex; gap:10px; align-items:center;" onclick="openPublicProfile('${d.uid}')">
                             <img src="${d.pic}" style="width:30px; height:30px; border-radius:50%;">
-                            <div>
-                                <b style="font-size:0.7rem; display:block;">${d.name} <span class="exec-badge">${d.role}</span></b>
-                                <small style="font-size:0.55rem; opacity:0.5;">${postTime}</small>
-                            </div>
+                            <b style="font-size:0.8rem;">${d.name} <span class="exec-badge">${d.role}</span></b>
                         </div>
-                        ${canDelete ? `<i data-lucide="trash-2" onclick="deletePost('${doc.id}')" style="color:var(--crimson); cursor:pointer; width:14px;"></i>` : ''}
-                    </div>
-
-                    <p style="margin:10px 0; font-size:0.85rem; line-height:1.4;">${d.txt}</p>
-                    ${d.file ? `<img src="${d.file}" class="post-media">` : ''}
-                    
-                    <div style="display:flex; justify-content:space-between; margin-top:12px; opacity:0.7;">
-                        <small onclick="likePost('${doc.id}')" style="color:var(--gold); cursor:pointer; font-weight:600;">
-                            ❤ ${d.likes ? d.likes.length : 0} Likes
-                        </small>
-                        <small style="font-size:0.65rem;">${comments.length} Comments</small>
-                    </div>
-
-                    <div class="comment-vault" id="vault-${doc.id}">
-                        ${comments.map((c, index) => {
-    // Only the author of the comment or an Executive can delete it
-    const canDeleteComment = c.userId === user.id || user.isExec;
-    
-    // We stringify the comment object so we can pass it to the delete function later
-    const commentData = JSON.stringify(c).replace(/"/g, '&quot;');
-
-    return `
-        <div class="comment-item" 
-             style="user-select: none; -webkit-user-select: none;"
-             onmousedown="startHold('${doc.id}', ${commentData}, ${canDeleteComment})" 
-             onmouseup="clearHold()" 
-             mouseleave="clearHold()"
-             ontouchstart="startHold('${doc.id}', ${commentData}, ${canDeleteComment})" 
-             ontouchend="clearHold()">
-            <b style="color:var(--gold);">${c.userName}:</b> ${c.text}
-        </div>
-    `;
-}).join('')}
-                    </div>
-
-                    <div style="display:flex; gap:8px; margin-top:10px; background:rgba(0,0,0,0.2); padding:5px; border-radius:10px;">
-                        <input id="input-${doc.id}" class="form-input" 
-                               style="font-size:0.75rem; padding:8px; margin:0; border:none; background:transparent;" 
-                               placeholder="Share your thoughts...">
-                        <button onclick="sendComment('${doc.id}')" 
-                                style="background:transparent; border:none; color:var(--gold); cursor:pointer; padding:0 10px;">
-                            <i data-lucide="send" style="width:18px;"></i>
-                        </button>
-                    </div>
-                </div>`;
-        });
-        lucide.createIcons();
-    });
-}
-
-async function likePost(postId) {
-    const postRef = db.collection("posts").doc(postId);
-    const doc = await postRef.get();
-    const likes = doc.data().likes || [];
-
-    if (likes.includes(user.id)) {
-        // Unlike if already liked
-        await postRef.update({
-            likes: firebase.firestore.FieldValue.arrayRemove(user.id)
-        });
-    } else {
-        // Like if not liked
-        await postRef.update({
-            likes: firebase.firestore.FieldValue.arrayUnion(user.id)
+                        <p style="margin:10px 0; font-size:0.9rem;">${d.txt}</p>
+                        ${d.file ? `<img src="${d.file}" class="post-media">` : ''}
+                        <div style="margin-top:10px; display:flex; gap:15px; font-size:0.7rem;">
+                            <span onclick="likePost('${doc.id}')">❤ ${d.likes.length}</span>
+                            <span>💬 ${d.comments.length}</span>
+                        </div>
+                        <div class="comment-vault">
+                            ${d.comments.map(c => `<div class="comment-item"><b>${c.userName}:</b> ${c.text}</div>`).join('')}
+                        </div>
+                        <div style="display:flex; gap:5px; margin-top:10px;">
+                            <input id="in-${doc.id}" class="form-input" style="margin:0; font-size:0.7rem;" placeholder="Comment...">
+                            <button onclick="sendComment('${doc.id}')" style="background:none; border:none; color:var(--gold);"><i data-lucide="send" style="width:16px;"></i></button>
+                        </div>
+                    </div>`;
+            });
+            lucide.createIcons();
         });
     }
-}
 
-    // 6. GP CALCULATOR
+    async function likePost(id) {
+        const ref = db.collection("posts").doc(id);
+        const doc = await ref.get();
+        const likes = doc.data().likes || [];
+        if(likes.includes(user.id)) await ref.update({ likes: firebase.firestore.FieldValue.arrayRemove(user.id) });
+        else await ref.update({ likes: firebase.firestore.FieldValue.arrayUnion(user.id) });
+    }
+
+    async function sendComment(id) {
+        const val = document.getElementById(`in-${id}`).value;
+        if(!val) return;
+        await db.collection("posts").doc(id).update({
+            comments: firebase.firestore.FieldValue.arrayUnion({ userId: user.id, userName: user.name, text: val, time: Date.now() })
+        });
+        document.getElementById(`in-${id}`).value = "";
+    }
+
     function addCourseRow() {
-        const row = document.createElement('div');
-        row.style = "display: flex; gap: 8px; margin-bottom: 10px;";
-        row.innerHTML = `
-            <input type="text" class="form-input" style="flex:2; margin:0;" placeholder="Course">
-            <input type="number" class="c-unit form-input" style="flex:1; margin:0;" placeholder="Unit">
-            <select class="c-grade form-input" style="flex:1; margin:0;">
-                <option value="4.0">A</option><option value="3.5">AB</option>
-                <option value="3.25">B</option><option value="3.0">BC</option>
-                <option value="2.75">C</option><option value="0.0">F</option>
-            </select>`;
-        document.getElementById('course-list').appendChild(row);
+        const div = document.createElement('div');
+        div.style = "display:flex; gap:5px; margin-bottom:5px;";
+        div.innerHTML = `<input type="text" class="form-input" style="flex:2; margin:0;" placeholder="Course"><input type="number" class="c-unit form-input" style="flex:1; margin:0;" placeholder="Unit"><select class="c-grade form-input" style="flex:1; margin:0;"><option value="4.0">A</option><option value="3.5">AB</option><option value="3.25">B</option><option value="3.0">BC</option><option value="2.75">C</option><option value="0.0">F</option></select>`;
+        document.getElementById('course-list').appendChild(div);
     }
 
     function calculateGP() {
-        const units = document.querySelectorAll('.c-unit');
-        const grades = document.querySelectorAll('.c-grade');
         let tp = 0, tu = 0;
-        units.forEach((u, i) => {
-            const val = parseFloat(u.value);
-            if(val > 0) { tp += (val * parseFloat(grades[i].value)); tu += val; }
+        document.querySelectorAll('.c-unit').forEach((u, i) => {
+            const unit = parseFloat(u.value);
+            if(unit > 0) { tp += (unit * parseFloat(document.querySelectorAll('.c-grade')[i].value)); tu += unit; }
         });
         document.getElementById('gp-res').innerText = tu > 0 ? (tp/tu).toFixed(2) : "0.00";
     }
 
-    // 7. CHAT & NAV
     function renderChatList() {
         db.collection("users").onSnapshot(snap => {
             const list = document.getElementById('chat-list');
             list.innerHTML = "";
             snap.forEach(doc => {
                 const u = doc.data();
-                if(u.id !== user.id) {
-                    list.innerHTML += `<div class="elite-card" onclick="openChat('${u.id}', '${u.name}')" style="cursor:pointer;"><b>${u.name}</b><br><small>${u.role}</small></div>`;
-                }
+                if(u.id !== user.id) list.innerHTML += `<div class="elite-card" onclick="openChat('${u.id}', '${u.name}')"><b>${u.name}</b><br><small>${u.role}</small></div>`;
             });
         });
     }
 
-    
-    async function sendComment(postId) {
-    const input = document.getElementById(`input-${postId}`);
-    const text = input.value.trim();
-    if(!text) return;
-
-    try {
-        await db.collection("posts").doc(postId).update({
-            comments: firebase.firestore.FieldValue.arrayUnion({
-                userId: user.id,
-                userName: user.name,
-                text: text,
-                time: new Date().toISOString()
-            })
+    function openChat(tid, tname) {
+        activeChatId = tid;
+        document.getElementById('chat-target').innerText = tname;
+        document.getElementById('chat-drawer').classList.remove('hidden');
+        const rid = [user.id, tid].sort().join('_');
+        if(activeChatListener) activeChatListener();
+        activeChatListener = db.collection("chats").doc(rid).collection("m").orderBy("time", "asc").onSnapshot(snap => {
+            const cont = document.getElementById('chat-msgs');
+            cont.innerHTML = "";
+            snap.forEach(doc => {
+                const m = doc.data();
+                cont.innerHTML += `<div class="chat-bubble ${m.sid === user.id ? 'sent' : 'received'}">${m.t}</div>`;
+            });
+            cont.scrollTop = cont.scrollHeight;
         });
-        input.value = "";
-        
-        // Auto-scroll the vault to the bottom
-        const vault = document.getElementById(`vault-${postId}`);
-        vault.scrollTop = vault.scrollHeight;
-        
-    } catch (e) {
-        alert("Action failed. Check connection.");
     }
-}
-function timeAgo(timestamp) {
-    if (!timestamp) return "just now";
-    
-    // Handle Firestore server timestamp vs regular date
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-    const seconds = Math.floor((new Date() - date) / 1000);
 
-    let interval = Math.floor(seconds / 31536000);
-    if (interval >= 1) return interval + "y ago";
-    
-    interval = Math.floor(seconds / 2592000);
-    if (interval >= 1) return interval + "mo ago";
-    
-    interval = Math.floor(seconds / 86400);
-    if (interval >= 1) return interval + "d ago";
-    
-    interval = Math.floor(seconds / 3600);
-    if (interval >= 1) return interval + "h ago";
-    
-    interval = Math.floor(seconds / 60);
-    if (interval >= 1) return interval + "m ago";
-    
-    return "just now";
-}
-  function closeChat() { document.getElementById('chat-drawer').classList.add('hidden'); }
+    async function sendMsg() {
+        const val = document.getElementById('msg-input').value;
+        if(!val) return;
+        const rid = [user.id, activeChatId].sort().join('_');
+        await db.collection("chats").doc(rid).collection("m").add({ sid: user.id, t: val, time: firebase.firestore.FieldValue.serverTimestamp() });
+        document.getElementById('msg-input').value = "";
+    }
+
+    function closeChat() { document.getElementById('chat-drawer').classList.add('hidden'); }
+
     function switchTab(t) {
         document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
         document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
         document.getElementById('tab-'+t).classList.remove('hidden');
         event.currentTarget.classList.add('active');
+        if(t === 'profile') updateProfileStats();
         lucide.createIcons();
     }
 
-    function logout() { localStorage.clear(); location.reload(); }
-
-    // Refresh the feed display every 60 seconds to update timestamps
-setInterval(() => {
-    if(user) renderFeed();
-}, 60000);
-
-let holdTimer;
-
-function startHold(postId, commentObj, canDelete) {
-    if (!canDelete) return; // Exit if user doesn't have permission
-
-    // Start a timer for 600 milliseconds
-    holdTimer = setTimeout(() => {
-        confirmDeleteComment(postId, commentObj);
-    }, 600); 
-}
-
-function clearHold() {
-    clearTimeout(holdTimer);
-}
-
-async function confirmDeleteComment(postId, commentObj) {
-    // Vibrate phone for feedback if supported
-    if (navigator.vibrate) navigator.vibrate(50);
-
-    if (confirm("Delete this comment?")) {
-        try {
-            await db.collection("posts").doc(postId).update({
-                comments: firebase.firestore.FieldValue.arrayRemove(commentObj)
-            });
-        } catch (e) {
-            console.error("Error removing comment: ", e);
-            alert("Could not delete comment.");
-        }
+    async function updateProfileStats() {
+        const posts = await db.collection("posts").where("uid", "==", user.id).get();
+        document.getElementById('p-name').innerText = user.name;
+        document.getElementById('p-role').innerText = user.role;
+        document.getElementById('p-img').src = user.pic;
+        document.getElementById('p-matric-display').innerText = "ID: " + user.matric;
+        document.getElementById('stat-posts').innerText = posts.size;
+        document.getElementById('stat-gp').innerText = document.getElementById('gp-res').innerText;
     }
-}
 
+    function handleMarketFile(input) {
+        const reader = new FileReader();
+        reader.onload = (e) => { 
+            verifiedMediaUrl = e.target.result; 
+            document.getElementById('market-progress').innerText = "✅ Image Added";
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
 
-async function showPublicProfile(targetUid) {
-    const doc = await db.collection("users").doc(targetUid).get();
-    if (!doc.exists) return;
-    const u = doc.data();
-
-    document.getElementById('view-p-img').src = u.pic;
-    document.getElementById('view-p-name').innerText = u.name;
-    document.getElementById('view-p-role').innerText = u.role;
-    document.getElementById('view-p-matric').innerText = "Matric: " + u.matric;
-    
-    // Set up the chat button
-    const btn = document.getElementById('view-p-chat-btn');
-    btn.onclick = () => {
-        closePublicProfile();
-        openChat(u.id, u.name);
-    };
-
-    document.getElementById('public-profile-modal').classList.remove('hidden');
-    lucide.createIcons();
-}
-
-function closePublicProfile() {
-    document.getElementById('public-profile-modal').classList.add('hidden');
-}
-
-let marketMediaUrl = "";
-
-// Handle Image for Market
-function handleMarketFile(input) {
-    const file = input.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        marketMediaUrl = e.target.result;
-        document.getElementById('market-progress').innerText = "✅ Photo attached";
-    };
-    reader.readAsDataURL(file);
-}
-
-// Publish Item (Mirroring publishPost logic)
-async function publishMarketItem() {
-    const name = document.getElementById('market-item-name').value;
-    const price = document.getElementById('market-item-price').value;
-    const desc = document.getElementById('market-item-desc').value;
-
-    if(!name || !price) return alert("Item name and price required");
-
-    await db.collection("marketplace").add({
-        sellerId: user.id,
-        sellerName: user.name,
-        sellerPic: user.pic,
-        itemName: name,
-        itemPrice: price,
-        itemDesc: desc,
-        file: marketMediaUrl,
-        time: firebase.firestore.FieldValue.serverTimestamp()
-    });
-
-    // Reset fields
-    document.getElementById('market-item-name').value = "";
-    document.getElementById('market-item-price').value = "";
-    document.getElementById('market-item-desc').value = "";
-    marketMediaUrl = "";
-    document.getElementById('market-progress').innerText = "";
-}
-
-// Render Marketplace (Mirroring renderFeed style)
-function renderMarketplace() {
-    db.collection("marketplace").orderBy("time", "desc").onSnapshot(snap => {
-        const m = document.getElementById('market-display');
-        if (!m) return;
-        m.innerHTML = "";
-
-        snap.forEach(doc => {
-            const d = doc.data();
-            const canDelete = d.sellerId === user.id || user.isExec;
-
-            m.innerHTML += `
-                <div class="elite-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div style="display:flex; gap:8px; align-items:center;">
-                            <img src="${d.sellerPic}" style="width:25px; height:25px; border-radius:50%;">
-                            <b style="font-size:0.65rem;">${d.sellerName}</b>
-                        </div>
-                        ${canDelete ? `<i data-lucide="trash-2" onclick="deleteMarketItem('${doc.id}')" style="color:var(--crimson); cursor:pointer; width:14px;"></i>` : ''}
-                    </div>
-
-                    ${d.file ? `<img src="${d.file}" class="post-media" style="margin-top:10px;">` : ''}
-                    
-                    <div style="margin-top:12px;">
-                        <span class="price-tag">₦${Number(d.itemPrice).toLocaleString()}</span>
-                        <h4 class="cambria" style="color:var(--gold); margin:5px 0 2px 0;">${d.itemName}</h4>
-                        <p style="font-size:0.75rem; opacity:0.8;">${d.itemDesc}</p>
-                    </div>
-
-                    <button class="btn-luxury" style="margin-top:15px; background:transparent; border:1px solid var(--gold); color:var(--gold);" 
-                            onclick="openChat('${d.sellerId}', '${d.sellerName}')">
-                        Contact Seller
-                    </button>
-                </div>`;
+    async function publishMarketItem() {
+        const name = document.getElementById('market-item-name').value;
+        const price = document.getElementById('market-item-price').value;
+        if(!name || !price) return alert("Enter details");
+        await db.collection("marketplace").add({
+            sellerId: user.id, sellerName: user.name, sellerPic: user.pic,
+            itemName: name, itemPrice: price, itemDesc: document.getElementById('market-item-desc').value,
+            file: verifiedMediaUrl, time: firebase.firestore.FieldValue.serverTimestamp()
         });
-        lucide.createIcons();
-    });
-}
-
-// Delete Item
-async function deleteMarketItem(id) {
-    if(confirm("Remove this listing?")) {
-        await db.collection("marketplace").doc(id).delete();
+        document.getElementById('market-item-name').value = "";
+        document.getElementById('market-item-price').value = "";
+        document.getElementById('market-item-desc').value = "";
+        verifiedMediaUrl = "";
+        document.getElementById('market-progress').innerText = "";
     }
-}
-// --- IMPROVISED CHAT SYSTEM ---
 
-let activeChatListener = null; // To prevent memory leaks
-
-function openChat(targetId, targetName) {
-    activeChatId = targetId;
-    document.getElementById('chat-target').innerText = targetName;
-    document.getElementById('chat-drawer').classList.remove('hidden');
-    
-    // Create a unique Room ID (Alphabetical sort ensures both users share the same ID)
-    const roomId = [user.id, targetId].sort().join('_');
-    const chatContainer = document.getElementById('chat-msgs');
-
-    // 1. CLEAR PREVIOUS LISTENER (Crucial for performance)
-    if (activeChatListener) activeChatListener();
-
-    // 2. REAL-TIME SNAPSHOT (This makes it "Instant" across computers)
-    activeChatListener = db.collection("chats")
-        .doc(roomId)
-        .collection("m")
-        .orderBy("time", "asc")
-        .onSnapshot(snap => {
-            chatContainer.innerHTML = "";
-            
-            if (snap.empty) {
-                chatContainer.innerHTML = "<center style='opacity:0.3; margin-top:50px; font-size:0.7rem;'>No messages yet. Say hello!</center>";
-            }
-
+    function renderMarketplace() {
+        db.collection("marketplace").orderBy("time", "desc").onSnapshot(snap => {
+            const m = document.getElementById('market-display');
+            m.innerHTML = "";
             snap.forEach(doc => {
-                const m = doc.data();
-                const isMe = m.sid === user.id;
-                
-                chatContainer.innerHTML += `
-                    <div class="chat-bubble ${isMe ? 'sent' : 'received'}">
-                        ${m.img ? `<img src="${m.img}" style="width:100%; border-radius:10px; margin-bottom:5px;">` : ''}
-                        ${m.t ? `<div>${m.t}</div>` : ''}
-                        <div style="font-size:0.5rem; opacity:0.5; text-align:right; margin-top:3px;">
-                            ${m.time ? timeAgo(m.time) : 'sending...'}
+                const d = doc.data();
+                m.innerHTML += `
+                    <div class="elite-card">
+                        <div style="display:flex; justify-content:space-between;">
+                            <b style="color:var(--gold);">${d.itemName}</b>
+                            <span class="price-tag">₦${d.itemPrice}</span>
                         </div>
+                        ${d.file ? `<img src="${d.file}" class="post-media">` : ''}
+                        <p style="font-size:0.75rem; margin:10px 0;">${d.itemDesc}</p>
+                        <button class="btn-luxury" onclick="openChat('${d.sellerId}', '${d.sellerName}')">Contact Seller</button>
                     </div>`;
             });
-            
-            // Auto-scroll to bottom
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }, (error) => {
-            console.error("Chat Error:", error);
         });
-}
-
-// 3. IMPROVISED SEND (Handles Text + Instant Image)
-async function sendMsg() {
-    const input = document.getElementById('msg-input');
-    const text = input.value.trim();
-    const roomId = [user.id, activeChatId].sort().join('_');
-
-    if (!text && !verifiedMediaUrl) return; // Don't send empty
-
-    const msgData = {
-        sid: user.id,
-        t: text,
-        img: verifiedMediaUrl || null,
-        time: firebase.firestore.FieldValue.serverTimestamp()
-    };
-
-    input.value = ""; // Clear input immediately for better UX
-    verifiedMediaUrl = ""; // Clear image buffer
-    
-    try {
-        await db.collection("chats").doc(roomId).collection("m").add(msgData);
-    } catch (e) {
-        alert("Message failed to send.");
     }
-}
 
-// 4. ADD FILE HANDLING FOR CHAT (Add this to your HTML near the chat input)
-function handleChatFile(input) {
-    const file = input.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        verifiedMediaUrl = e.target.result;
-        // Visual feedback that image is ready
-        document.getElementById('msg-input').placeholder = "📸 Image ready to send...";
-    };
-    reader.readAsDataURL(file);
-}
-async function updateProfileStats() {
-    if (!user) return;
+    async function openPublicProfile(uid) {
+        const doc = await db.collection("users").doc(uid).get();
+        if(!doc.exists) return;
+        const d = doc.data();
+        document.getElementById('view-p-img').src = d.pic;
+        document.getElementById('view-p-name').innerText = d.name;
+        document.getElementById('view-p-role').innerText = d.role;
+        document.getElementById('view-p-matric').innerText = "ID: " + d.matric;
+        document.getElementById('view-p-chat-btn').onclick = () => { closePublicProfile(); openChat(d.id, d.name); };
+        document.getElementById('public-profile-modal').classList.remove('hidden');
+    }
 
-    // 1. Live Fetch Post Count
-    const postsSnap = await db.collection("posts").where("uid", "==", user.id).get();
-    const postCount = postsSnap.size;
-
-    // 2. DOM Updates
-    document.getElementById('p-name').innerText = user.name;
-    document.getElementById('p-role').innerText = user.role.toUpperCase();
-    document.getElementById('p-img').src = user.pic;
-    document.getElementById('p-matric-display').innerText = user.matric || "NO MATRIC DATA";
-    
-    // Count animation for style
-    animateNumber('stat-posts', 0, postCount, 1000);
-    
-    // Pull GP from the text display of the calculator
-    const currentGP = document.getElementById('gp-res').innerText;
-    document.getElementById('stat-gp').innerText = currentGP;
-    
-    lucide.createIcons();
-}
-
-// Visual "Counting" Effect for stats
-function animateNumber(id, start, end, duration) {
-    const obj = document.getElementById(id);
-    let startTimestamp = null;
-    const step = (timestamp) => {
-        if (!startTimestamp) startTimestamp = timestamp;
-        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        obj.innerHTML = Math.floor(progress * (end - start) + start);
-        if (progress < 1) {
-            window.requestAnimationFrame(step);
-        }
-    };
-    window.requestAnimationFrame(step);
-}
-
-// Update the switchTab function to trigger stats refresh
-const originalSwitchTab = switchTab;
-switchTab = function(t) {
-    originalSwitchTab(t);
-    if(t === 'profile') updateProfileStats();
-};
-async function openPublicProfile(uid) {
-    const doc = await db.collection("users").doc(uid).get();
-    if (!doc.exists) return;
-    const data = doc.data();
-
-    document.getElementById('view-p-img').src = data.pic;
-    document.getElementById('view-p-name').innerText = data.name;
-    document.getElementById('view-p-role').innerText = data.role;
-    document.getElementById('view-p-matric').innerText = data.isExec ? "Verified Executive" : `Matric: ${data.matric}`;
-    
-    // Setup Chat Button
-    document.getElementById('view-p-chat-btn').onclick = () => {
-        closePublicProfile();
-        switchTab('chat');
-        openChat(data.id, data.name);
-    };
-
-    document.getElementById('public-profile-modal').classList.remove('hidden');
-    lucide.createIcons();
-}
-
-function closePublicProfile() {
-    document.getElementById('public-profile-modal').classList.add('hidden');
-}
+    function closePublicProfile() { document.getElementById('public-profile-modal').classList.add('hidden'); }
+    function logout() { localStorage.clear(); location.reload(); }
 </script>
-
-
-
 </body>
 </html>

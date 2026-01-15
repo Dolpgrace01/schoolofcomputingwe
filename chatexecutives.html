@@ -14,11 +14,11 @@
 
     <style>
         :root {
-            --gold: #d4af37; --emerald: #064e3b; --deep-green: #022c22;
+            --gold: #826c24; --emerald: #064e3b; --deep-green: #022c22;
             --glass: rgba(2, 44, 34, 0.98); --border: rgba(212, 175, 55, 0.2); --crimson: #ef4444;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Poppins', sans-serif ; }
+        * {cursor: pointer; margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Poppins', sans-serif ; }
         body { 
             font-family: 'Poppins', sans-serif; 
             background: #022c22; color: white; min-height: 100vh; padding-bottom: 90px;
@@ -113,6 +113,61 @@
     border-left: 2px solid var(--border);
 }
     
+/* Glassmorphism Profile Card */
+.membership-card {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(2, 44, 34, 0.8) 100%);
+    border: 1px solid var(--gold);
+    border-radius: 25px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* Shimmer animation for that "Elite" feel */
+.membership-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: shimmer 6s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+.profile-stats-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.stat-label {
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.6;
+}
     </style>
 </head>
 <body>
@@ -147,29 +202,28 @@
     </header>
 
     <div class="container">
+        
         <section id="tab-market" class="hidden">
     <div class="elite-card">
-        <h3 class="cambria" style="color:var(--gold);"> Sell Anything</h3>
-        <p style="font-size:0.6rem; opacity:0.7; margin-bottom:10px;">Sell to the students. Online or POD.</p>
+        <h3 class="cambria" style="color:var(--gold); margin-bottom:5px;">Marketplace</h3>
+        <p style="font-size:0.6rem; opacity:0.7; margin-bottom:15px;">List items for sale to the crew.</p>
         
-        <button class="btn-luxury" onclick="document.getElementById('market-form').classList.toggle('hidden')">
-            + List an Item
-        </button>
-
-        <div id="market-form" class="hidden" style="margin-top:15px; border-top:1px solid var(--border); padding-top:15px;">
-            <input type="text" id="item-name" class="form-input" placeholder="Item Name">
-            <input type="number" id="item-price" class="form-input" placeholder="Price (0 for Free)">
-            <textarea id="item-desc" class="form-input" placeholder="Description/Condition"></textarea>
-            
-            <label style="cursor:pointer; color:var(--gold); display:block; margin-bottom:10px;">
-                <i data-lucide="camera"></i> Add Item Photo
-                <input type="file" id="item-file" class="hidden" accept="image/*" onchange="handleMarketFile(this)">
+        <input type="text" id="market-item-name" class="form-input" placeholder="What are you selling?">
+        <input type="number" id="market-item-price" class="form-input" placeholder="Price (₦)">
+        <textarea id="market-item-desc" class="form-input" placeholder="Short description..." style="height:60px; resize:none;"></textarea>
+        
+        <div style="display:flex; justify-content: space-between; align-items: center;">
+            <label style="cursor:pointer; color:var(--gold); font-size:0.7rem;">
+                <i data-lucide="camera" style="width:16px; vertical-align:middle;"></i> Add Photo
+                <input type="file" id="market-file-input" class="hidden" accept="image/*" onchange="handleMarketFile(this)">
             </label>
-            <div id="market-upload-status" style="font-size:0.6rem; color:var(--gold);"></div>
-            
-            <button class="btn-luxury" style="background:var(--emerald); color:white;" onclick="postItem()">Publish Listing</button>
+            <button class="btn-luxury" style="width:auto; padding: 5px 20px;" onclick="publishMarketItem()">List Item</button>
         </div>
+        <div id="market-progress" style="font-size:0.6rem; margin-top:5px; color:var(--gold);"></div>
     </div>
+
+    <div id="market-display"></div>
+</section>
 
     <div id="market-display" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
         </div>
@@ -214,14 +268,62 @@
         </section>
 
         <section id="tab-profile" class="hidden">
-            <div class="elite-card" style="text-align:center;">
-                <img id="p-img" style="width:80px; height:80px; border-radius:50%; border:2px solid var(--gold); margin-bottom:10px;">
-                <h2 id="p-name" class="cambria"></h2>
-                <p id="p-role" class="exec-badge" style="display:inline-block;"></p>
-                <button class="btn-luxury" style="margin-top:30px; background-color: white; color:white;" onclick="logout()"> Logout Session</button>
+    <div class="membership-card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="z-index: 1;">
+                <p style="font-size: 0.5rem; letter-spacing: 3px; color: var(--gold); margin-bottom: 10px;">OFFICIAL MEMBER</p>
+                <h2 id="p-name" class="cambria" style="font-size: 1.5rem; margin: 0;"></h2>
+                <span id="p-role" class="exec-badge" style="margin-top: 10px; display: inline-block;"></span>
             </div>
-        </section>
+            <div style="position: relative; z-index: 1;">
+                <img id="p-img" style="width: 85px; height: 85px; border-radius: 20px; border: 2px solid var(--gold); object-fit: cover;">
+                <div style="position: absolute; -top: 5px; -right: 5px; background: var(--gold); color: #022c22; font-size: 10px; padding: 2px 6px; border-radius: 5px; font-weight: 900;">'26</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <p id="p-matric-display" style="font-family: monospace; font-size: 0.8rem; letter-spacing: 2px; opacity: 0.8;"></p>
+        </div>
+
+        <div class="profile-stats-container">
+            <div class="stat-item">
+                <span class="stat-number" id="stat-posts">0</span>
+                <span class="stat-label">Contributions</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="stat-gp">0.00</span>
+                <span class="stat-label">Academic GP</span>
+            </div>
+        </div>
     </div>
+
+    <div style="margin-top: 25px;">
+        <h3 class="cambria" style="font-size: 0.8rem; color: var(--gold); margin-bottom: 15px; letter-spacing: 1px;">CONTROL CENTER</h3>
+        
+        <div class="profile-action-list">
+            <div class="action-item" onclick="switchTab('market')">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="background: rgba(212, 175, 55, 0.1); padding: 10px; border-radius: 10px;"><i data-lucide="package" style="color: var(--gold);"></i></div>
+                    <div>
+                        <b style="font-size: 0.8rem;">My Marketplace</b>
+                        <p style="font-size: 0.6rem; opacity: 0.5;">Manage your listed items</p>
+                    </div>
+                </div>
+                <i data-lucide="chevron-right" style="width: 16px; opacity: 0.4;"></i>
+            </div>
+
+            <div class="action-item" onclick="logout()" style="margin-top: 15px; border: 1px solid rgba(239, 68, 68, 0.3);">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="background: rgba(239, 68, 68, 0.1); padding: 10px; border-radius: 10px;"><i data-lucide="power" style="color: #ef4444;"></i></div>
+                    <div>
+                        <b style="font-size: 0.8rem; color: #ef4444;">Logout</b>
+                        <p style="font-size: 0.6rem; opacity: 0.5;">End your current session</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
     <nav class="bottom-nav">
         <div class="nav-link active" onclick="switchTab('feed')"><i data-lucide="home"></i><small>Feed</small></div>
@@ -236,15 +338,73 @@
 </div>
 
 <div id="chat-drawer" class="hidden">
-    <div style="padding:20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-        <b id="chat-target" class="cambria" style="color:var(--gold);"></b>
-        <i data-lucide="x" onclick="closeChat()" style="cursor:pointer;"></i>
+    <div style="padding:20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background: var(--glass);">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <div id="target-status-dot" style="width:8px; height:8px; background:gray; border-radius:50%;"></div>
+            <b id="chat-target" class="cambria" style="color:var(--gold);"></b>
+        </div>
+        <i data-lucide="x" onclick="closeChat()" style="cursor:pointer; color:var(--gold);"></i>
     </div>
-    <div id="chat-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column;"></div>
-    <div style="padding:20px; display:flex; gap:10px; background: #021a14;">
-        <input type="text" id="msg-input" class="form-input" style="margin:0;" placeholder="Type...">
-        <button class="btn-luxury" style="width:auto; padding:0 20px;" onclick="sendMsg()"><i data-lucide="send"></i></button>
+
+    <div id="chat-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:10px; background: #021a14;">
+        </div>
+
+    <div style="padding:15px; display:flex; gap:10px; background: #021a14; align-items: center; border-top: 1px solid var(--border);">
+        <label style="cursor:pointer; color:var(--gold); display: flex; align-items: center;">
+            <i data-lucide="image" style="width:22px;"></i>
+            <input type="file" id="chat-file-input" class="hidden" accept="image/*" onchange="handleChatFile(this)">
+        </label>
+        
+        <div style="flex:1; position:relative;">
+            <input type="text" id="msg-input" class="form-input" style="margin:0; padding-right:40px;" placeholder="Type a message..." onkeypress="if(event.key==='Enter') sendMsg()">
+            <div id="chat-img-preview" class="hidden" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); width:25px; height:25px; border-radius:4px; border:1px solid var(--gold); background-size:cover;"></div>
+        </div>
+
+        <button class="btn-luxury" style="width:auto; padding:10px 15px; display:flex; align-items:center; justify-content:center;" onclick="sendMsg()">
+            <i data-lucide="send" style="width:18px;"></i>
+        </button>
     </div>
+</div>
+<section id="tab-profile" class="hidden">
+    <div class="elite-card" style="text-align:center; padding: 30px 20px; position: relative; overflow: hidden; background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.2));">
+        <div style="position: absolute; top: -10px; right: -10px; opacity: 0.1;"><i data-lucide="shield-check" style="width: 80px; height: 80px;"></i></div>
+        
+        <div style="position: relative;">
+            <div style="position: relative; display: inline-block;">
+                <img id="p-img" style="width:90px; height:90px; border-radius:50%; border:3px solid var(--gold); padding: 3px; background: #022c22;">
+                <div style="position: absolute; bottom: 5px; right: 5px; background: #22c55e; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #022c22;"></div>
+            </div>
+            <h2 id="p-name" class="cambria" style="margin-top:10px; letter-spacing: 1px;"></h2>
+            <div id="p-role" class="exec-badge" style="display:inline-block; margin-top: 5px; padding: 4px 12px;"></div>
+            <p id="p-matric-display" style="font-size: 0.6rem; opacity: 0.5; margin-top: 8px; font-family: monospace;"></p>
+        </div>
+
+        <div class="profile-stats-grid">
+            <div class="stat-box">
+                <span class="stat-val" id="stat-posts">0</span>
+                <span class="stat-label">Posts</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-val" id="stat-gp">0.00</span>
+                <span class="stat-label">Current GP</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-action-list">
+        <div class="action-item" onclick="switchTab('market')">
+            <span><i data-lucide="shopping-cart" style="width:16px; vertical-align:middle; margin-right:10px;"></i> My Listings</span>
+            <i data-lucide="chevron-right" style="width:14px;"></i>
+        </div>
+        <div class="action-item" onclick="alert('Digital ID Feature coming soon!')">
+            <span><i data-lucide="qr-code" style="width:16px; vertical-align:middle; margin-right:10px;"></i> Generate Entry QR</span>
+            <i data-lucide="chevron-right" style="width:14px;"></i>
+        </div>
+        <div class="action-item" onclick="logout()" style="margin-top: 10px; border-color: rgba(239, 68, 68, 0.2); color: #f87171;">
+            <span><i data-lucide="log-out" style="width:16px; vertical-align:middle; margin-right:10px;"></i> Logout Session</span>
+        </div>
+    </div>
+</section>
 </div>
 
 <script>
@@ -268,11 +428,18 @@
     let activeChatId = null;
 
     const EXECS = [
-        { name: "Ajiferuke Ridwanullahi", role: "President", pka: "AJII", img: "backggg.jfif", quote: "Leadership is the standard." },
-        { name: "Olaniyan Kehinde", role: "Vice President", pka: "ARMANI", img: "BGG2.jpg", quote: "Accuracy is our mandate." },
-        { name: "Obidare Ibrahim", role: "General Secretary", pka: "AJII", img: "newbg.JPG", quote: "Organization is greatness." },
-        { name: "Oyebode Blessing", role: "Financial Secretary", pka: "IRON LADY", img: "IMG_9196.JPG", quote: "Integrity is key." }
-    ];
+    { name: "Ajiferuke Ridwanullahi", role: "President", key: "PREZ26-AJ", pka: "AJII", img: "ajii.jpg", quote: "Leadership is the standard." },
+    { name: "Olaniyan Kehinde", role: "Vice President", key: "VP26-AR", pka: "ARMANI", img: "armani.jpg", quote: "Accuracy is our mandate." },
+    { name: "Obidare Ibrahim", role: "General Secretary", key: "SEC26-IB", pka: "AJII", img: "dolapo.JPG", quote: "Organization is greatness." },
+    { name: "Oyebode Blessing", role: "Financial Secretary", key: "FIN26-BL", pka: "IRON LADY", img: "oyenike.JPG", quote: "Integrity is key." },
+    { name: "Executive Member 5", role: "Treasurer", key: "TRE26-EX5", pka: "N/A", img: "muller.jpg", quote: "Prudence first." },
+    { name: "Executive Member 6", role: "PRO", key: "PRO26-EX6", pka: "N/A", img: "mubest.jpg", quote: "Voice of Equity." },
+    { name: "Executive Member 7", role: "Social Director", key: "SOC26-EX7", pka: "N/A", img: "zacch.jpg", quote: "Balance is life." },
+    { name: "Executive Member 8", role: "Welfare Director", key: "WEL26-EX8", pka: "N/A", img: "editor.jpg", quote: "Care is priority." },
+    { name: "Executive Member 9", role: "Sport Director", key: "SPT26-EX9", pka: "N/A", img: "marcos.jpg", quote: "Strength and Honor." },
+    { name: "Executive Member 10", role: "Assistant Gen Sec", key: "AGS26-E10", pka: "N/A", img: "muslimah.jpg", quote: "Efficiency in support." },
+    { name: "Executive Member 11", role: "Auditor", key: "AUD26-E11", pka: "N/A", img: "placeholder.jpg", quote: "Transparency always." }
+];
 
     // 3. STARTUP
     window.onload = () => { 
@@ -283,14 +450,19 @@
 
     // 4. AUTH FUNCTIONS
     function gate() { 
-        if(prompt("Passcode:") === "1234") { 
-            isExecLogin = true; 
-            showReg(); 
-        } else {
-            alert("Wrong code");
-        }
-    }
+    const pass = prompt("Enter Executive Access Key:");
+    const foundExec = EXECS.find(e => e.key === pass);
 
+    if(foundExec) { 
+        isExecLogin = true; 
+        // Pre-fill the name field for the executive
+        document.getElementById('reg-name').value = foundExec.name;
+        showReg(); 
+        alert("Welcome, " + foundExec.name);
+    } else {
+        alert("Invalid Executive Key");
+    }
+}
     function showReg() {
         document.getElementById('auth-choice').classList.add('hidden');
         document.getElementById('reg-form').classList.remove('hidden');
@@ -298,39 +470,57 @@
     }
 
     async function handleAuth() {
-        const n = document.getElementById('reg-name').value.trim();
-        const m = document.getElementById('reg-matric').value.trim();
-        const btn = document.getElementById('auth-submit-btn');
+    const n = document.getElementById('reg-name').value.trim();
+    const m = document.getElementById('reg-matric').value.trim().toUpperCase(); // Normalize to uppercase
+    const btn = document.getElementById('auth-submit-btn');
 
-        if(!n) return alert("Please enter your Full Name");
-        
-        btn.innerText = "VERIFYING...";
-        btn.disabled = true;
+    // 1. Basic Validation
+    if(!n) return alert("Please enter your Full Name");
+    if(!m) return alert("Please enter your Matric No");
 
-        const userData = { 
-            id: "U"+Date.now(), 
-            name: n, 
-            matric: m || "N/A", 
-            isExec: isExecLogin, 
-            pic: `https://api.dicebear.com/7.x/avataaars/svg?seed=${n}`, 
-            role: isExecLogin ? "Executive" : "Student" 
-        };
+    btn.innerText = "VERIFYING...";
+    btn.disabled = true;
 
-        try {
-            // Save to Database
-            await db.collection("users").doc(userData.id).set(userData);
-            
-            // Save locally
-            localStorage.setItem('ec26_user', JSON.stringify(userData));
-            user = userData;
-            showApp();
-        } catch (e) {
-            console.error(e);
-            alert("Error: " + e.message + "\n\nTip: Check if your Firestore rules are set to Public/Test Mode.");
+    try {
+        // 2. CHECK FOR DUPLICATE MATRIC NO
+        // We look through the 'users' collection for anyone with this matric
+        const duplicateCheck = await db.collection("users")
+            .where("matric", "==", m)
+            .get();
+
+        if (!duplicateCheck.empty) {
+            alert("⚠️ This Matric Number is already registered. If this is you, please use your original device or contact an Executive.");
             btn.innerText = "ACCESS HUB";
             btn.disabled = false;
+            return; // STOP the registration
         }
+
+        // 3. PROCEED IF UNIQUE
+        const userData = { 
+            id: "U" + Date.now(), 
+            name: n, 
+            matric: m, 
+            isExec: isExecLogin, 
+            pic: `https://api.dicebear.com/7.x/avataaars/svg?seed=${n}`, 
+            role: isExecLogin ? "Executive" : "Student",
+            joined: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        // Save to Database
+        await db.collection("users").doc(userData.id).set(userData);
+        
+        // Save locally
+        localStorage.setItem('ec26_user', JSON.stringify(userData));
+        user = userData;
+        showApp();
+
+    } catch (e) {
+        console.error(e);
+        alert("Verification Error: " + e.message);
+        btn.innerText = "ACCESS HUB";
+        btn.disabled = false;
     }
+}
 
     function showApp() {
     document.getElementById('auth-screen').classList.add('hidden');
@@ -530,19 +720,7 @@ async function likePost(postId) {
         });
     }
 
-    function openChat(id, name) {
-        activeChatId = id;
-        document.getElementById('chat-target').innerText = name;
-        document.getElementById('chat-drawer').classList.remove('hidden');
-        const rid = [user.id, id].sort().join('_');
-        db.collection("chats").doc(rid).collection("m").orderBy("time", "asc").onSnapshot(snap => {
-            const b = document.getElementById('chat-msgs');
-            b.innerHTML = "";
-        if(snap.empty) b.innerHTML = "<center style='opacity:0.5; margin-top:20px;'>No messages yet. Start the conversation.</center>";
-            snap.forEach(m => b.innerHTML += `<div class="chat-bubble ${m.data().sid === user.id ? 'sent' : 'received'}">${m.data().t}</div>`);
-            b.scrollTop = b.scrollHeight;
-        });
-    }
+    
     async function sendComment(postId) {
     const input = document.getElementById(`input-${postId}`);
     const text = input.value.trim();
@@ -591,17 +769,7 @@ function timeAgo(timestamp) {
     
     return "just now";
 }
-
-    async function sendMsg() {
-        const t = document.getElementById('msg-input').value;
-        if(!t || !activeChatId) return;
-        const rid = [user.id, activeChatId].sort().join('_');
-        await db.collection("chats").doc(rid).collection("m").add({ sid: user.id, t, time: firebase.firestore.FieldValue.serverTimestamp() });
-        document.getElementById('msg-input').value = "";
-    }
-
-    function closeChat() { document.getElementById('chat-drawer').classList.add('hidden'); }
-
+  function closeChat() { document.getElementById('chat-drawer').classList.add('hidden'); }
     function switchTab(t) {
         document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
         document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
@@ -622,10 +790,10 @@ let holdTimer;
 function startHold(postId, commentObj, canDelete) {
     if (!canDelete) return; // Exit if user doesn't have permission
 
-    // Start a timer for 800 milliseconds
+    // Start a timer for 600 milliseconds
     holdTimer = setTimeout(() => {
         confirmDeleteComment(postId, commentObj);
-    }, 800); 
+    }, 600); 
 }
 
 function clearHold() {
@@ -648,187 +816,6 @@ async function confirmDeleteComment(postId, commentObj) {
     }
 }
 
-// 1. DELETE LISTING FUNCTION
-async function deleteMarketItem(itemId) {
-    if(confirm("Are you sure you want to remove this listing?")) {
-        try {
-            await db.collection("marketplace").doc(itemId).delete();
-            // The onSnapshot in renderMarketplace will automatically update the UI
-        } catch (e) {
-            alert("Error: " + e.message);
-        }
-    }
-}
-
-// 2. SEARCH / FILTER FUNCTION
-function filterMarket() {
-    const query = document.getElementById('market-search').value.toLowerCase();
-    const cards = document.querySelectorAll('.market-card');
-
-    cards.forEach(card => {
-        const title = card.querySelector('h4').innerText.toLowerCase();
-        const desc = card.querySelector('p').innerText.toLowerCase();
-        
-        if (title.includes(query) || desc.includes(query)) {
-            card.style.display = "flex";
-        } else {
-            card.style.display = "none";
-        }
-    });
-}
-
-// 3. UPDATED RENDER FUNCTION (With Delete Icon & Permissions)
-function renderMarketplace() {
-    db.collection("marketplace").orderBy("time", "desc").onSnapshot(snap => {
-        const display = document.getElementById('market-display');
-        if(!display) return;
-        display.innerHTML = "";
-        
-        snap.forEach(doc => {
-            const item = doc.data();
-            const isOwner = item.sellerId === user.id;
-
-            display.innerHTML += `
-                <div class="market-card">
-                    <img src="${item.img}" class="market-img">
-                    <div style="padding:10px;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-                            <span class="price-tag">${item.price == 0 ? 'FREE' : '₦' + item.price}</span>
-                            ${isOwner ? `<i data-lucide="trash-2" onclick="deleteMarketItem('${doc.id}')" style="color:var(--crimson); cursor:pointer; width:14px;"></i>` : ''}
-                        </div>
-                        <h4 style="font-size:0.8rem; margin:0;">${item.name}</h4>
-                        <p style="font-size:0.6rem; opacity:0.6; height:30px; overflow:hidden; margin-top:4px;">${item.desc}</p>
-                        <button class="btn-luxury" style="font-size:0.55rem; margin-top:10px; height:30px; padding:0;" 
-                                onclick="buyItem('${item.price}', '${item.sellerId}', '${item.sellerName}', '${item.name.replace(/'/g, "\\'")}')">
-                            Buy Now
-                        </button>
-                    </div>
-                </div>`;
-        });
-        lucide.createIcons();
-    });
-}
-let marketImageUrl = "";
-
-function handleMarketFile(input) {
-    const file = input.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        marketImageUrl = e.target.result; // This stores the image data
-        document.getElementById('market-upload-status').innerText = "✅ Photo Attached";
-    };
-    reader.readAsDataURL(file);
-}
-
-async function postItem() {
-    const name = document.getElementById('item-name').value;
-    const price = document.getElementById('item-price').value || 0;
-    const desc = document.getElementById('item-desc').value;
-
-    if (!name || !marketImageUrl) {
-        return alert("Please provide at least a name and a photo!");
-    }
-
-    try {
-        await db.collection("marketplace").add({
-            sellerId: user.id,
-            sellerName: user.name,
-            name: name,
-            price: parseFloat(price),
-            desc: desc,
-            img: marketImageUrl, // This ensures the image is saved to Firestore
-            time: firebase.firestore.FieldValue.serverTimestamp()
-        });
-
-        // Reset the form
-        document.getElementById('market-form').classList.add('hidden');
-        document.getElementById('item-name').value = "";
-        document.getElementById('item-price').value = "";
-        document.getElementById('item-desc').value = "";
-        document.getElementById('market-upload-status').innerText = "";
-        marketImageUrl = ""; 
-        
-        alert("Item listed successfully!");
-    } catch (e) {
-        console.error("Post Error:", e);
-        alert("Failed to post item.");
-    }
-}
-
-function renderMarketplace() {
-    db.collection("marketplace").orderBy("time", "desc").onSnapshot(snap => {
-        const display = document.getElementById('market-display');
-        const isOwner = item.sellerId === user.id;
-        display.innerHTML = "";
-        snap.forEach(doc => {
-            const item = doc.data();
-            display.innerHTML += `
-    <div class="market-card" id="item-${doc.id}">
-        <img src="${item.img}" class="market-img">
-        <div style="padding:10px;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span class="price-tag">${item.price == 0 ? 'FREE' : '₦' + item.price}</span>
-                ${isOwner ? `<i data-lucide="trash-2" onclick="deleteMarketItem('${doc.id}')" style="color:var(--crimson); width:14px; cursor:pointer;"></i>` : ''}
-            </div>
-            <h4 style="font-size:0.8rem; margin:5px 0;">${item.name}</h4>
-                        <p style="font-size:0.6rem; opacity:0.6; height:30px; overflow:hidden;">${item.desc}</p>
-                        <button class="btn-luxury" style="font-size:0.5rem; margin-top:10px;" 
-        onclick="buyItem('${item.price}', '${item.sellerId}', '${item.sellerName}', '${item.name.replace(/'/g, "\\'")}')">
-    Buy Now
-</button>
-                    </div>
-                </div>`;
-        });
-    });
-}
-
-async function buyItem(price, sellerId, sellerName, itemName) {
-    if (sellerId === user.id) return alert("You cannot buy your own item!");
-
-    const method = confirm(`Interested in "${itemName}"?\n\nOK: Pay Online (Paystack)\nCancel: Pay on Delivery`);
-
-    if (method) {
-        payWithPaystack(price, itemName, sellerId, sellerName);
-    } else {
-        const msg = `Hi ${sellerName}, I'm interested in buying your "${itemName}" for ₦${price}. I'd like to pay on delivery.`;
-        await sendAutoMessage(sellerId, msg);
-        alert("Seller has been notified via DM!");
-        switchTab('chat'); 
-    }
-}
-
-function payWithPaystack(amount, item, sellerId, sellerName) {
-    let handler = PaystackPop.setup({
-        key: 'pk_test_YOUR_KEY_HERE', // Add your key here
-        email: user.name.replace(/\s/g, '') + "@equity.com",
-        amount: amount * 100,
-        currency: 'NGN',
-        callback: async function(response) {
-            const successMsg = `✅ PAID: I just paid ₦${amount} for "${item}" via Paystack. Ref: ${response.reference}`;
-            await sendAutoMessage(sellerId, successMsg);
-            alert('Payment Successful!');
-            switchTab('chat');
-        }
-    });
-    handler.openIframe();
-}
-
-async function sendAutoMessage(targetId, text) {
-    const rid = [user.id, targetId].sort().join('_');
-    await db.collection("chats").doc(rid).set({
-        users: [user.id, targetId],
-        lastMsg: text,
-        lastTime: firebase.firestore.FieldValue.serverTimestamp()
-    }, { merge: true });
-
-    await db.collection("chats").doc(rid).collection("m").add({
-        sid: user.id,
-        t: text,
-        time: firebase.firestore.FieldValue.serverTimestamp()
-    });
-}
 
 async function showPublicProfile(targetUid) {
     const doc = await db.collection("users").doc(targetUid).get();
@@ -854,18 +841,250 @@ async function showPublicProfile(targetUid) {
 function closePublicProfile() {
     document.getElementById('public-profile-modal').classList.add('hidden');
 }
+
+let marketMediaUrl = "";
+
+// Handle Image for Market
+function handleMarketFile(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        marketMediaUrl = e.target.result;
+        document.getElementById('market-progress').innerText = "✅ Photo attached";
+    };
+    reader.readAsDataURL(file);
+}
+
+// Publish Item (Mirroring publishPost logic)
+async function publishMarketItem() {
+    const name = document.getElementById('market-item-name').value;
+    const price = document.getElementById('market-item-price').value;
+    const desc = document.getElementById('market-item-desc').value;
+
+    if(!name || !price) return alert("Item name and price required");
+
+    await db.collection("marketplace").add({
+        sellerId: user.id,
+        sellerName: user.name,
+        sellerPic: user.pic,
+        itemName: name,
+        itemPrice: price,
+        itemDesc: desc,
+        file: marketMediaUrl,
+        time: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    // Reset fields
+    document.getElementById('market-item-name').value = "";
+    document.getElementById('market-item-price').value = "";
+    document.getElementById('market-item-desc').value = "";
+    marketMediaUrl = "";
+    document.getElementById('market-progress').innerText = "";
+}
+
+// Render Marketplace (Mirroring renderFeed style)
+function renderMarketplace() {
+    db.collection("marketplace").orderBy("time", "desc").onSnapshot(snap => {
+        const m = document.getElementById('market-display');
+        if (!m) return;
+        m.innerHTML = "";
+
+        snap.forEach(doc => {
+            const d = doc.data();
+            const canDelete = d.sellerId === user.id || user.isExec;
+
+            m.innerHTML += `
+                <div class="elite-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; gap:8px; align-items:center;">
+                            <img src="${d.sellerPic}" style="width:25px; height:25px; border-radius:50%;">
+                            <b style="font-size:0.65rem;">${d.sellerName}</b>
+                        </div>
+                        ${canDelete ? `<i data-lucide="trash-2" onclick="deleteMarketItem('${doc.id}')" style="color:var(--crimson); cursor:pointer; width:14px;"></i>` : ''}
+                    </div>
+
+                    ${d.file ? `<img src="${d.file}" class="post-media" style="margin-top:10px;">` : ''}
+                    
+                    <div style="margin-top:12px;">
+                        <span class="price-tag">₦${Number(d.itemPrice).toLocaleString()}</span>
+                        <h4 class="cambria" style="color:var(--gold); margin:5px 0 2px 0;">${d.itemName}</h4>
+                        <p style="font-size:0.75rem; opacity:0.8;">${d.itemDesc}</p>
+                    </div>
+
+                    <button class="btn-luxury" style="margin-top:15px; background:transparent; border:1px solid var(--gold); color:var(--gold);" 
+                            onclick="openChat('${d.sellerId}', '${d.sellerName}')">
+                        Contact Seller
+                    </button>
+                </div>`;
+        });
+        lucide.createIcons();
+    });
+}
+
+// Delete Item
+async function deleteMarketItem(id) {
+    if(confirm("Remove this listing?")) {
+        await db.collection("marketplace").doc(id).delete();
+    }
+}
+// --- IMPROVISED CHAT SYSTEM ---
+
+let activeChatListener = null; // To prevent memory leaks
+
+function openChat(targetId, targetName) {
+    activeChatId = targetId;
+    document.getElementById('chat-target').innerText = targetName;
+    document.getElementById('chat-drawer').classList.remove('hidden');
+    
+    // Create a unique Room ID (Alphabetical sort ensures both users share the same ID)
+    const roomId = [user.id, targetId].sort().join('_');
+    const chatContainer = document.getElementById('chat-msgs');
+
+    // 1. CLEAR PREVIOUS LISTENER (Crucial for performance)
+    if (activeChatListener) activeChatListener();
+
+    // 2. REAL-TIME SNAPSHOT (This makes it "Instant" across computers)
+    activeChatListener = db.collection("chats")
+        .doc(roomId)
+        .collection("m")
+        .orderBy("time", "asc")
+        .onSnapshot(snap => {
+            chatContainer.innerHTML = "";
+            
+            if (snap.empty) {
+                chatContainer.innerHTML = "<center style='opacity:0.3; margin-top:50px; font-size:0.7rem;'>No messages yet. Say hello!</center>";
+            }
+
+            snap.forEach(doc => {
+                const m = doc.data();
+                const isMe = m.sid === user.id;
+                
+                chatContainer.innerHTML += `
+                    <div class="chat-bubble ${isMe ? 'sent' : 'received'}">
+                        ${m.img ? `<img src="${m.img}" style="width:100%; border-radius:10px; margin-bottom:5px;">` : ''}
+                        ${m.t ? `<div>${m.t}</div>` : ''}
+                        <div style="font-size:0.5rem; opacity:0.5; text-align:right; margin-top:3px;">
+                            ${m.time ? timeAgo(m.time) : 'sending...'}
+                        </div>
+                    </div>`;
+            });
+            
+            // Auto-scroll to bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }, (error) => {
+            console.error("Chat Error:", error);
+        });
+}
+
+// 3. IMPROVISED SEND (Handles Text + Instant Image)
+async function sendMsg() {
+    const input = document.getElementById('msg-input');
+    const text = input.value.trim();
+    const roomId = [user.id, activeChatId].sort().join('_');
+
+    if (!text && !verifiedMediaUrl) return; // Don't send empty
+
+    const msgData = {
+        sid: user.id,
+        t: text,
+        img: verifiedMediaUrl || null,
+        time: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    input.value = ""; // Clear input immediately for better UX
+    verifiedMediaUrl = ""; // Clear image buffer
+    
+    try {
+        await db.collection("chats").doc(roomId).collection("m").add(msgData);
+    } catch (e) {
+        alert("Message failed to send.");
+    }
+}
+
+// 4. ADD FILE HANDLING FOR CHAT (Add this to your HTML near the chat input)
+function handleChatFile(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        verifiedMediaUrl = e.target.result;
+        // Visual feedback that image is ready
+        document.getElementById('msg-input').placeholder = "📸 Image ready to send...";
+    };
+    reader.readAsDataURL(file);
+}
+async function updateProfileStats() {
+    if (!user) return;
+
+    // 1. Live Fetch Post Count
+    const postsSnap = await db.collection("posts").where("uid", "==", user.id).get();
+    const postCount = postsSnap.size;
+
+    // 2. DOM Updates
+    document.getElementById('p-name').innerText = user.name;
+    document.getElementById('p-role').innerText = user.role.toUpperCase();
+    document.getElementById('p-img').src = user.pic;
+    document.getElementById('p-matric-display').innerText = user.matric || "NO MATRIC DATA";
+    
+    // Count animation for style
+    animateNumber('stat-posts', 0, postCount, 1000);
+    
+    // Pull GP from the text display of the calculator
+    const currentGP = document.getElementById('gp-res').innerText;
+    document.getElementById('stat-gp').innerText = currentGP;
+    
+    lucide.createIcons();
+}
+
+// Visual "Counting" Effect for stats
+function animateNumber(id, start, end, duration) {
+    const obj = document.getElementById(id);
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        obj.innerHTML = Math.floor(progress * (end - start) + start);
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
+
+// Update the switchTab function to trigger stats refresh
+const originalSwitchTab = switchTab;
+switchTab = function(t) {
+    originalSwitchTab(t);
+    if(t === 'profile') updateProfileStats();
+};
+async function openPublicProfile(uid) {
+    const doc = await db.collection("users").doc(uid).get();
+    if (!doc.exists) return;
+    const data = doc.data();
+
+    document.getElementById('view-p-img').src = data.pic;
+    document.getElementById('view-p-name').innerText = data.name;
+    document.getElementById('view-p-role').innerText = data.role;
+    document.getElementById('view-p-matric').innerText = data.isExec ? "Verified Executive" : `Matric: ${data.matric}`;
+    
+    // Setup Chat Button
+    document.getElementById('view-p-chat-btn').onclick = () => {
+        closePublicProfile();
+        switchTab('chat');
+        openChat(data.id, data.name);
+    };
+
+    document.getElementById('public-profile-modal').classList.remove('hidden');
+    lucide.createIcons();
+}
+
+function closePublicProfile() {
+    document.getElementById('public-profile-modal').classList.add('hidden');
+}
 </script>
 
-<div id="public-profile-modal" class="hidden" style="position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:3000; display:flex; align-items:center; justify-content:center; padding:20px;">
-    <div class="elite-card" style="width:100%; max-width:350px; text-align:center; position:relative;">
-        <i data-lucide="x" onclick="closePublicProfile()" style="position:absolute; top:15px; right:15px; cursor:pointer;"></i>
-        <img id="view-p-img" style="width:100px; height:100px; border-radius:50%; border:3px solid var(--gold); margin-bottom:15px;">
-        <h2 id="view-p-name" class="cambria"></h2>
-        <p id="view-p-role" class="exec-badge" style="display:inline-block; margin-bottom:20px;"></p>
-        <p id="view-p-matric" style="font-size:0.7rem; opacity:0.5; margin-bottom:20px;"></p>
-        <button id="view-p-chat-btn" class="btn-luxury">Send Direct Message</button>
-    </div>
-</div>
+
 
 </body>
 </html>

@@ -8,10 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
-    <script src="https://www.chromestatus.com/feature/5745543795965952"></script>
 
     <style>
         :root {
@@ -19,252 +17,90 @@
             --glass: rgba(2, 44, 34, 0.98); --border: rgba(212, 175, 55, 0.2); --crimson: #ef4444;
         }
 
-        * {cursor: pointer; margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Poppins', sans-serif ; }
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background: #022c22; color: white; min-height: 100vh; padding-bottom: 90px;
-            overflow-x: hidden;
-        }
-
-        /* Like Heart Animation */
-.like-btn-active {
-    color: #ef4444 !important;
-    transform: scale(1.2);
-    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.like-btn {
-    transition: transform 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-}
-
-/* Sophisticated Comment Section */
-.comment-vault {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    padding: 10px;
-    margin-top: 15px;
-    border: 1px solid rgba(212, 175, 55, 0.1);
-}
-
-.comment-item {
-    padding: 8px 12px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.03);
-    margin-bottom: 8px;
-    font-size: 0.8rem;
-    border-left: 3px solid var(--gold);
-    animation: slideIn 0.3s ease-out;
-}
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateX(-10px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-/* Post Interaction Bar */
-.post-actions {
-    display: flex;
-    gap: 20px;
-    padding-top: 15px;
-    border-top: 1px solid var(--border);
-    margin-top: 15px;
-}
-
-.action-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    cursor: pointer;
-    opacity: 0.8;
-}
-
-/* Chat Bubble Geometry */
-.msg-row { display: flex; width: 100%; margin-bottom: 8px; }
-.msg-row.sent { justify-content: flex-end; }
-.msg-row.received { justify-content: flex-end; flex-direction: row-reverse; } /* Aligns left */
-
-.bubble {
-    max-width: 75%;
-    padding: 10px 14px;
-    border-radius: 18px;
-    position: relative;
-    font-size: 0.85rem;
-    line-height: 1.4;
-    display: flex;
-    flex-direction: column; /* Stack text and time vertically */
-}
-
-.sent .bubble {
-    background: var(--gold);
-    color: #022c22;
-    border-bottom-right-radius: 4px;
-}
-
-.received .bubble {
-    background: rgba(255,255,255,0.1);
-    color: white;
-    border-bottom-left-radius: 4px;
-}
-
-/* Metadata: Time and Checkmarks */
-.msg-meta {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 4px;
-    font-size: 0.6rem;
-    margin-top: 4px;
-    opacity: 0.8;
-}
-
-.check-double { color: #38bdf8; } /* Blue check for read */
-
-.action-label:hover { opacity: 1; color: var(--gold); }
+        * { cursor: pointer; margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Poppins', sans-serif; }
+        body { background: #022c22; color: white; min-height: 100vh; padding-bottom: 90px; overflow-x: hidden; }
 
         .hidden { display: none !important; }
         .container { max-width: 500px; margin: 0 auto; padding: 15px; }
         .cambria { font-family: 'Poppins', serif; }
 
-        /* Gallery */
-        .gallery-wrapper { position: relative; display: flex; align-items: center; margin: 20px 0; }
-        .faculty-gallery { display: flex; overflow-x: auto; scroll-behavior: smooth; gap: 15px; padding: 10px; scrollbar-width: none; width: 100%; }
-        .faculty-gallery::-webkit-scrollbar { display: none; }
-        .member-card { min-width: 240px; background: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 20px; text-align: center; border: 1px solid var(--border); }
-        .member-image { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); margin-bottom: 10px; }
-        
         /* Components */
-        .elite-card { background: rgba(255, 255, 255, 0.04); border-radius: 20px; border: 1px solid var(--border); padding: 15px; margin-bottom: 15px; }
+        .elite-card { background: rgba(255, 255, 255, 0.04); border-radius: 20px; border: 1px solid var(--border); padding: 15px; margin-bottom: 15px; position: relative; }
         .btn-luxury { padding: 12px; border-radius: 12px; border: none; background: linear-gradient(135deg, var(--gold), #b08d29); color: #022c22; font-weight: 800; cursor: pointer; font-size: 0.7rem; text-transform: uppercase; width: 100%; }
         .form-input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); color: white; outline: none; }
         .post-media { width: 100%; border-radius: 12px; margin-top: 10px; border: 1px solid var(--border); }
 
+        /* Gallery */
+        .faculty-gallery { display: flex; overflow-x: auto; scroll-behavior: smooth; gap: 15px; padding: 10px; scrollbar-width: none; }
+        .member-card { min-width: 200px; background: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 15px; text-align: center; border: 1px solid var(--border); }
+        .member-image { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); }
+
+        /* Chat Styles */
+        .msg-row { display: flex; width: 100%; margin-bottom: 8px; }
+        .msg-row.sent { justify-content: flex-end; }
+        .msg-row.received { justify-content: flex-start; }
+        .bubble { max-width: 75%; padding: 10px 14px; border-radius: 18px; font-size: 0.85rem; }
+        .sent .bubble { background: var(--gold); color: #022c22; border-bottom-right-radius: 4px; }
+        .received .bubble { background: rgba(255,255,255,0.1); color: white; border-bottom-left-radius: 4px; }
+        
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--glass); display: flex; justify-content: space-around; padding: 12px 10px 25px; border-top: 1px solid var(--border); z-index: 1000; }
         .nav-link { color: #777; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
         .nav-link.active { color: var(--gold); }
-        .exec-badge { background: var(--gold); color: rgb(44, 45, 4); font-size:0.6rem; padding: 4px 6px; border-radius: 4px; font-weight: 800; }
         
         #chat-drawer { position: fixed; inset: 0; background: #021a14; z-index: 2000; display: flex; flex-direction: column; }
-        .chat-bubble { padding: 10px 14px; border-radius: 15px; margin-bottom: 8px; max-width: 80%; font-size: 0.85rem; }
-        .sent { align-self: flex-end; background: var(--gold); color: black; }
-        .received { align-self: flex-start; background: rgba(255,255,255,0.1); }
-
-        .price-tag { background: var(--gold); color: black; font-weight: 800; font-size: 0.7rem; padding: 2px 8px; border-radius: 5px; }
-
-        .comment-vault { max-height: 120px; overflow-y: auto; margin-top: 10px; padding-right: 5px; }
-        .comment-item { font-size: 0.7rem; margin-bottom: 6px; background: rgba(255, 255, 255, 0.03); padding: 8px; border-radius: 8px; border-left: 2px solid var(--border); }
-
-        .membership-card {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(2, 44, 34, 0.8) 100%);
-            border: 1px solid var(--gold); border-radius: 25px; padding: 30px; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .profile-stats-container { display: flex; justify-content: space-around; margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(212, 175, 55, 0.2); }
-        .stat-number { display: block; font-size: 1.4rem; font-weight: 800; color: var(--gold); }
-        .stat-label { font-size: 0.5rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; }
-
-        .action-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 15px; margin-bottom: 10px; border: 1px solid var(--border); }
+        .exec-badge { background: var(--gold); color: #022c22; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; font-weight: 800; }
         
-        #public-profile-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 20px; }
-    
-    /* Marketplace Enhancement */
-.price-tag {
-    background: linear-gradient(135deg, var(--gold), #b08d29);
-    color: #022c22;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-weight: 800;
-    font-size: 0.9rem;
-}
-/* Comment Long-Press Animation */
-.comment-item {
-    transition: transform 0.2s, background 0.2s;
-    user-select: none; /* Prevents text selection during long press */
-    -webkit-user-select: none;
+.id-card-container {
+    perspective: 1000px;
+    margin: 20px 0;
 }
 
-.comment-pressing {
-    transform: scale(0.95);
-    background: rgba(239, 68, 68, 0.2) !important;
-    border-left-color: #ef4444 !important;
-}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-.payment-badge {
-    font-size: 0.6rem;
-    padding: 2px 8px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    font-weight: 800;
-    border: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.market-buy-btn {
-    background: var(--gold);
-    color: #022c22;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: 800;
+.id-card {
     width: 100%;
-    cursor: pointer;
-    transition: 0.3s;
+    max-width: 350px;
+    height: 200px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(130,108,36,0.2) 0%, rgba(2,44,34,0.95) 100%);
+    border: 1px solid var(--gold);
+    border-radius: 15px;
+    position: relative;
+    padding: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
 }
 
-.market-buy-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
-}
-/* Voice Note Bubble */
-.vn-player {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 160px;
-    height: 40px;
+.id-card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%);
+    transform: rotate(30deg);
 }
 
-.vn-visualizer {
-    flex: 1;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    gap: 2px;
+.id-chip {
+    width: 35px;
+    height: 28px;
+    background: linear-gradient(135deg, #d4af37, #fcf6ba, #d4af37);
+    border-radius: 4px;
+    margin-bottom: 10px;
 }
 
-.vn-bar {
-    width: 3px;
-    background: currentColor;
-    border-radius: 10px;
+.id-uid {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-family: 'Courier New', monospace;
+    color: var(--gold);
+    font-weight: 800;
+    letter-spacing: 2px;
 }
 
-/* Pulsing Record Effect */
-.recording-active {
-    background: #ef4444 !important;
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-    70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-}
-
-.msg-meta {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 5px;
-    margin-top: 4px;
-    min-width: 60px; /* Ensures space for "Just now" */
-}
-
-.sent .msg-meta {
-color: rgba(2, 44, 34, 0.7) !important; /* Dark text on Gold bubble */
-}
-.received .msg-meta {
-color: rgba(255, 255, 255, 0.5) !important; /* Dim white text on Dark bubble */}
+        .price-tag { background: var(--gold); color: #022c22; font-weight: 800; padding: 4px 8px; border-radius: 5px; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -279,8 +115,8 @@ color: rgba(255, 255, 255, 0.5) !important; /* Dim white text on Dark bubble */}
         <div id="reg-form" class="hidden" style="margin-top: 20px;">
             <input type="text" id="reg-name" class="form-input" placeholder="Full Name">
             <input type="text" id="reg-matric" class="form-input" placeholder="Matric No">
-            <button class="btn-luxury" id="auth-submit-btn" onclick="handleAuth()">Access Hub</button>
-            <p onclick="location.reload()" style="font-size:0.7rem; margin-top:15px; cursor:pointer; opacity:0.5;">← Back</p>
+            <button class="btn-luxury" onclick="handleAuth()">Access Hub</button>
+            <p onclick="location.reload()" style="font-size:0.7rem; margin-top:15px; opacity:0.5;">← Back</p>
         </div>
     </div>
 </div>
@@ -292,166 +128,194 @@ color: rgba(255, 255, 255, 0.5) !important; /* Dim white text on Dark bubble */}
     </header>
 
     <div class="container">
-        <section id="tab-market" class="hidden">
-            <div class="elite-card">
-                <h3 class="cambria" style="color:var(--gold); margin-bottom:5px;">Marketplace</h3>
-                <input type="text" id="market-item-name" class="form-input" placeholder="What are you selling?">
-                <input type="number" id="market-item-price" class="form-input" placeholder="Price (₦)">
-                <textarea id="market-item-desc" class="form-input" placeholder="Short description..." style="height:60px; resize:none;"></textarea>
-                <div style="display:flex; justify-content: space-between; align-items: center;">
-                    <label style="cursor:pointer; color:var(--gold); font-size:0.7rem;">
-                        <i data-lucide="camera" style="width:16px; vertical-align:middle;"></i> Add Photo
-                        <input type="file" id="market-file-input" class="hidden" accept="image/*" onchange="handleMarketFile(this)">
-                    </label>
-                    <button class="btn-luxury" style="width:auto; padding: 5px 20px;" onclick="publishMarketItem()">List Item</button>
-                </div>
-                <div id="market-progress" style="font-size:0.6rem; margin-top:5px; color:var(--gold);"></div>
-            </div>
-            <div id="market-display" style="display: grid; grid-template-columns: 1fr; gap: 15px;"></div>
-        </section>
-
         <section id="tab-feed">
-            <div class="gallery-wrapper">
-                <button onclick="sideScroll('left')" style="position: absolute; left: -10px; z-index: 10; background: var(--gold); border: none; border-radius: 50%; width: 30px; height: 30px;">&#10094;</button>
-                <div class="faculty-gallery" id="exec-gallery"></div>
-                <button onclick="sideScroll('right')" style="position: absolute; right: -10px; z-index: 10; background: var(--gold); border: none; border-radius: 50%; width: 30px; height: 30px;">&#10095;</button>
-            </div>
+            <div class="faculty-gallery" id="exec-gallery"></div>
             <div class="elite-card">
                 <textarea id="post-text" class="form-input" placeholder="Post an update..." style="height:60px; resize:none;"></textarea>
                 <div style="display:flex; justify-content: space-between; align-items: center;">
                     <label style="cursor:pointer; color:var(--gold);"><i data-lucide="paperclip"></i>
                         <input type="file" id="post-file" class="hidden" accept="image/*" onchange="handleFile(this)">
                     </label>
-                    <button class="btn-luxury" id="post-btn" style="width:auto; padding: 5px 20px;" onclick="publishPost()">Post</button>
+                    <button class="btn-luxury" style="width:auto; padding: 5px 20px;" onclick="publishPost()">Post</button>
                 </div>
-                <div id="upload-progress" style="font-size:0.6rem; margin-top:5px; color:var(--gold);"></div>
+                <div id="upload-status" style="font-size:0.6rem; margin-top:5px; color:var(--gold);"></div>
             </div>
             <div id="feed-display"></div>
         </section>
 
-        <section id="tab-gp" class="hidden">
-    <div class="elite-card" style="margin-bottom: 20px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent); border: 1px solid var(--border);">
-        <div style="display: flex; align-items: center; gap: 15px;">
+       <section id="tab-market" class="hidden">
+    <div class="elite-card" style="display: flex; justify-content: space-around; padding: 10px; background: linear-gradient(to right, rgba(130,108,36,0.1), transparent);">
+        <div style="text-align: center;">
+            <small style="opacity: 0.6; font-size: 0.6rem; text-transform: uppercase;">Listed Value</small>
+            <div style="color: var(--gold); font-weight: 800;" id="stats-sales">₦0</div>
+        </div>
+        <div style="width: 1px; background: var(--border); height: 30px;"></div>
+        <div style="text-align: center;">
+            <small style="opacity: 0.6; font-size: 0.6rem; text-transform: uppercase;">Items Active</small>
+            <div style="color: #fff; font-weight: 800;" id="stats-count">0</div>
+        </div>
+    </div>
+
+    <div class="elite-card" style="padding: 10px; display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03);">
+        <i data-lucide="search" size="18" style="color: var(--gold);"></i>
+        <input type="text" id="market-search" class="form-input" style="margin:0; background:transparent; border:none; padding: 5px;" placeholder="Search textbooks, gadgets, services..." onkeyup="renderMarketplace()">
+    </div>
+
+    <details class="elite-card" style="margin-bottom: 15px;">
+        <summary style="color: var(--gold); font-size: 0.8rem; font-weight: 600; cursor: pointer; outline: none;">+ List New Product</summary>
+        <div style="margin-top: 15px;">
+            <input type="text" id="market-item-name" class="form-input" placeholder="Item Name">
+            <input type="number" id="market-item-price" class="form-input" placeholder="Price (₦)">
+            <textarea id="market-item-desc" class="form-input" placeholder="Description..." style="height:50px;"></textarea>
+            
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
+                <label class="btn-luxury" style="flex: 1; background: rgba(255,255,255,0.05); color: var(--gold); border: 1px dashed var(--gold); display: flex; align-items: center; justify-content: center; gap: 5px;">
+                    <i data-lucide="camera" size="16"></i> <span id="market-img-label">Add Photo</span>
+                    <input type="file" id="market-file" class="hidden" accept="image/*" onchange="handleMarketFile(this)">
+                </label>
+                <button class="btn-luxury" style="flex: 1;" onclick="publishMarketItem()">Post Item</button>
+            </div>
+        </div>
+    </details>
+
+    <div id="market-display"></div>
+</section>
+
+       <section id="tab-gp" class="hidden">
+    <div class="elite-card" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 15px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
             <div style="position: relative;">
-                <img id="gp-pfp" src="" style="width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover;">
-                <div style="position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: #10b981; border: 2px solid #022c22; border-radius: 50%;"></div>
+                <img id="gp-pfp" src="" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover;">
+                <div style="position: absolute; bottom: 2px; right: 2px; width: 10px; height: 10px; background: #10b981; border: 2px solid #022c22; border-radius: 50%;"></div>
             </div>
             <div style="flex: 1;">
                 <h3 id="gp-user-name" class="cambria" style="font-size: 1rem; color: var(--gold); margin: 0;">---</h3>
-                <p style="font-size: 0.6rem; opacity: 0.7; margin-top: 2px;">
-                    <i data-lucide="refresh-cw" style="width: 10px; vertical-align: middle;"></i> 
-                    Last Sync: <span id="sync-timestamp">Just now</span>
-                </p>
+                <p style="font-size: 0.6rem; opacity: 0.5;">Active Sync: Equity '26 Server</p>
             </div>
             <div style="text-align: right;">
-                <small style="display: block; font-size: 0.5rem; opacity: 0.6; text-transform: uppercase;">Recent GPA</small>
                 <span id="recent-gp-badge" style="font-size: 1.2rem; font-weight: 800; color: var(--gold);">0.00</span>
             </div>
         </div>
     </div>
 
-    <div class="elite-card" style="border: 1px solid var(--gold); background: rgba(0,0,0,0.3); position: relative; overflow: hidden;">
+    <div class="elite-card" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 20px; margin-top: 12px; position: relative; overflow: hidden;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <h4 class="cambria" style="color: var(--gold); font-size: 0.85rem; margin: 0;">Cumulative GPA Vault</h4>
-                <p id="gp-remark" style="font-size: 0.65rem; opacity: 0.7; margin-top: 4px;">Academic standing: Calculating...</p>
+            <div style="z-index: 1;">
+                <h4 style="color: var(--gold); font-size: 0.8rem; margin: 0;">Cumulative GPA Vault</h4>
+                <p id="gp-remark" style="font-size: 0.7rem; opacity: 0.8; margin-top: 5px; font-weight: 600; text-transform: uppercase;"></p>
+                <p id="degree-praise" style="font-size: 0.6rem; color: #fff; font-style: italic; opacity: 0.7;"></p>
             </div>
-            <h2 id="cgpa-display" style="font-size: 2.5rem; font-weight: 900; letter-spacing: -1px; margin: 0;">0.00</h2>
+            <h2 id="cgpa-display" style="font-size: 2.8rem; font-weight: 900; margin: 0; color: white;">0.00</h2>
         </div>
-        <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-top: 15px; overflow: hidden;">
-            <div id="cgpa-progress" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--gold), #f59e0b); transition: 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);"></div>
+        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-top: 15px;">
+            <div id="cgpa-progress" style="width: 0%; height: 100%; background: var(--gold); transition: 1s ease;"></div>
         </div>
     </div>
 
-    <div class="elite-card" style="margin-top: 20px;">
+    <div class="elite-card" style="background: transparent; border: 1px solid var(--border); margin-top: 12px; padding: 15px;">
         <div id="course-list"></div>
-        <button class="btn-luxury" style="background: transparent; border: 1px solid var(--border); color: var(--gold); margin: 10px 0;" onclick="addCourseRow()">+ Add Course</button>
-        <button class="btn-luxury" onclick="calculateGP()">Calculate & Sync Results</button>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
+            <button class="btn-luxury" style="background: rgba(255,255,255,0.05); color: var(--gold); border: 1px dashed var(--gold);" onclick="addCourseRow()">+ Add Course</button>
+            <button class="btn-luxury" onclick="calculateGP()">Sync Results</button>
+        </div>
     </div>
 </section>
 
         <section id="tab-chat" class="hidden">
-            <div class="elite-card" style="margin-bottom: 15px; background: rgba(0,0,0,0.4);">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <button onclick="openFeedback()" style="background: var(--gold); border: none; padding: 5px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 800; cursor: pointer;">
-            <i data-lucide="message-square-plus" style="width: 10px; vertical-align: middle;"></i> FEEDBACK
-        </button>
-        <div style="text-align: right; opacity: 0.7; font-size: 0.65rem;">
-            <span id="active-count">0</span> Active Members Online
-        </div>
-    </div>
-
-    <div style="position: relative;">
-        <i data-lucide="search" style="position: absolute; left: 12px; top: 10px; width: 16px; opacity: 0.5;"></i>
-        <input type="text" id="member-search" onkeyup="filterMembers()" placeholder="Search active members..." 
-               style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 10px 10px 10px 40px; border-radius: 12px; color: white; outline: none; font-size: 0.8rem;">
-    </div>
-</div>
-
-<div id="member-list-container" style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 10px;">
-    </div>
-            <h3 class="cambria" style="color:var(--gold); margin-bottom:15px;">Direct Messages</h3>
+            <div class="elite-card">
+                <input type="text" id="member-search" class="form-input" placeholder="Search members..." onkeyup="renderChatList()">
+            </div>
             <div id="chat-list"></div>
-            
         </section>
-        
 
-        <section id="tab-profile" class="hidden">
-    <div class="elite-card" style="background: linear-gradient(145deg, var(--deep-green), #064e3b); border: 2px solid var(--gold); padding: 30px 20px; text-align: center; position: relative; overflow: hidden;">
-        <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: var(--gold); opacity: 0.1; border-radius: 50%;"></div>
-        
+        <section id="tab-profile" class="hidden" style="padding-bottom: 100px;">
+            <div class="id-card-container">
+        <div class="id-card">
+            <div style="display: flex; gap: 15px; position: relative; z-index: 2;">
+                <img id="p-card-img" src="" style="width: 70px; height: 70px; border-radius: 10px; border: 1.5px solid var(--gold); object-fit: cover;">
+                <div style="flex: 1;">
+                    <h3 id="p-card-name" class="cambria" style="font-size: 0.9rem; color: white; margin: 0;">---</h3>
+                    <p id="p-card-role" class="exec-badge" style="display: inline-block; margin-top: 5px;">---</p>
+                    <div class="id-chip" style="margin-top: 10px;"></div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; z-index: 2; position: relative;">
+                <p style="font-size: 0.5rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px;">Status: Active Member</p>
+                <p style="font-size: 0.5rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px;">Batch: Equity Crew '26</p>
+            </div>
+
+            <div class="id-uid">
+                <small style="font-size: 0.4rem; display: block; opacity: 0.5; margin-bottom: -5px;">UID</small>
+                <span id="p-card-uid">-------</span>
+            </div>
+        </div>
+    </div>
+    <div style="height: 120px; background: linear-gradient(45deg, var(--deep-green), var(--gold)); border-bottom: 2px solid var(--gold);"></div>
+    
+    <div style="padding: 0 20px; margin-top: -60px; text-align: center;">
         <div style="position: relative; display: inline-block;">
-            <img id="user-profile-pic" src="" style="width: 110px; height: 110px; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; box-shadow: 0 0 20px rgba(130, 108, 36, 0.3);">
-            <div id="verified-badge" style="position: absolute; bottom: 5px; right: 5px; background: var(--gold); color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--deep-green);">
-                <i data-lucide="check" style="width: 14px;"></i>
-            </div>
+            <img id="p-img" src="" style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--deep-green); box-shadow: 0 10px 20px rgba(0,0,0,0.3); background: #000;">
+            <button onclick="document.getElementById('p-file').click()" style="position: absolute; bottom: 5px; right: 5px; background: var(--gold); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="camera" style="width: 18px;"></i>
+            </button>
         </div>
-
-        <h2 id="user-profile-name" class="cambria" style="margin-top: 15px; color: var(--gold); font-size: 1.5rem;">---</h2>
-        <p id="user-profile-role" style="font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; margin-top: -5px;">Elite Member</p>
+        <input type="file" id="p-file" class="hidden" onchange="uploadProfilePic()">
         
-        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px; border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: 20px;">
-            <div style="text-align: center;">
-                <small style="display: block; opacity: 0.6; font-size: 0.6rem;">RANK</small>
-                <span style="color: var(--gold); font-weight: 800;">Gold</span>
-            </div>
-            <div style="text-align: center;">
-                <small style="display: block; opacity: 0.6; font-size: 0.6rem;">SINCE</small>
-                <span id="member-since" style="font-weight: 600;">2024</span>
-            </div>
-            <div style="text-align: center;">
-                <small style="display: block; opacity: 0.6; font-size: 0.6rem;">STATUS</small>
-                <span style="color: #10b981; font-weight: 600;">Active</span>
-            </div>
+        <h2 id="p-name" style="margin-top: 15px; font-size: 1.5rem; color: #fff;"></h2>
+        <p id="p-role" style="color: var(--gold); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 800; margin-bottom: 20px;">Elite Member</p>
+    </div>
+
+    <div style="display: flex; justify-content: space-around; background: rgba(255,255,255,0.03); padding: 15px; margin: 20px; border-radius: 15px; border: 1px solid rgba(212,175,55,0.1);">
+        <div style="text-align: center;">
+            <div id="stat-posts" style="font-weight: 800; color: var(--gold);">0</div>
+            <small style="font-size: 0.6rem; opacity: 0.5;">POSTS</small>
+        </div>
+        <div style="text-align: center; border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.1); padding: 0 20px;">
+            <div id="stat-rating" style="font-weight: 800; color: var(--gold);">5.0</div>
+            <small style="font-size: 0.6rem; opacity: 0.5;">RATING</small>
+        </div>
+        <div style="text-align: center;">
+            <div id="stat-deals" style="font-weight: 800; color: var(--gold);">0</div>
+            <small style="font-size: 0.6rem; opacity: 0.5;">DEALS</small>
         </div>
     </div>
 
-    <div class="elite-card" style="margin-top: 15px;">
-        <h4 class="cambria" style="color: var(--gold); margin-bottom: 15px; font-size: 0.9rem;">Identification</h4>
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
-                <span style="opacity: 0.6;"> Unique ID </span>
-                <span id="profile-matric" style="font-weight: 600;">---</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
-                <!-- <span style="opacity: 0.6;">Department</span>
-                <span>Computer Science</span> -->
-            </div>
+    <div style="padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="font-size: 1rem; color: #fff;">Crew Reviews</h3>
+            <button onclick="showReviewModal()" style="font-size: 0.7rem; color: var(--gold); background: transparent; border: 1px solid var(--gold); padding: 5px 12px; border-radius: 20px;">Leave Review</button>
         </div>
+        <div id="reviews-list" style="display: flex; flex-direction: column; gap: 12px;">
+            </div>
     </div>
 
-    <div class="elite-card" onclick="switchTab('gp')" style="margin-top: 15px; background: rgba(130, 108, 36, 0.1); cursor: pointer; border-left: 4px solid var(--gold);">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <p style="margin: 0; font-size: 0.7rem; opacity: 0.7;">CURRENT CGPA</p>
-                <h3 id="profile-cgpa" style="margin: 0; font-size: 1.4rem;">0.00</h3>
-            </div>
-            <i data-lucide="chevron-right" style="color: var(--gold);"></i>
+    <div class="elite-card" style="margin: 20px; background: rgba(255,255,255,0.02); border: 1px solid var(--border);">
+        <h4 style="font-size: 0.7rem; color: var(--gold); margin-bottom: 15px; letter-spacing: 1px;">ACCOUNT SETTINGS</h4>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="font-size: 0.6rem; opacity: 0.5; display: block; margin-bottom: 5px;">DISPLAY NAME</label>
+            <input type="text" id="edit-name" class="form-input" style="margin:0;">
         </div>
-    </div>
 
-    <button class="btn-luxury" style="margin-top: 20px; background: transparent; border: 1px solid #ef4444; color: #ef4444;" onclick="logout()">Logout Account</button>
+        <div style="margin-bottom: 20px;">
+            <label style="font-size: 0.6rem; opacity: 0.5; display: block; margin-bottom: 5px;">CHANGE PROFILE PHOTO</label>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button class="btn-luxury" style="width: auto; background: rgba(255,255,255,0.05); border: 1px solid var(--gold); color: var(--gold);" onclick="document.getElementById('edit-file').click()">
+                    <i data-lucide="upload" size="14"></i> Choose Image
+                </button>
+                <span id="file-chosen-name" style="font-size: 0.6rem; opacity: 0.4;">No file chosen</span>
+                <input type="file" id="edit-file" class="hidden" accept="image/*" onchange="previewNewImage(this)">
+            </div>
+        </div>
+<button id="save-btn" class="btn-luxury" onclick="saveProfileChanges()">
+    <span id="save-text">SAVE CHANGES</span>
+    <div id="save-loader" class="hidden"></div> </button>        
+    <button onclick="logout()" style="width: 100%; background: transparent; color: #ef4444; border: 1px solid #ef4444; margin-top: 15px; padding: 12px; border-radius: 10px; font-weight: 600;">LOGOUT</button>
+    </div>
 </section>
+    </div>
 
     <nav class="bottom-nav">
         <div class="nav-link active" onclick="switchTab('feed')"><i data-lucide="home"></i><small>Feed</small></div>
@@ -463,35 +327,30 @@ color: rgba(255, 255, 255, 0.5) !important; /* Dim white text on Dark bubble */}
 </div>
 
 <div id="chat-drawer" class="hidden">
-    <div style="padding:20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background: var(--glass);">
-        <b id="chat-target" class="cambria" style="color:var(--gold);"></b>
+    <div style="padding:20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+        <b id="chat-target-name" style="color:var(--gold);">Chat</b>
         <i data-lucide="x" onclick="closeChat()"></i>
     </div>
-    <div id="chat-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:10px;"></div>
-    <div style="padding:15px; display:flex; gap:10px; border-top: 1px solid var(--border);">
+    <div id="chat-messages-container" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:10px;"></div>
+    <div style="padding:15px; display:flex; gap:10px; background:rgba(0,0,0,0.2);">
         <input type="text" id="msg-input" class="form-input" style="margin:0;" placeholder="Message..." onkeypress="if(event.key==='Enter') sendMsg()">
         <button class="btn-luxury" style="width:auto; padding:10px 15px;" onclick="sendMsg()"><i data-lucide="send"></i></button>
-        <div class="chat-input-area" style="display: flex; gap: 10px; align-items: center; padding: 15px; background: var(--glass); border-top: 1px solid var(--border);">
-    <button id="vn-btn" onclick="toggleVoiceRecord()" style="background: rgba(255,255,255,0.1); border: none; width: 45px; height: 45px; border-radius: 50%; color: white; cursor: pointer;">
-        <i data-lucide="mic" id="mic-icon"></i>
-    </button>
-    
-</div>
-    </div>
-</div>
-
-<div id="public-profile-modal" class="hidden">
-    <div class="elite-card" style="width: 100%; max-width: 350px; text-align: center;">
-        <img id="view-p-img" style="width:100px; height:100px; border-radius:50%; border:3px solid var(--gold);">
-        <h2 id="view-p-name" class="cambria" style="margin-top:10px;"></h2>
-        <p id="view-p-role" class="exec-badge" style="display:inline-block;"></p>
-        <p id="view-p-matric" style="margin:10px 0; opacity:0.6;"></p>
-        <button id="view-p-chat-btn" class="btn-luxury">Send Message</button>
-        <button class="btn-luxury" style="background:transparent; color:white; border:1px solid var(--border); margin-top:10px;" onclick="closePublicProfile()">Close</button>
     </div>
 </div>
 
 <script>
+    function formatExactTime(timestamp) {
+    if (!timestamp) return "Just now";
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    return date.toLocaleString('en-US', { 
+        hour: 'numeric', 
+        minute: '2-digit', 
+        hour12: true, 
+        day: 'numeric', 
+        month: 'short' 
+    });
+}
+    // Firebase Config
     const firebaseConfig = {
         apiKey: "AIzaSyBLrdBzHOhsJW4_ixghTx96XpHT4QMS8s8",
         authDomain: "executo-4ecd7.firebaseapp.com",
@@ -505,31 +364,29 @@ color: rgba(255, 255, 255, 0.5) !important; /* Dim white text on Dark bubble */}
     const db = firebase.firestore();
 
     let user = JSON.parse(localStorage.getItem('ec26_user'));
-    let isExecLogin = false;
     let verifiedMediaUrl = "";
-    let activeChatId = null;
-    let activeChatListener = null;
+    let activeRoomId = null;
+    let chatListener = null;
 
     const EXECS = [
-        { name: "Ajiferuke Ridwanullahi", role: "President", key: "PREZ26-AJ", pka: "AJII", img: "ajii.jpg", quote: "Leadership is the standard." },
-        { name: "Olaniyan Kehinde", role: "Vice President", key: "VP26-AR", pka: "ARMANI", img: "armani.jpg", quote: "Accuracy is our mandate." },
-        { name: "Obidare Ibrahim", role: "General Secretary", key: "SEC26-IB", pka: "AJII", img: "dolapo.JPG", quote: "Organization is greatness." },
-        { name: "Oyebode Blessing", role: "Financial Secretary", key: "FIN26-BL", pka: "IRON LADY", img: "oyenike.JPG", quote: "Integrity is key." }
+        { name: "Ajiferuke Ridwanullahi", role: "President", key: "PREZ26-AJ", img: "ajii.jpg", quote: "Leadership is the standard." },
+        { name: "Olaniyan Kehinde", role: "Vice President", key: "VP26-AR", img: "armani.jpg", quote: "Accuracy is our mandate." },
+        { name: "Obidare Ibrahim", role: "General Secretary", key: "SEC26-IB", img: "dolapo.JPG", quote: "Organization is greatness." },
+        { name: "Oyebode Blessing", role: "Financial Secretary", key: "FIN26-BL", img: "oyenike.JPG", quote: "Integrity is key." }
     ];
 
-    window.onload = () => { 
-        if(user) showApp(); 
-        addCourseRow(); 
-        lucide.createIcons(); 
+    window.onload = () => {
+        if(user) showApp();
+        lucide.createIcons();
     };
 
-    function gate() { 
+    function gate() {
         const pass = prompt("Enter Executive Access Key:");
-        const foundExec = EXECS.find(e => e.key === pass);
-        if(foundExec) { 
-            isExecLogin = true; 
-            document.getElementById('reg-name').value = foundExec.name;
-            showReg(); 
+        const found = EXECS.find(e => e.key === pass);
+        if(found) {
+            document.getElementById('reg-name').value = found.name;
+            document.getElementById('reg-matric').value = "EXEC-" + found.key.split('-')[1];
+            showReg();
         } else alert("Invalid Key");
     }
 
@@ -542,14 +399,17 @@ color: rgba(255, 255, 255, 0.5) !important; /* Dim white text on Dark bubble */}
         const n = document.getElementById('reg-name').value.trim();
         const m = document.getElementById('reg-matric').value.trim().toUpperCase();
         if(!n || !m) return alert("Fill all fields");
-        
-        const userData = { 
-            id: "U" + Date.now(), name: n, matric: m, isExec: isExecLogin, 
-            pic: `https://api.dicebear.com/7.x/avataaars/svg?seed=${n}`, 
-            role: isExecLogin ? "Executive" : "Student" 
+
+        const userData = {
+            id: m.replace(/\//g, '_'), 
+            name: n, 
+            matric: m, 
+            pic: `https://api.dicebear.com/7.x/avataaars/svg?seed=${n}`,
+            role: m.startsWith('EXEC') ? "Executive" : "Student",
+            cgpa: "0.00"
         };
-        
-        await db.collection("users").doc(userData.id).set(userData);
+
+        await db.collection("users").doc(userData.id).set(userData, {merge: true});
         localStorage.setItem('ec26_user', JSON.stringify(userData));
         user = userData;
         showApp();
@@ -559,693 +419,771 @@ color: rgba(255, 255, 255, 0.5) !important; /* Dim white text on Dark bubble */}
         document.getElementById('auth-screen').classList.add('hidden');
         document.getElementById('main-app').classList.remove('hidden');
         document.getElementById('u-pfp').src = user.pic;
-        renderGallery(); 
-        renderFeed(); 
-        renderChatList();
+        renderGallery();
+        renderFeed();
         renderMarketplace();
+        renderChatList();
+        addCourseRow();
+        initGlobalNotifications();
+        requestNotificationPermission();
     }
 
-    function renderGallery() {
-        document.getElementById('exec-gallery').innerHTML = EXECS.map(e => `
-            <div class="member-card">
-                <img src="${e.img}" class="member-image" onerror="this.src='https://via.placeholder.com/80'">
-                <p class="exec-badge">${e.role}</p>
-                <h4 class="cambria">${e.name}</h4>
-                <p style="font-size:0.6rem; opacity:0.6;">"${e.quote}"</p>
-            </div>
-        `).join('');
-    }
+    function initGlobalNotifications() {
+    // 1. Feed Alerts
+    db.collection("posts").where("time", ">", new Date(lastSeenPostTime))
+    .onSnapshot(snap => {
+        snap.docChanges().forEach(change => {
+            if (change.type === "added") {
+                const post = change.doc.data();
+                if (post.uid !== user.id) {
+                    notifyTab('feed');
+                    sendNativePush("New Crew Post", `${post.name} shared an update on the Feed.`);
+                }
+            }
+        });
+    });
 
-    function sideScroll(dir) { document.getElementById('exec-gallery').scrollLeft += (dir === 'left' ? -250 : 250); }
+    // 2. Market Alerts
+    db.collection("marketplace").where("time", ">", new Date(lastSeenMarketTime))
+    .onSnapshot(snap => {
+        snap.docChanges().forEach(change => {
+            if (change.type === "added") {
+                const item = change.doc.data();
+                if (item.sellerId !== user.id) {
+                    notifyTab('market');
+                    sendNativePush("New Listing", `${item.itemName} is now available for ₦${item.itemPrice.toLocaleString()}`);
+                }
+            }
+        });
+    });
 
+    // 3. Direct Message Alerts
+    db.collectionGroup("m").where("read", "==", false).onSnapshot(snap => {
+        snap.docChanges().forEach(change => {
+            if (change.type === "added") {
+                const m = change.doc.data();
+                const roomId = change.doc.ref.parent.parent.id;
+                
+                // Only push if it's for me, from someone else, and I'm not in that chat
+                if (roomId.includes(user.id) && m.sid !== user.id && activeRoomId !== roomId) {
+                    notifyTab('chat');
+                    sendNativePush("New Message", m.t);
+                }
+            }
+        });
+    });
+}
+
+    function switchTab(t) {
+    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+    document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+    
+    document.getElementById('tab-' + t).classList.remove('hidden');
+    event.currentTarget.classList.add('active');
+    
+    // NEW: Clear the notification dot for this tab
+    clearNotification(t);
+
+    if(t === 'gp') updateGPProfile();
+    if(t === 'profile') updateProfileUI();
+    lucide.createIcons();
+}
+
+    // --- Feed Logic ---
     function handleFile(input) {
         const reader = new FileReader();
-        reader.onload = (e) => { 
+        reader.onload = (e) => {
             verifiedMediaUrl = e.target.result;
-            document.getElementById('upload-progress').innerText = "✅ Ready";
+            document.getElementById('upload-status').innerText = "✅ Image Ready";
         };
         reader.readAsDataURL(input.files[0]);
     }
 
     async function publishPost() {
-        if(!document.getElementById('post-text').value && !verifiedMediaUrl) return;
+        const txt = document.getElementById('post-text').value;
+        if(!txt && !verifiedMediaUrl) return;
+        
         await db.collection("posts").add({
-            uid: user.id, name: user.name, role: user.role, pic: user.pic,
-            txt: document.getElementById('post-text').value, file: verifiedMediaUrl, 
-            likes: [], comments: [], time: firebase.firestore.FieldValue.serverTimestamp()
+            uid: user.id, name: user.name, pic: user.pic, role: user.role,
+            txt: txt, file: verifiedMediaUrl, likes: [], comments: [],
+            time: firebase.firestore.FieldValue.serverTimestamp()
         });
+        
         document.getElementById('post-text').value = "";
         verifiedMediaUrl = "";
-        document.getElementById('upload-progress').innerText = "";
+        document.getElementById('upload-status').innerText = "";
     }
 
-    function renderFeed() {
-    db.collection("posts").orderBy("time", "desc").onSnapshot(snap => {
-        const f = document.getElementById('feed-display');
-        if (!f) return;
-        f.innerHTML = ""; 
+    
+// Polytechnic 4.0 Scale Classifications
+const POLY_GRADES = {
+    "A": 4.0, "AB": 3.5, "B": 3.25, "BC": 3.0, "C": 2.75, 
+    "CD": 2.5, "D": 2.25, "E": 2.0, "F": 0.0
+};
 
+function getPolyDegreeDetails(gp) {
+    const score = parseFloat(gp);
+    if (score >= 3.50) return { class: "Distinction", praise: "Elite Performance! You are at the peak of Equity '26.", color: "#4ade80" };
+    if (score >= 3.00) return { class: "Upper Credit", praise: "Brilliant standing! You're a high-flyer in the Elite Hub.", color: "#fbbf24" };
+    if (score >= 2.50) return { class: "Lower Credit", praise: "Good progress. Keep pushing for that Upper Credit leap!", color: "#f87171" };
+    if (score >= 2.00) return { class: "Pass", praise: "You've crossed the line. Consistency will take you higher.", color: "#9ca3af" };
+    return { class: "Below Average", praise: "Every comeback starts with a single step. Keep grinding.", color: "#ef4444" };
+}
+
+
+
+// Function to call when user enters the GP tab
+// Function to call when user enters the GP tab
+function updateGPProfile() {
+    document.getElementById('gp-profile-img').src = user.pic;
+    document.getElementById('gp-profile-name').innerText = user.name;
+    
+    const currentGP = user.cgpa || "0.00";
+    document.getElementById('cgpa-display').innerText = currentGP;
+    
+    const info = getPolyDegreeDetails(currentGP);
+    document.getElementById('degree-badge').innerText = info.class;
+    document.getElementById('degree-badge').style.color = info.color;
+    document.getElementById('gp-remark').innerText = info.class;
+    document.getElementById('degree-praise').innerText = info.praise;
+}
+
+
+async function calculateGP() {
+    let tp = 0, tu = 0;
+    const units = document.querySelectorAll('.c-unit');
+    const grades = document.querySelectorAll('.c-grade');
+
+    units.forEach((u, i) => {
+        const val = parseFloat(u.value);
+        if (val > 0) {
+            tp += (val * parseFloat(grades[i].value));
+            tu += val;
+        }
+    });
+
+    const res = tu > 0 ? (tp / tu).toFixed(2) : "0.00";
+    
+    // UI Updates
+    document.getElementById('cgpa-display').innerText = res;
+    document.getElementById('recent-gp-badge').innerText = res;
+    
+    // Progress Bar (Scale of 4.0)
+    const percentage = (parseFloat(res) / 4.0) * 100;
+    document.getElementById('cgpa-progress').style.width = percentage + "%";
+
+    const info = getPolyDegreeDetails(res);
+    document.getElementById('gp-remark').innerText = info.class;
+    document.getElementById('gp-remark').style.color = info.color;
+    document.getElementById('degree-praise').innerText = info.praise;
+
+    // Database Sync
+    user.cgpa = res;
+    localStorage.setItem('ec26_user', JSON.stringify(user));
+    await db.collection("users").doc(user.id).update({ cgpa: res });
+}
+// Ensure the course row uses the correct 4.0 weights
+function addCourseRow() {
+    const div = document.createElement('div');
+    div.style = "display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 8px; margin-bottom: 10px;";
+    div.innerHTML = `
+        <input type="text" class="gp-field" style="background:rgba(0,0,0,0.2); border:1px solid var(--border); border-radius:8px; padding:10px; color:white; font-size:0.75rem;" placeholder="Course">
+        <input type="number" class="c-unit" style="background:rgba(0,0,0,0.2); border:1px solid var(--border); border-radius:8px; padding:10px; color:white; font-size:0.75rem;" placeholder="Unit">
+        <select class="c-grade" style="background:rgba(0,0,0,0.2); border:1px solid var(--border); border-radius:8px; padding:10px; color:var(--gold); font-size:0.75rem;">
+            <option value="4.0">A </option>
+            <option value="3.5">AB </option>
+            <option value="3.25">B </option>
+            <option value="3.0">BC </option>
+            <option value="2.75">C </option>
+            <option value="2.5">CD </option>
+            <option value="2.25">D </option>
+            <option value="2.0">E </option>
+            <option value="0.0">F </option>
+        </select>`;
+    document.getElementById('course-list').appendChild(div);
+}
+    
+
+    
+    
+    // A list of Elite quotes to simulate AI generation
+const eliteQuotes = [
+    "Precision is the only standard.",
+    "Excellence is a habit, not an act.",
+    "The hub of equity and intellectual growth.",
+    "Leading the crew with calculated moves.",
+    "Success favors the well-prepared."
+];
+// Global Unread Listener for the Chat Tab
+function initGlobalChatNotifier() {
+    // This looks for any chat where you are the recipient and there is an unread message
+    db.collectionGroup("m").where("read", "==", false).onSnapshot(snap => {
+        let totalUnread = 0;
         snap.forEach(doc => {
-            const d = doc.data();
-            const comments = d.comments || [];
-            const likes = d.likes || [];
-            const isLiked = likes.includes(user.id);
-            
-            // PERMISSION LOGIC
-            // User can delete if: 1. They wrote the post, 2. They are the General Secretary (Obidare Ibrahim)
-            const isAuthor = d.uid === user.id;
-            const isGenSec = user.name === "Obidare Ibrahim"; 
-            const canDelete = isAuthor || isGenSec;
-
-            f.innerHTML += `
-                <div class="elite-card" style="margin-bottom: 20px; animation: slideIn 0.4s ease;">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                        <div style="display:flex; gap:10px; align-items:center;" onclick="openPublicProfile('${d.uid}')">
-                            <img src="${d.pic}" style="width:35px; height:35px; border-radius:50%; border: 1px solid var(--gold);">
-                            <div>
-                                <b style="font-size:0.75rem; display:block; color:var(--gold);">${d.name}</b>
-                                <span class="exec-badge" style="font-size:0.5rem;">${d.role}</span>
-                            </div>
-                        </div>
-                        
-                        ${canDelete ? `
-                            <div onclick="deletePost('${doc.id}')" style="padding: 5px; cursor:pointer;">
-                                <i data-lucide="trash-2" style="color:#ef4444; width:16px;"></i>
-                            </div>
-                        ` : ''}
-                    </div>
-
-                    <p style="margin:15px 0; font-size:0.9rem; line-height:1.6; color: rgba(255,255,255,0.9);">${d.txt}</p>
-                    ${d.file ? `<img src="${d.file}" class="post-media" style="border-radius:15px;">` : ''}
-                    
-                    <div class="post-actions">
-                        <div class="action-label like-btn ${isLiked ? 'like-btn-active' : ''}" onclick="likePost('${doc.id}')">
-                            <i data-lucide="heart" style="width:18px;"></i> 
-                            <span>${likes.length}</span>
-                        </div>
-                        <div class="action-label" onclick="document.getElementById('in-${doc.id}').focus()">
-                            <i data-lucide="message-square" style="width:18px;"></i>
-                            <span>${comments.length}</span>
-                        </div>
-                    </div>
-
-                    <div class="comment-vault ${comments.length === 0 ? 'hidden' : ''}">
-    ${comments.map((c, index) => {
-        // Permissions: Author of comment OR General Secretary
-        const canDeleteComment = c.userId === user.id || user.name === "Obidare Ibrahim";
-        
-        return `
-            <div class="comment-item" 
-                 ${canDeleteComment ? `
-                    onmousedown="startCommentLongPress(event, '${doc.id}', ${index})" 
-                    onmouseup="cancelCommentLongPress(event)" 
-                    ontouchstart="startCommentLongPress(event, '${doc.id}', ${index})" 
-                    ontouchend="cancelCommentLongPress(event)"
-                 ` : ''}>
-                <b style="color:var(--gold); margin-right:5px;">${c.userName}</b>
-                <span>${c.text}</span>
-            </div>
-        `;
-    }).join('')}
-</div>
-
-                    <div style="display:flex; gap:10px; margin-top:15px; background:rgba(0,0,0,0.3); padding:8px 12px; border-radius:12px; border: 1px solid var(--border);">
-                        <input id="in-${doc.id}" style="background:transparent; border:none; color:white; flex:1; outline:none; font-size:0.8rem;" placeholder="Add a comment...">
-                        <button onclick="sendComment('${doc.id}')" style="background:transparent; border:none; color:var(--gold); cursor:pointer;">
-                            <i data-lucide="send" style="width:18px;"></i>
-                        </button>
-                    </div>
-                </div>`;
+            const msg = doc.data();
+            // Check if the message was sent to me (by checking the parent roomId)
+            const roomId = doc.ref.parent.parent.id;
+            if (roomId.includes(user.id) && msg.sid !== user.id) {
+                totalUnread++;
+            }
         });
+
+        // Update the Chat icon in the Bottom Nav with a red dot if unread > 0
+        const chatNavLink = document.querySelector('.nav-link[onclick*="chat"]');
+        if (totalUnread > 0) {
+            chatNavLink.style.position = "relative";
+            chatNavLink.innerHTML = `<i data-lucide="message-circle"></i><small>Chat</small>
+                                     <div style="position:absolute; top:-2px; right:15px; width:8px; height:8px; background:#ef4444; border-radius:50%; border:1px solid #022c22;"></div>`;
+        } else {
+            chatNavLink.innerHTML = `<i data-lucide="message-circle"></i><small>Chat</small>`;
+        }
         lucide.createIcons();
     });
 }
 
-    async function likePost(id) {
-        const ref = db.collection("posts").doc(id);
-        const doc = await ref.get();
-        const likes = doc.data().likes || [];
-        if(likes.includes(user.id)) await ref.update({ likes: firebase.firestore.FieldValue.arrayRemove(user.id) });
-        else await ref.update({ likes: firebase.firestore.FieldValue.arrayUnion(user.id) });
-    }
 
-    async function sendComment(id) {
-        const val = document.getElementById(`in-${id}`).value;
-        if(!val) return;
-        await db.collection("posts").doc(id).update({
-            comments: firebase.firestore.FieldValue.arrayUnion({ userId: user.id, userName: user.name, text: val, time: Date.now() })
-        });
-        document.getElementById(`in-${id}`).value = "";
-    }
-
-    function addCourseRow() {
-        const div = document.createElement('div');
-        div.style = "display:flex; gap:5px; margin-bottom:5px;";
-        div.innerHTML = `<input type="text" class="form-input" style="flex:2; margin:0;" placeholder="Course"><input type="number" class="c-unit form-input" style="flex:1; margin:0;" placeholder="Unit"><select class="c-grade form-input" style="flex:1; margin:0;"><option value="4.0">A</option><option value="3.5">AB</option><option value="3.25">B</option><option value="3.0">BC</option><option value="2.75">C</option><option value="0.0">F</option></select>`;
-        document.getElementById('course-list').appendChild(div);
-    }
-    // Function to update the Profile Header and pull saved data
-async function syncGPDashboard() {
-    if (!user) return;
+function renderChatList() {
+    const q = document.getElementById('member-search').value.toLowerCase();
     
-    // 1. Update Profile visuals
-    document.getElementById('gp-pfp').src = user.pic;
-    document.getElementById('gp-user-name').innerText = user.name;
-    
-    // 2. Set Sync Time (Login Time)
-    const now = new Date();
-    document.getElementById('sync-timestamp').innerText = now.toLocaleDateString() + " " + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    // Listen to all users
+    db.collection("users").onSnapshot(async (snap) => {
+        const list = document.getElementById('chat-list');
+        list.innerHTML = "";
 
-    // 3. Fetch latest CGPA from Firebase
-    const doc = await db.collection("users").doc(user.id).get();
-    if(doc.exists && doc.data().cgpa) {
-        const savedGP = doc.data().cgpa;
-        updateGPAVisuals(savedGP);
-    }
-}
+        for (const doc of snap.docs) {
+            const u = doc.data();
+            if (u.id === user.id) continue; // Skip self
+            if (!u.name.toLowerCase().includes(q)) continue;
 
-// Enhanced Calculation with Firebase Saving
-async function calculateGP() {
-    let tp = 0, tu = 0;
-    document.querySelectorAll('.c-unit').forEach((u, i) => {
-        const unit = parseFloat(u.value);
-        if(unit > 0) { 
-            tp += (unit * parseFloat(document.querySelectorAll('.c-grade')[i].value)); 
-            tu += unit; 
+            const roomId = [user.id, u.id].sort().join('_');
+            const quote = eliteQuotes[Math.floor(Math.random() * eliteQuotes.length)];
+            
+            // Fetch the last message for the preview
+            const lastMsgSnap = await db.collection("chats").doc(roomId)
+                .collection("m").orderBy("time", "desc").limit(1).get();
+            
+            let lastMsgText = "Start a conversation...";
+            let lastMsgTime = "";
+            let unreadCount = 0;
+
+            if (!lastMsgSnap.empty) {
+                const m = lastMsgSnap.docs[0].data();
+                lastMsgText = m.t.length > 30 ? m.t.substring(0, 30) + "..." : m.t;
+                lastMsgTime = m.time ? formatExactTime(m.time) : "";
+                
+                // Count unread (sent by them, read is false)
+                const unreadSnap = await db.collection("chats").doc(roomId)
+                    .collection("m").where("sid", "==", u.id).where("read", "==", false).get();
+                unreadCount = unreadSnap.size;
+            }
+
+            list.innerHTML += `
+                <div class="elite-card" onclick="openChat('${u.id}', '${u.name}')" 
+                     style="display: flex; align-items: center; gap: 15px; padding: 12px; border-bottom: 1px solid rgba(212,175,55,0.05); background: transparent;">
+                    
+                    <div style="position: relative;">
+                        <img src="${u.pic}" style="width: 50px; height: 50px; border-radius: 50%; border: 1.5px solid var(--gold);">
+                        <div style="position: absolute; bottom: 2px; right: 2px; width: 10px; height: 10px; background: #10b981; border: 2px solid #022c22; border-radius: 50%;"></div>
+                    </div>
+
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <b style="font-size: 0.9rem; color: #fff;">${u.name}</b>
+                            <small style="font-size: 0.6rem; opacity: 0.4;">${lastMsgTime}</small>
+                        </div>
+                        <p style="font-size: 0.65rem; color: var(--gold); font-style: italic; margin-bottom: 4px;">"${quote}"</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.75rem; opacity: 0.5; font-weight: 300;">${lastMsgText}</span>
+                            ${unreadCount > 0 ? `<span style="background: var(--gold); color: #022c22; font-size: 0.6rem; font-weight: 800; padding: 2px 6px; border-radius: 10px;">${unreadCount}</span>` : ''}
+                        </div>
+                    </div>
+                </div>`;
         }
     });
-    
-    const finalGP = tu > 0 ? (tp/tu) : 0;
-    
-    // Update local UI
-    updateGPAVisuals(finalGP);
-
-    // Sync to Firebase for persistence
-    try {
-        await db.collection("users").doc(user.id).update({
-            cgpa: finalGP.toFixed(2),
-            lastGpCalc: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        if (navigator.vibrate) navigator.vibrate(50);
-    } catch (e) {
-        console.error("Sync failed:", e);
-    }
 }
 
-function updateGPAVisuals(value) {
-    const numValue = parseFloat(value);
-    document.getElementById('recent-gp-badge').innerText = numValue.toFixed(2);
-    document.getElementById('cgpa-display').innerText = numValue.toFixed(2);
-    
-    // Update Progress Bar (assuming 4.0 scale)
-    const percentage = (numValue / 4.0) * 100;
-    document.getElementById('cgpa-progress').style.width = Math.min(percentage, 100) + "%";
+    let typingTimeout;
 
-    // Set Remark
-    let remark = "Pass";
-    if(numValue >= 3.5) remark = "Distinction Candidate";
-    else if(numValue >= 3.0) remark = "Upper Credit Standing";
-    else if(numValue >= 2.5) remark = "Lower Credit Standing";
-    document.getElementById('gp-remark').innerText = "Academic standing: " + remark;
-}
-
-    // function calculateGP() {
-    //     let tp = 0, tu = 0;
-    //     document.querySelectorAll('.c-unit').forEach((u, i) => {
-    //         const unit = parseFloat(u.value);
-    //         if(unit > 0) { tp += (unit * parseFloat(document.querySelectorAll('.c-grade')[i].value)); tu += unit; }
-    //     });
-    //     document.getElementById('gp-res').innerText = tu > 0 ? (tp/tu).toFixed(2) : "0.00";
-    // }
-
-    function renderChatList() {
-        db.collection("users").onSnapshot(snap => {
-            const list = document.getElementById('chat-list');
-            list.innerHTML = "";
-            snap.forEach(doc => {
-                const u = doc.data();
-                if(u.id !== user.id) list.innerHTML += `<div class="elite-card" onclick="openChat('${u.id}', '${u.name}')"><b>${u.name}</b><br><small>${u.role}</small></div>`;
-            });
-        });
-    }
-
-let activeRoomId = null; // Single variable for the room
-
-function openChat(tid, tname) {
-    // 1. Unify the Room ID (Sorting ensures both computers generate 'ID1_ID2')
+async function openChat(tid, tname) {
     activeRoomId = [user.id, tid].sort().join('_');
-    
-    document.getElementById('chat-target').innerText = tname;
+    document.getElementById('chat-target-name').innerText = tname;
     document.getElementById('chat-drawer').classList.remove('hidden');
     
-    const cont = document.getElementById('chat-msgs');
-    cont.innerHTML = `<div style="text-align:center; opacity:0.5; font-size:0.7rem; padding:20px;">Synchronizing secure channel...</div>`;
+    // 1. Initial Mark as Read
+    markMessagesAsRead(activeRoomId, tid);
 
-    // 2. Clear old listener if it exists to prevent double-messages
-    if(activeChatListener) activeChatListener();
+    // 2. Typing Indicator Listener
+    db.collection("chats").doc(activeRoomId).onSnapshot(doc => {
+        const data = doc.data();
+        const indicator = document.getElementById('typing-indicator'); // Add this div in your HTML drawer
+        if (data && data.typing === tid) {
+            indicator.innerText = `${tname} is typing...`;
+            indicator.style.display = "block";
+        } else {
+            indicator.style.display = "none";
+        }
+    });
 
-    // 3. Real-time Sync (This is what handles the 'two computers' requirement)
-    activeChatListener = db.collection("chats").doc(activeRoomId).collection("m")
+    // 3. Message Listener
+    if(chatListener) chatListener();
+    chatListener = db.collection("chats").doc(activeRoomId)
+        .collection("m")
         .orderBy("time", "asc")
         .onSnapshot(snap => {
-            cont.innerHTML = "";
+            const container = document.getElementById('chat-messages-container');
+            container.innerHTML = "";
+            
             snap.forEach(doc => {
                 const m = doc.data();
                 const isMe = m.sid === user.id;
-                const timeStr = formatRelativeTime(m.time); // Uses your existing helper
+                const isRead = m.read === true;
 
-                cont.innerHTML += `
+                // Double tick logic
+                const statusTicks = isRead 
+                    ? `<i data-lucide="check-check" size="14" style="color:var(--gold); margin-left:4px;"></i>` 
+                    : `<i data-lucide="check" size="14" style="opacity:0.4; margin-left:4px;"></i>`;
+
+                container.innerHTML += `
                     <div class="msg-row ${isMe ? 'sent' : 'received'}">
-                        <div class="bubble">
-                            ${m.t}
-                            <div class="msg-meta">
-                                <span>${timeStr}</span>
-                                ${isMe ? `<i data-lucide="${m.read ? 'check-check' : 'check'}" class="${m.read ? 'check-double' : ''}" style="width:11px;"></i>` : ''}
-                            </div>
+                        <div class="bubble" style="display:flex; align-items:flex-end;">
+                            <span style="word-break: break-word;">${m.t}</span>
+                            ${isMe ? statusTicks : ''}
                         </div>
                     </div>`;
             });
-            cont.scrollTop = cont.scrollHeight;
+            
+            container.scrollTop = container.scrollHeight;
             lucide.createIcons();
             
-            // Mark as read if I am the receiver
-            markAsRead(activeRoomId);
-        });
-}        activeChatId = tid;
-        document.getElementById('chat-target').innerText = tname;
-        document.getElementById('chat-drawer').classList.remove('hidden');
-        const rid = [user.id, tid].sort().join('_');
-        if(activeChatListener) activeChatListener();
-        activeChatListener = db.collection("chats").doc(rid).collection("m").orderBy("time", "asc").onSnapshot(snap => {
-            const cont = document.getElementById('chat-msgs');
-            cont.innerHTML = "";
-            snap.forEach(doc => {
-                const m = doc.data();
-                cont.innerHTML += `<div class="chat-bubble ${m.sid === user.id ? 'sent' : 'received'}">${m.t}</div>`;
-            });
-            cont.scrollTop = cont.scrollHeight;
+            // Mark new incoming messages as read while looking at the screen
+            markMessagesAsRead(activeRoomId, tid);
         });
 
-    
-    
-        async function sendMsg() {
-    const input = document.getElementById('msg-input'); // Matches your HTML ID
-    const val = input.value.trim();
-    
-    if(!val || !activeRoomId) return;
+        clearNotification('chat');
+}
 
-    // Clear UI immediately for a snappy feel
-    input.value = "";
 
-    try {
+    async function sendMsg() {
+        const input = document.getElementById('msg-input');
+        const val = input.value.trim();
+        if(!val || !activeRoomId) return;
+        input.value = "";
         await db.collection("chats").doc(activeRoomId).collection("m").add({
-            sid: user.id,
-            t: val,
-            time: firebase.firestore.FieldValue.serverTimestamp(), // Global Sync Time
-            read: false,
-            type: 'text'
+            sid: user.id, t: val, time: firebase.firestore.FieldValue.serverTimestamp()
         });
-    } catch (e) {
-        console.error("Transmission failed:", e);
-        alert("Check your internet connection.");
     }
-}
 
-    function closeChat() { document.getElementById('chat-drawer').classList.add('hidden'); }
-
-    function switchTab(t) {
-    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-    document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-    document.getElementById('tab-'+t).classList.remove('hidden');
-    event.currentTarget.classList.add('active');
-    
-    if(t === 'profile') updateProfileStats();
-    if(t === 'gp') syncGPDashboard(); // Add this line
-    
-    lucide.createIcons();
-}
-
-async function updateProfileStats() {
-    if (!user) return;
-
-    // Set Name and Image
-    document.getElementById('user-profile-name').innerText = user.name;
-    document.getElementById('user-profile-pic').src = user.pic || 'https://via.placeholder.com/150';
-    document.getElementById('user-profile-role').innerText = user.role || 'Member';
-    document.getElementById('profile-matric').innerText = user.id; // Using ID as Matric
-
-    // Fetch the latest CGPA from the "users" collection
-    const userDoc = await db.collection("users").doc(user.id).get();
-    if (userDoc.exists) {
-        const data = userDoc.data();
-        document.getElementById('profile-cgpa').innerText = data.cgpa || "0.00";
-        
-        // Dynamic "Member Since" (optional if you saved join date)
-        if (data.joined) {
-            const joinedYear = new Date(data.joined.seconds * 1000).getFullYear();
-            document.getElementById('member-since').innerText = joinedYear;
-        }
+    function closeChat() { 
+        document.getElementById('chat-drawer').classList.add('hidden'); 
+        if(chatListener) chatListener();
     }
-    
-    lucide.createIcons();
+
+    async function markMessagesAsRead(roomId, recipientId) {
+    const batch = db.batch();
+    const unreadMessages = await db.collection("chats").doc(roomId)
+        .collection("m")
+        .where("sid", "==", recipientId) // Messages sent by the other person
+        .where("read", "==", false)
+        .get();
+
+    unreadMessages.forEach(doc => {
+        batch.update(doc.ref, { read: true });
+    });
+
+    await batch.commit();
 }
 
-    // async function updateProfileStats() {
-    //     const posts = await db.collection("posts").where("uid", "==", user.id).get();
-    //     document.getElementById('p-name').innerText = user.name;
-    //     document.getElementById('p-role').innerText = user.role;
-    //     document.getElementById('p-img').src = user.pic;
-    //     document.getElementById('p-matric-display').innerText = "ID: " + user.matric;
-    //     document.getElementById('stat-posts').innerText = posts.size;
-    //     document.getElementById('stat-gp').innerText = document.getElementById('gp-res').innerText;
-    // }
+    // --- Market Logic ---
+    let marketImageUrl = "";
+
+    // --- Market Functions ---
 
     function handleMarketFile(input) {
         const reader = new FileReader();
-        reader.onload = (e) => { 
-            verifiedMediaUrl = e.target.result; 
-            document.getElementById('market-progress').innerText = "✅ Image Added";
+        reader.onload = (e) => {
+            marketImageUrl = e.target.result;
+            document.getElementById('market-img-label').innerText = "Photo Ready";
+            document.getElementById('market-upload-preview').classList.remove('hidden');
         };
         reader.readAsDataURL(input.files[0]);
     }
 
     async function publishMarketItem() {
-        const name = document.getElementById('market-item-name').value;
-        const price = document.getElementById('market-item-price').value;
-        if(!name || !price) return alert("Enter details");
+        const name = document.getElementById('market-item-name').value.trim();
+        const price = document.getElementById('market-item-price').value.trim();
+        const desc = document.getElementById('market-item-desc').value.trim();
+
+        if(!name || !price) return alert("Item name and price required!");
+
         await db.collection("marketplace").add({
-            sellerId: user.id, sellerName: user.name, sellerPic: user.pic,
-            itemName: name, itemPrice: price, itemDesc: document.getElementById('market-item-desc').value,
-            file: verifiedMediaUrl, time: firebase.firestore.FieldValue.serverTimestamp()
+            sellerId: user.id,
+            sellerName: user.name,
+            itemName: name,
+            itemPrice: parseFloat(price),
+            itemDesc: desc,
+            itemImg: marketImageUrl,
+            status: "active",
+            time: firebase.firestore.FieldValue.serverTimestamp()
         });
+
+        // Reset Form
         document.getElementById('market-item-name').value = "";
         document.getElementById('market-item-price').value = "";
         document.getElementById('market-item-desc').value = "";
-        verifiedMediaUrl = "";
-        document.getElementById('market-progress').innerText = "";
+        marketImageUrl = "";
+        document.getElementById('market-img-label').innerText = "Add Photo";
+        document.getElementById('market-upload-preview').classList.add('hidden');
+        alert("Product listed successfully!");
     }
 
-    const PAYSTACK_PK = 'pk_test_7c7358690ce988034fc366cff33b97a3f1a3bc7b'; 
-
-function renderMarketplace() {
+    function renderMarketplace() {
+    const searchQuery = document.getElementById('market-search').value.toLowerCase();
+    
     db.collection("marketplace").orderBy("time", "desc").onSnapshot(snap => {
-        const m = document.getElementById('market-display');
-        if (!m) return;
-        m.innerHTML = "";
+        const container = document.getElementById('market-display');
+        let myTotalSales = 0;
+        let myActiveItems = 0;
+        container.innerHTML = "";
 
         snap.forEach(doc => {
             const d = doc.data();
             
-            // PERMISSION LOGIC
-            const isOwner = d.sellerId === user.id;
-            const isGenSec = user.name === "Obidare Ibrahim"; 
-            const canDelete = isOwner || isGenSec;
+            // Stats Calculation
+            if (d.sellerId === user.id) {
+                myTotalSales += d.itemPrice;
+                myActiveItems++;
+            }
 
-            m.innerHTML += `
-                <div class="elite-card" style="position:relative; display:flex; flex-direction:column; gap:10px;">
-                    ${canDelete ? `
-                        <div onclick="deleteMarketItem('${doc.id}')" style="position:absolute; top:10px; right:10px; background:rgba(239, 68, 68, 0.8); padding:5px; border-radius:50%; z-index:10;">
-                            <i data-lucide="trash-2" style="color:white; width:14px;"></i>
+            // Filter Logic
+            const matchesSearch = d.itemName.toLowerCase().includes(searchQuery) || 
+                                d.itemDesc.toLowerCase().includes(searchQuery);
+
+            if (matchesSearch) {
+                const canDelete = d.sellerId === user.id || user.name === "Obidare Ibrahim";
+                
+                container.innerHTML += `
+                    <div class="elite-card">
+                        ${d.itemImg ? `<img src="${d.itemImg}" style="width:100%; height:180px; object-fit:cover; border-radius:12px; margin-bottom:10px; border: 1px solid var(--border);">` : ''}
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                            <div>
+                                <h4 style="color:var(--gold); font-size:1rem;">${d.itemName}</h4>
+                                <div style="display:flex; flex-direction:column;">
+                                    <small style="opacity:0.6;">By ${d.sellerName}</small>
+                                    <small style="font-size:0.6rem; opacity:0.4;">${formatExactTime(d.time)}</small>
+                                </div>
+                            </div>
+                            <div style="text-align:right;">
+                                <span class="price-tag">₦${d.itemPrice.toLocaleString()}</span>
+                                ${canDelete ? `<div style="margin-top:5px;"><i data-lucide="trash-2" size="14" style="color:#ef4444;" onclick="deleteDoc('marketplace', '${doc.id}')"></i></div>` : ''}
+                            </div>
                         </div>
-                    ` : ''}
-
-                    <img src="${d.file || 'https://via.placeholder.com/300x200?text=No+Image'}" 
-                         style="width:100%; height:160px; object-fit:cover; border-radius:15px;">
-                    
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span class="price-tag">₦${Number(d.itemPrice).toLocaleString()}</span>
-                        <div class="payment-badge">Paystack / POD</div>
-                    </div>
-
-                    <h3 class="cambria" style="font-size:1rem; margin-top:5px;">${d.itemName}</h3>
-                    <p style="font-size:0.75rem; opacity:0.7;">${d.itemDesc}</p>
-                    
-                    <div style="margin-top:auto; padding-top:10px;">
-                        <button class="market-buy-btn" onclick="initiatePurchase('${doc.id}', ${d.itemPrice}, '${d.itemName}', '${d.sellerId}', '${d.sellerName}')">
-                            PURCHASE ITEM
+                        <p style="font-size:0.75rem; margin:10px 0; opacity:0.8;">${d.itemDesc}</p>
+                        <button class="btn-luxury" style="margin-top:5px;" onclick="openChat('${d.sellerId}', '${d.sellerName}')">
+                            <i data-lucide="message-circle" size="14" style="vertical-align:middle; margin-right:5px;"></i> Contact Seller
                         </button>
-                    </div>
-                </div>`;
+                    </div>`;
+            }
         });
+
+        // Update Stats Nav
+        document.getElementById('stats-sales').innerText = `₦${myTotalSales.toLocaleString()}`;
+        document.getElementById('stats-count').innerText = myActiveItems;
+        
         lucide.createIcons();
     });
 }
-
-async function initiatePurchase(itemId, amount, itemName, sellerId, sellerName) {
-    const choice = confirm("CHOOSE PAYMENT METHOD:\n\nOK: Paystack (Secure Online)\nCANCEL: Pay on Delivery (POD)");
-
-    if (choice) {
-        // PAYSTACK FLOW
-        const handler = PaystackPop.setup({
-            key: PAYSTACK_PK,
-            email: user.matric.replace('/', '') + "@equity26.com", 
-            amount: amount * 100, // Paystack uses Kobo
-            currency: 'NGN',
-            callback: function(response){
-                alert('Payment successful! Ref: ' + response.reference);
-                notifySeller(sellerId, `PAID: I just paid ₦${amount} for ${itemName} via Paystack. Ref: ${response.reference}`);
-            },
-            onClose: function(){ alert('Transaction cancelled.'); }
-        });
-        handler.openIframe();
-    } else {
-        // POD FLOW
-        if(confirm("Notify seller you want to meet for Pay on Delivery?")) {
-            notifySeller(sellerId, `POD REQUEST: I'm interested in ${itemName} (₦${amount}). Can we meet for Pay on Delivery?`);
-            alert("Seller notified via DM!");
-            switchTab('chat');
-        }
-    }
-}
-
-async function deleteMarketItem(itemId) {
-    if(confirm("Remove this listing from the Marketplace?")) {
-        try {
-            await db.collection("marketplace").doc(itemId).delete();
-        } catch (e) {
-            alert("Deletion failed: " + e.message);
-        }
-    }
-}
-
-// Helper to bridge Marketplace to Chat
-async function notifySeller(sellerId, message) {
-    const roomId = [user.id, sellerId].sort().join('_');
-    await db.collection("chats").doc(roomId).collection("m").add({
-        sid: user.id,
-        t: message,
-        time: firebase.firestore.FieldValue.serverTimestamp()
-    });
-}
-    // function renderMarketplace() {
-    //     db.collection("marketplace").orderBy("time", "desc").onSnapshot(snap => {
-    //         const m = document.getElementById('market-display');
-    //         m.innerHTML = "";
-    //         snap.forEach(doc => {
-    //             const d = doc.data();
-    //             m.innerHTML += `
-    //                 <div class="elite-card">
-    //                     <div style="display:flex; justify-content:space-between;">
-    //                         <b style="color:var(--gold);">${d.itemName}</b>
-    //                         <span class="price-tag">₦${d.itemPrice}</span>
-    //                     </div>
-    //                     ${d.file ? `<img src="${d.file}" class="post-media">` : ''}
-    //                     <p style="font-size:0.75rem; margin:10px 0;">${d.itemDesc}</p>
-    //                     <button class="btn-luxury" onclick="openChat('${d.sellerId}', '${d.sellerName}')">Contact Seller</button>
-    //                 </div>`;
-    //         });
-    //     });
-    // }
-
-    async function openPublicProfile(uid) {
-        const doc = await db.collection("users").doc(uid).get();
-        if(!doc.exists) return;
-        const d = doc.data();
-        document.getElementById('view-p-img').src = d.pic;
-        document.getElementById('view-p-name').innerText = d.name;
-        document.getElementById('view-p-role').innerText = d.role;
-        document.getElementById('view-p-matric').innerText = "ID: " + d.matric;
-        document.getElementById('view-p-chat-btn').onclick = () => { closePublicProfile(); openChat(d.id, d.name); };
-        document.getElementById('public-profile-modal').classList.remove('hidden');
+    // --- Utilities ---
+    function updateProfileUI() {
+        document.getElementById('profile-img').src = user.pic;
+        document.getElementById('profile-name-display').innerText = user.name;
+        document.getElementById('profile-role-display').innerText = user.role;
+        document.getElementById('profile-gp-val').innerText = user.cgpa || "0.00";
+        document.getElementById('profile-id-val').innerText = user.matric;
     }
 
-    function closePublicProfile() { document.getElementById('public-profile-modal').classList.add('hidden'); }
+    function renderGallery() {
+        document.getElementById('exec-gallery').innerHTML = EXECS.map(e => `
+            <div class="member-card">
+                <img src="${e.img}" class="member-image" onerror="this.src='https://via.placeholder.com/60'">
+                <p class="exec-badge">${e.role}</p>
+                <h4 style="font-size:0.8rem; margin:5px 0;">${e.name}</h4>
+            </div>
+        `).join('');
+    }
+
+    async function deleteDoc(col, id) {
+        if(confirm("Delete this entry?")) await db.collection(col).doc(id).delete();
+    }
+
     function logout() { localStorage.clear(); location.reload(); }
 
-    async function deletePost(postId) {
-    if(confirm("Permanently delete this post from the Faculty Feed?")) {
-        try {
-            await db.collection("posts").doc(postId).delete();
-        } catch (e) {
-            alert("Error deleting post: " + e.message);
+
+    // --- Helper for Long Press ---
+    let pressTimer;
+
+    function startPress(callback) {
+        pressTimer = window.setTimeout(callback, 800);
+    }
+    
+    function cancelPress() {
+        clearTimeout(pressTimer);
+    }
+
+    // --- Feed & Interaction Logic ---
+
+    // --- Feed & Interaction Logic ---
+
+async function toggleLike(postId, currentLikes) {
+    const ref = db.collection("posts").doc(postId);
+    if (currentLikes.includes(user.id)) {
+        await ref.update({ likes: firebase.firestore.FieldValue.arrayRemove(user.id) });
+    } else {
+        await ref.update({ likes: firebase.firestore.FieldValue.arrayUnion(user.id) });
+    }
+}
+
+async function addComment(postId) {
+    const input = document.getElementById(`cmt-input-${postId}`);
+    const val = input.value.trim();
+    if (!val) return;
+
+    const commentData = {
+        cid: Math.random().toString(36).substr(2, 9),
+        uid: user.id,
+        name: user.name,
+        text: val,
+        time: Date.now()
+    };
+
+    await db.collection("posts").doc(postId).update({
+        comments: firebase.firestore.FieldValue.arrayUnion(commentData)
+    });
+    input.value = "";
+}
+
+async function deleteComment(postId, commentObj) {
+    const isAdmin = user.name === "Obidare Ibrahim";
+    const isOwner = commentObj.uid === user.id;
+
+    if (isAdmin || isOwner) {
+        if (confirm("Delete this comment?")) {
+            await db.collection("posts").doc(postId).update({
+                comments: firebase.firestore.FieldValue.arrayRemove(commentObj)
+            });
         }
     }
 }
 
-let commentPressTimer;
-
-function startCommentLongPress(event, postId, commentIndex) {
-    const el = event.currentTarget;
-    el.classList.add('comment-pressing');
-
-    // 800ms (0.8 seconds) is the standard for a long press
-    commentPressTimer = setTimeout(() => {
-        deleteComment(postId, commentIndex);
-        el.classList.remove('comment-pressing');
-    }, 800);
-}
-
-function cancelCommentLongPress(event) {
-    clearTimeout(commentPressTimer);
-    event.currentTarget.classList.remove('comment-pressing');
-}
-
-async function deleteComment(postId, commentIndex) {
-    if (confirm("Delete this comment permanently?")) {
-        try {
-            const postRef = db.collection("posts").doc(postId);
-            const doc = await postRef.get();
-            const comments = doc.data().comments;
-            
-            // Remove the specific comment by index
-            comments.splice(commentIndex, 1);
-            
-            await postRef.update({ comments: comments });
-            if (navigator.vibrate) navigator.vibrate(50); // Haptic feedback
-        } catch (e) {
-            console.error("Comment delete failed:", e);
-        }
-    }
-
-    // 1. Search Members Logic
-function filterMembers() {
-    let input = document.getElementById('member-search').value.toLowerCase();
-    // Logic to filter your existing member list display
-    // Example: document.querySelectorAll('.member-item').forEach(...)
-}
-
-// 2. Feedback Logic
-function openFeedback() {
-    const fb = prompt("Equity Crew '26 Feedback - How can we improve the hub?");
-    if(fb) {
-        db.collection("feedback").add({
-            uid: user.id,
-            userName: user.name,
-            txt: fb,
-            time: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        alert("Thank you! The Executives have received your response.");
-    }
-}
-
-function renderMessages(roomId) {
-    db.collection("chats").doc(roomId).collection("m").orderBy("time", "asc").onSnapshot(snap => {
-        const box = document.getElementById('chat-box');
-        if(!box) return;
-        box.innerHTML = "";
+function renderFeed() {
+    db.collection("posts").orderBy("time", "desc").onSnapshot(snap => {
+        const container = document.getElementById('feed-display');
+        container.innerHTML = "";
         
         snap.forEach(doc => {
-            const m = doc.data();
-            const isMe = m.sid === user.id;
-            
-            // This line gets the "Just now" or "2m ago" string
-            const displayTime = formatRelativeTime(m.time);
-            
-            const isRead = m.read === true;
+            const d = doc.data();
+            const pid = doc.id;
+            const likes = d.likes || [];
+            const comments = d.comments || [];
+            const canDeletePost = d.uid === user.id || user.name === "Obidare Ibrahim";
 
-            box.innerHTML += `
-    <div class="msg-row ${isMe ? 'sent' : 'received'}" style="display: flex; width: 100%; margin-bottom: 10px; ${isMe ? 'justify-content: flex-end;' : 'justify-content: flex-start;'}">
-        <div class="bubble" style="max-width: 75%; padding: 10px 14px; border-radius: 18px; position: relative; ${isMe ? 'background: var(--gold); color: #022c22; border-bottom-right-radius: 4px;' : 'background: rgba(255,255,255,0.1); color: white; border-bottom-left-radius: 4px;'}">
-            
-            <div class="msg-content">${m.t || ''}</div>
-            
-            <div class="msg-meta" style="display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 5px; min-width: 50px;">
-                <span style="font-size: 0.6rem; font-weight: 600; opacity: 0.8; color: inherit;">
-                    ${displayTime}
-                </span>
-                ${isMe ? `
-                    <i data-lucide="${m.read ? 'check-check' : 'check'}" 
-                       style="width:11px; opacity: 0.8; ${m.read ? 'color: #38bdf8;' : ''}"></i>
-                ` : ''}
+            container.innerHTML += `
+                    <div class="elite-card" style="margin-bottom:25px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="display:flex; gap:10px; align-items:center;">
+                     <img src="${d.pic}" style="width:35px; height:35px; border-radius:50%; border:1px solid var(--gold);">
+                    <div>
+                        <b style="font-size:0.8rem;">${d.name}</b>
+                        <span style="font-size:0.6rem; opacity:0.5; margin-left:5px;">• ${formatExactTime(d.time)}</span>
+                        <br>
+                        <span class="exec-badge" style="font-size:0.5rem;">${d.role}</span>
+                </div>
             </div>
+            ${canDeletePost ? `<i data-lucide="more-vertical" onclick="deleteDoc('posts', '${pid}')"></i>` : ''}
         </div>
-    </div>`;
+                    
+                    <p style="margin:12px 0; font-size:0.9rem; line-height:1.4;">${d.txt}</p>
+                    ${d.file ? `<img src="${d.file}" class="post-media">` : ''}
+
+                    <div style="display:flex; gap:20px; margin-top:15px; padding-top:10px; border-top:1px solid rgba(212,175,55,0.1);">
+                        <div onclick="toggleLike('${pid}', ${JSON.stringify(likes)})" style="display:flex; align-items:center; gap:5px; color:${likes.includes(user.id) ? '#ef4444' : 'inherit'}">
+                            <i data-lucide="heart" size="18"></i> <small>${likes.length}</small>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:5px;">
+                            <i data-lucide="message-square" size="18"></i> <small>${comments.length}</small>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:15px; background:rgba(0,0,0,0.2); border-radius:12px; padding:10px;">
+                        <div id="cmt-scroll-${pid}" style="max-height: 150px; overflow-y: auto; margin-bottom: 10px; padding-right: 5px;">
+                            ${comments.length === 0 ? '<p style="font-size:0.7rem; opacity:0.5; text-align:center;">No comments yet</p>' : ''}
+                            ${comments.map((c) => `
+                                <div class="comment-item" 
+                                     style="font-size:0.75rem; margin-bottom:10px; padding:8px; background:rgba(255,255,255,0.03); border-radius:8px;"
+                                     onmousedown="startPress(() => deleteComment('${pid}', ${JSON.stringify(c).replace(/"/g, '&quot;')}))" 
+                                     onmouseup="cancelPress()" 
+                                     ontouchstart="startPress(() => deleteComment('${pid}', ${JSON.stringify(c).replace(/"/g, '&quot;')}))" 
+                                     ontouchend="cancelPress()">
+                                    <b style="color:var(--gold); display:block; margin-bottom:2px;">${c.name}</b>
+                                    <span style="opacity:0.9;">${c.text}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div style="display:flex; align-items:center; gap:8px; background:rgba(0,0,0,0.3); padding:5px 10px; border-radius:25px; border:1px solid var(--border);">
+                            <input type="text" id="cmt-input-${pid}" 
+                                   style="flex:1; background:none; border:none; color:white; font-size:0.8rem; outline:none; padding:5px;" 
+                                   placeholder="Add a comment..."
+                                   onkeypress="if(event.key==='Enter') addComment('${pid}')">
+                            <i data-lucide="send" size="18" style="color:var(--gold); cursor:pointer;" onclick="addComment('${pid}')"></i>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        lucide.createIcons();
+    });
+}
+
+// Add this to your <input id="msg-input" ...>
+// oninput="handleTyping()"
+
+async function handleTyping() {
+    if (!activeRoomId) return;
+
+    // Set typing status to your ID
+    await db.collection("chats").doc(activeRoomId).set({
+        typing: user.id
+    }, { merge: true });
+
+    // Clear status after 2 seconds of no typing
+    clearTimeout(typingTimeout);
+    typingTimeout = setTimeout(async () => {
+        await db.collection("chats").doc(activeRoomId).set({
+            typing: null
+        }, { merge: true });
+    }, 2000);
+}
+
+// Global state to track last seen times to avoid old notifications
+let lastSeenPostTime = Date.now();
+let lastSeenMarketTime = Date.now();
+
+
+
+function notifyTab(tabName) {
+    const navLink = document.querySelector(`.nav-link[onclick*="${tabName}"]`);
+    if (navLink) {
+        // Add a pulsing gold notification dot
+        let dot = navLink.querySelector('.nav-dot');
+        if (!dot) {
+            dot = document.createElement('div');
+            dot.className = 'nav-dot';
+            dot.style = "position:absolute; top:2px; right:20px; width:8px; height:8px; background:var(--gold); border-radius:50%; border:1px solid #022c22; box-shadow: 0 0 10px var(--gold);";
+            navLink.style.position = "relative";
+            navLink.appendChild(dot);
+        }
+    }
+}
+
+// Clear notifications when a user enters a tab
+function clearNotification(tabName) {
+    const navLink = document.querySelector(`.nav-link[onclick*="${tabName}"]`);
+    const dot = navLink?.querySelector('.nav-dot');
+    if (dot) dot.remove();
+    
+    // Update last seen times
+    if (tabName === 'feed') lastSeenPostTime = Date.now();
+    if (tabName === 'market') lastSeenMarketTime = Date.now();
+}
+
+async function updateProfileUI() {
+    // Basic Info
+    document.getElementById('p-card-img').src = user.pic;
+    document.getElementById('p-card-name').innerText = user.name;
+    document.getElementById('p-card-role').innerText = user.role;
+    document.getElementById('edit-name').value = user.name;
+
+    // UID Logic
+    let displayUID = "";
+    if (user.role === "Executive") {
+        displayUID = user.matric; // Use Matric for Executives
+    } else {
+        // For Students, check if a UID already exists
+        if (!user.generatedUID) {
+            displayUID = generateStudentUID();
+            user.generatedUID = displayUID;
+            // Save to Firebase so it never changes
+            await db.collection("users").doc(user.id).update({ generatedUID: displayUID });
+            localStorage.setItem('ec26_user', JSON.stringify(user));
+        } else {
+            displayUID = user.generatedUID;
+        }
+    }
+    
+    document.getElementById('p-card-uid').innerText = displayUID;
+    
+    // Refresh stats and reviews as built previously
+    renderReviews();
+}
+
+function renderReviews() {
+    const list = document.getElementById('reviews-list');
+    list.innerHTML = "";
+
+    // In a real app, 'targetId' would be the profile being viewed. 
+    // For the personal profile tab, we show reviews people left for YOU.
+    db.collection("reviews").where("targetId", "==", user.id).orderBy("time", "desc").onSnapshot(snap => {
+        if (snap.empty) {
+            list.innerHTML = `<div style="text-align:center; padding: 20px; opacity:0.4; font-size:0.8rem;">No reviews yet. Be the first to trade!</div>`;
+            return;
+        }
+
+        let totalRating = 0;
+        snap.forEach(doc => {
+            const r = doc.data();
+            totalRating += r.rating;
+            list.innerHTML += `
+                <div class="elite-card" style="padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.1);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <b style="font-size: 0.8rem; color: var(--gold);">${r.authorName}</b>
+                        <div style="color: #fbbf24; font-size: 0.7rem;">
+                            ${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}
+                        </div>
+                    </div>
+                    <p style="font-size: 0.75rem; opacity: 0.8; line-height: 1.4;">"${r.text}"</p>
+                    <small style="font-size: 0.6rem; opacity: 0.3; display: block; margin-top: 8px;">${new Date(r.time).toLocaleDateString()}</small>
+                </div>
+            `;
         });
         
-        lucide.createIcons();
-        box.scrollTop = box.scrollHeight;
+        const avg = (totalRating / snap.size).toFixed(1);
+        document.getElementById('stat-rating').innerText = avg;
     });
 }
-}
 
-function formatRelativeTime(timestamp) {
-    // 1. Handle the "Just Sent" state where Firebase hasn't synced the time yet
-    if (!timestamp || timestamp === null) {
-        return "Just now";
-    }
+async function submitReview(targetUserId, targetUserName, rating, text) {
+    if(!text || !rating) return alert("Please provide a rating and comment.");
     
-    // 2. Convert Firebase Timestamp to JS Date object
-    let date;
-    if (timestamp.seconds) {
-        date = new Date(timestamp.seconds * 1000);
-    } else if (timestamp instanceof Date) {
-        date = timestamp;
-    } else {
-        date = new Date(timestamp);
-    }
-
-    const now = new Date();
-    const diffInSeconds = Math.floor((now - date) / 1000);
-
-    // 3. Logic for relative strings
-    if (diffInSeconds < 30) return "Just now";
-    if (diffInSeconds < 60) return diffInSeconds + "s ago";
-    
-    const minutes = Math.floor(diffInSeconds / 60);
-    if (minutes < 60) return minutes + "m ago";
-    
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return hours + "h ago";
-    
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-}
-
-
-
-// Refresh the UI every minute to update relative times
-setInterval(() => {
-    if (activeRoomId) {
-        // Trigger a light refresh or manual timestamp update
-        lucide.createIcons(); 
-    }
-}, 60000);
-
-// Every 30 seconds, refresh the icons and layout to update "Time Ago" strings
-setInterval(() => {
-    if (typeof activeRoomId !== 'undefined' && activeRoomId) {
-        // This triggers a re-render of the relative times 
-        // by slightly pulsing the UI or re-running the format function
-        console.log("Refreshing timestamps...");
-        // If you want it to be super smooth, you could target just the <span> tags
-    }
-}, 30000);
-
-async function sendMessage() {
-    const text = document.getElementById('chat-msg-input').value;
-    if(!text) return;
-
-    await db.collection("chats").doc(activeRoomId).collection("m").add({
-        sid: user.id,
-        t: text,
-        time: firebase.firestore.FieldValue.serverTimestamp(), // THIS IS KEY
-        read: false
+    await db.collection("reviews").add({
+        targetId: targetUserId,
+        authorId: user.id,
+        authorName: user.name,
+        rating: parseInt(rating),
+        text: text,
+        time: Date.now()
     });
     
-    document.getElementById('chat-msg-input').value = "";
+    alert(`Review for ${targetUserName} submitted!`);
 }
-
-
-
+// Helper to generate a random Student UID
+function generateStudentUID() {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let result = "EQ-";
+    for (let i = 0; i < 5; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+}
 </script>
 </body>
 </html>

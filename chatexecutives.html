@@ -11,6 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script src="https://www.chromestatus.com/feature/5745543795965952"></script>
 
     <style>
         :root {
@@ -24,6 +25,104 @@
             background: #022c22; color: white; min-height: 100vh; padding-bottom: 90px;
             overflow-x: hidden;
         }
+
+        /* Like Heart Animation */
+.like-btn-active {
+    color: #ef4444 !important;
+    transform: scale(1.2);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.like-btn {
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+/* Sophisticated Comment Section */
+.comment-vault {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 10px;
+    margin-top: 15px;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.comment-item {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    border-left: 3px solid var(--gold);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Post Interaction Bar */
+.post-actions {
+    display: flex;
+    gap: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border);
+    margin-top: 15px;
+}
+
+.action-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+/* Chat Bubble Geometry */
+.msg-row { display: flex; width: 100%; margin-bottom: 8px; }
+.msg-row.sent { justify-content: flex-end; }
+.msg-row.received { justify-content: flex-end; flex-direction: row-reverse; } /* Aligns left */
+
+.bubble {
+    max-width: 75%;
+    padding: 10px 14px;
+    border-radius: 18px;
+    position: relative;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column; /* Stack text and time vertically */
+}
+
+.sent .bubble {
+    background: var(--gold);
+    color: #022c22;
+    border-bottom-right-radius: 4px;
+}
+
+.received .bubble {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border-bottom-left-radius: 4px;
+}
+
+/* Metadata: Time and Checkmarks */
+.msg-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    font-size: 0.6rem;
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+.check-double { color: #38bdf8; } /* Blue check for read */
+
+.action-label:hover { opacity: 1; color: var(--gold); }
 
         .hidden { display: none !important; }
         .container { max-width: 500px; margin: 0 auto; padding: 15px; }
@@ -68,6 +167,104 @@
         .action-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 15px; margin-bottom: 10px; border: 1px solid var(--border); }
         
         #public-profile-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    
+    /* Marketplace Enhancement */
+.price-tag {
+    background: linear-gradient(135deg, var(--gold), #b08d29);
+    color: #022c22;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.9rem;
+}
+/* Comment Long-Press Animation */
+.comment-item {
+    transition: transform 0.2s, background 0.2s;
+    user-select: none; /* Prevents text selection during long press */
+    -webkit-user-select: none;
+}
+
+.comment-pressing {
+    transform: scale(0.95);
+    background: rgba(239, 68, 68, 0.2) !important;
+    border-left-color: #ef4444 !important;
+}
+
+.payment-badge {
+    font-size: 0.6rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 800;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.market-buy-btn {
+    background: var(--gold);
+    color: #022c22;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 800;
+    width: 100%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.market-buy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+/* Voice Note Bubble */
+.vn-player {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 160px;
+    height: 40px;
+}
+
+.vn-visualizer {
+    flex: 1;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.vn-bar {
+    width: 3px;
+    background: currentColor;
+    border-radius: 10px;
+}
+
+/* Pulsing Record Effect */
+.recording-active {
+    background: #ef4444 !important;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.msg-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    margin-top: 4px;
+    min-width: 60px; /* Ensures space for "Just now" */
+}
+
+.sent .msg-meta {
+color: rgba(2, 44, 34, 0.7) !important; /* Dark text on Gold bubble */
+}
+.received .msg-meta {
+color: rgba(255, 255, 255, 0.5) !important; /* Dim white text on Dark bubble */}
     </style>
 </head>
 <body>
@@ -133,45 +330,128 @@
         </section>
 
         <section id="tab-gp" class="hidden">
-            <div class="elite-card">
-                <h3 class="cambria" style="color: var(--gold); text-align: center;">4.0 GP Calculator</h3>
-                <div id="course-list" style="margin-top:15px;"></div>
-                <button class="btn-luxury" style="background: transparent; border: 1px solid var(--gold); color: var(--gold); margin: 10px 0;" onclick="addCourseRow()">+ Add Course</button>
-                <div style="margin-top: 20px; padding: 15px; border-radius: 12px; background: rgba(0,0,0,0.4); text-align: center; border: 1.5px solid var(--gold);">
-                    <h1 id="gp-res" style="color: var(--gold); font-size: 2.2rem; margin:0;">0.00</h1>
-                </div>
-                <button class="btn-luxury" style="margin-top: 15px;" onclick="calculateGP()">Calculate & Save</button>
+    <div class="elite-card" style="margin-bottom: 20px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent); border: 1px solid var(--border);">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="position: relative;">
+                <img id="gp-pfp" src="" style="width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover;">
+                <div style="position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: #10b981; border: 2px solid #022c22; border-radius: 50%;"></div>
             </div>
-        </section>
+            <div style="flex: 1;">
+                <h3 id="gp-user-name" class="cambria" style="font-size: 1rem; color: var(--gold); margin: 0;">---</h3>
+                <p style="font-size: 0.6rem; opacity: 0.7; margin-top: 2px;">
+                    <i data-lucide="refresh-cw" style="width: 10px; vertical-align: middle;"></i> 
+                    Last Sync: <span id="sync-timestamp">Just now</span>
+                </p>
+            </div>
+            <div style="text-align: right;">
+                <small style="display: block; font-size: 0.5rem; opacity: 0.6; text-transform: uppercase;">Recent GPA</small>
+                <span id="recent-gp-badge" style="font-size: 1.2rem; font-weight: 800; color: var(--gold);">0.00</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="elite-card" style="border: 1px solid var(--gold); background: rgba(0,0,0,0.3); position: relative; overflow: hidden;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h4 class="cambria" style="color: var(--gold); font-size: 0.85rem; margin: 0;">Cumulative GPA Vault</h4>
+                <p id="gp-remark" style="font-size: 0.65rem; opacity: 0.7; margin-top: 4px;">Academic standing: Calculating...</p>
+            </div>
+            <h2 id="cgpa-display" style="font-size: 2.5rem; font-weight: 900; letter-spacing: -1px; margin: 0;">0.00</h2>
+        </div>
+        <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-top: 15px; overflow: hidden;">
+            <div id="cgpa-progress" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--gold), #f59e0b); transition: 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);"></div>
+        </div>
+    </div>
+
+    <div class="elite-card" style="margin-top: 20px;">
+        <div id="course-list"></div>
+        <button class="btn-luxury" style="background: transparent; border: 1px solid var(--border); color: var(--gold); margin: 10px 0;" onclick="addCourseRow()">+ Add Course</button>
+        <button class="btn-luxury" onclick="calculateGP()">Calculate & Sync Results</button>
+    </div>
+</section>
 
         <section id="tab-chat" class="hidden">
+            <div class="elite-card" style="margin-bottom: 15px; background: rgba(0,0,0,0.4);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <button onclick="openFeedback()" style="background: var(--gold); border: none; padding: 5px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 800; cursor: pointer;">
+            <i data-lucide="message-square-plus" style="width: 10px; vertical-align: middle;"></i> FEEDBACK
+        </button>
+        <div style="text-align: right; opacity: 0.7; font-size: 0.65rem;">
+            <span id="active-count">0</span> Active Members Online
+        </div>
+    </div>
+
+    <div style="position: relative;">
+        <i data-lucide="search" style="position: absolute; left: 12px; top: 10px; width: 16px; opacity: 0.5;"></i>
+        <input type="text" id="member-search" onkeyup="filterMembers()" placeholder="Search active members..." 
+               style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 10px 10px 10px 40px; border-radius: 12px; color: white; outline: none; font-size: 0.8rem;">
+    </div>
+</div>
+
+<div id="member-list-container" style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 10px;">
+    </div>
             <h3 class="cambria" style="color:var(--gold); margin-bottom:15px;">Direct Messages</h3>
             <div id="chat-list"></div>
+            
         </section>
+        
 
         <section id="tab-profile" class="hidden">
-            <div class="membership-card">
-                <div style="display: flex; justify-content: space-between;">
-                    <div>
-                        <p style="font-size: 0.5rem; letter-spacing: 3px; color: var(--gold);">OFFICIAL MEMBER</p>
-                        <h2 id="p-name" class="cambria"></h2>
-                        <span id="p-role" class="exec-badge"></span>
-                    </div>
-                    <img id="p-img" style="width: 80px; height: 80px; border-radius: 20px; border: 2px solid var(--gold); object-fit: cover;">
-                </div>
-                <p id="p-matric-display" style="margin-top:15px; font-family: monospace; opacity: 0.7;"></p>
-                <div class="profile-stats-container">
-                    <div class="stat-item"><span class="stat-number" id="stat-posts">0</span><span class="stat-label">Posts</span></div>
-                    <div class="stat-item"><span class="stat-number" id="stat-gp">0.00</span><span class="stat-label">GPA</span></div>
-                </div>
+    <div class="elite-card" style="background: linear-gradient(145deg, var(--deep-green), #064e3b); border: 2px solid var(--gold); padding: 30px 20px; text-align: center; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: var(--gold); opacity: 0.1; border-radius: 50%;"></div>
+        
+        <div style="position: relative; display: inline-block;">
+            <img id="user-profile-pic" src="" style="width: 110px; height: 110px; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; box-shadow: 0 0 20px rgba(130, 108, 36, 0.3);">
+            <div id="verified-badge" style="position: absolute; bottom: 5px; right: 5px; background: var(--gold); color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--deep-green);">
+                <i data-lucide="check" style="width: 14px;"></i>
             </div>
-            <div style="margin-top: 25px;">
-                <div class="action-item" onclick="logout()" style="border-color: rgba(239, 68, 68, 0.3); color: #ef4444;">
-                    <span>Logout Session</span><i data-lucide="power"></i>
-                </div>
+        </div>
+
+        <h2 id="user-profile-name" class="cambria" style="margin-top: 15px; color: var(--gold); font-size: 1.5rem;">---</h2>
+        <p id="user-profile-role" style="font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; margin-top: -5px;">Elite Member</p>
+        
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px; border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: 20px;">
+            <div style="text-align: center;">
+                <small style="display: block; opacity: 0.6; font-size: 0.6rem;">RANK</small>
+                <span style="color: var(--gold); font-weight: 800;">Gold</span>
             </div>
-        </section>
+            <div style="text-align: center;">
+                <small style="display: block; opacity: 0.6; font-size: 0.6rem;">SINCE</small>
+                <span id="member-since" style="font-weight: 600;">2024</span>
+            </div>
+            <div style="text-align: center;">
+                <small style="display: block; opacity: 0.6; font-size: 0.6rem;">STATUS</small>
+                <span style="color: #10b981; font-weight: 600;">Active</span>
+            </div>
+        </div>
     </div>
+
+    <div class="elite-card" style="margin-top: 15px;">
+        <h4 class="cambria" style="color: var(--gold); margin-bottom: 15px; font-size: 0.9rem;">Identification</h4>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                <span style="opacity: 0.6;"> Unique ID </span>
+                <span id="profile-matric" style="font-weight: 600;">---</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                <!-- <span style="opacity: 0.6;">Department</span>
+                <span>Computer Science</span> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="elite-card" onclick="switchTab('gp')" style="margin-top: 15px; background: rgba(130, 108, 36, 0.1); cursor: pointer; border-left: 4px solid var(--gold);">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <p style="margin: 0; font-size: 0.7rem; opacity: 0.7;">CURRENT CGPA</p>
+                <h3 id="profile-cgpa" style="margin: 0; font-size: 1.4rem;">0.00</h3>
+            </div>
+            <i data-lucide="chevron-right" style="color: var(--gold);"></i>
+        </div>
+    </div>
+
+    <button class="btn-luxury" style="margin-top: 20px; background: transparent; border: 1px solid #ef4444; color: #ef4444;" onclick="logout()">Logout Account</button>
+</section>
 
     <nav class="bottom-nav">
         <div class="nav-link active" onclick="switchTab('feed')"><i data-lucide="home"></i><small>Feed</small></div>
@@ -191,6 +471,12 @@
     <div style="padding:15px; display:flex; gap:10px; border-top: 1px solid var(--border);">
         <input type="text" id="msg-input" class="form-input" style="margin:0;" placeholder="Message..." onkeypress="if(event.key==='Enter') sendMsg()">
         <button class="btn-luxury" style="width:auto; padding:10px 15px;" onclick="sendMsg()"><i data-lucide="send"></i></button>
+        <div class="chat-input-area" style="display: flex; gap: 10px; align-items: center; padding: 15px; background: var(--glass); border-top: 1px solid var(--border);">
+    <button id="vn-btn" onclick="toggleVoiceRecord()" style="background: rgba(255,255,255,0.1); border: none; width: 45px; height: 45px; border-radius: 50%; color: white; cursor: pointer;">
+        <i data-lucide="mic" id="mic-icon"></i>
+    </button>
+    
+</div>
     </div>
 </div>
 
@@ -314,35 +600,86 @@
     }
 
     function renderFeed() {
-        db.collection("posts").orderBy("time", "desc").onSnapshot(snap => {
-            const f = document.getElementById('feed-display');
-            f.innerHTML = "";
-            snap.forEach(doc => {
-                const d = doc.data();
-                f.innerHTML += `
-                    <div class="elite-card">
+    db.collection("posts").orderBy("time", "desc").onSnapshot(snap => {
+        const f = document.getElementById('feed-display');
+        if (!f) return;
+        f.innerHTML = ""; 
+
+        snap.forEach(doc => {
+            const d = doc.data();
+            const comments = d.comments || [];
+            const likes = d.likes || [];
+            const isLiked = likes.includes(user.id);
+            
+            // PERMISSION LOGIC
+            // User can delete if: 1. They wrote the post, 2. They are the General Secretary (Obidare Ibrahim)
+            const isAuthor = d.uid === user.id;
+            const isGenSec = user.name === "Obidare Ibrahim"; 
+            const canDelete = isAuthor || isGenSec;
+
+            f.innerHTML += `
+                <div class="elite-card" style="margin-bottom: 20px; animation: slideIn 0.4s ease;">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                         <div style="display:flex; gap:10px; align-items:center;" onclick="openPublicProfile('${d.uid}')">
-                            <img src="${d.pic}" style="width:30px; height:30px; border-radius:50%;">
-                            <b style="font-size:0.8rem;">${d.name} <span class="exec-badge">${d.role}</span></b>
+                            <img src="${d.pic}" style="width:35px; height:35px; border-radius:50%; border: 1px solid var(--gold);">
+                            <div>
+                                <b style="font-size:0.75rem; display:block; color:var(--gold);">${d.name}</b>
+                                <span class="exec-badge" style="font-size:0.5rem;">${d.role}</span>
+                            </div>
                         </div>
-                        <p style="margin:10px 0; font-size:0.9rem;">${d.txt}</p>
-                        ${d.file ? `<img src="${d.file}" class="post-media">` : ''}
-                        <div style="margin-top:10px; display:flex; gap:15px; font-size:0.7rem;">
-                            <span onclick="likePost('${doc.id}')">❤ ${d.likes.length}</span>
-                            <span>💬 ${d.comments.length}</span>
+                        
+                        ${canDelete ? `
+                            <div onclick="deletePost('${doc.id}')" style="padding: 5px; cursor:pointer;">
+                                <i data-lucide="trash-2" style="color:#ef4444; width:16px;"></i>
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    <p style="margin:15px 0; font-size:0.9rem; line-height:1.6; color: rgba(255,255,255,0.9);">${d.txt}</p>
+                    ${d.file ? `<img src="${d.file}" class="post-media" style="border-radius:15px;">` : ''}
+                    
+                    <div class="post-actions">
+                        <div class="action-label like-btn ${isLiked ? 'like-btn-active' : ''}" onclick="likePost('${doc.id}')">
+                            <i data-lucide="heart" style="width:18px;"></i> 
+                            <span>${likes.length}</span>
                         </div>
-                        <div class="comment-vault">
-                            ${d.comments.map(c => `<div class="comment-item"><b>${c.userName}:</b> ${c.text}</div>`).join('')}
+                        <div class="action-label" onclick="document.getElementById('in-${doc.id}').focus()">
+                            <i data-lucide="message-square" style="width:18px;"></i>
+                            <span>${comments.length}</span>
                         </div>
-                        <div style="display:flex; gap:5px; margin-top:10px;">
-                            <input id="in-${doc.id}" class="form-input" style="margin:0; font-size:0.7rem;" placeholder="Comment...">
-                            <button onclick="sendComment('${doc.id}')" style="background:none; border:none; color:var(--gold);"><i data-lucide="send" style="width:16px;"></i></button>
-                        </div>
-                    </div>`;
-            });
-            lucide.createIcons();
+                    </div>
+
+                    <div class="comment-vault ${comments.length === 0 ? 'hidden' : ''}">
+    ${comments.map((c, index) => {
+        // Permissions: Author of comment OR General Secretary
+        const canDeleteComment = c.userId === user.id || user.name === "Obidare Ibrahim";
+        
+        return `
+            <div class="comment-item" 
+                 ${canDeleteComment ? `
+                    onmousedown="startCommentLongPress(event, '${doc.id}', ${index})" 
+                    onmouseup="cancelCommentLongPress(event)" 
+                    ontouchstart="startCommentLongPress(event, '${doc.id}', ${index})" 
+                    ontouchend="cancelCommentLongPress(event)"
+                 ` : ''}>
+                <b style="color:var(--gold); margin-right:5px;">${c.userName}</b>
+                <span>${c.text}</span>
+            </div>
+        `;
+    }).join('')}
+</div>
+
+                    <div style="display:flex; gap:10px; margin-top:15px; background:rgba(0,0,0,0.3); padding:8px 12px; border-radius:12px; border: 1px solid var(--border);">
+                        <input id="in-${doc.id}" style="background:transparent; border:none; color:white; flex:1; outline:none; font-size:0.8rem;" placeholder="Add a comment...">
+                        <button onclick="sendComment('${doc.id}')" style="background:transparent; border:none; color:var(--gold); cursor:pointer;">
+                            <i data-lucide="send" style="width:18px;"></i>
+                        </button>
+                    </div>
+                </div>`;
         });
-    }
+        lucide.createIcons();
+    });
+}
 
     async function likePost(id) {
         const ref = db.collection("posts").doc(id);
@@ -367,15 +704,79 @@
         div.innerHTML = `<input type="text" class="form-input" style="flex:2; margin:0;" placeholder="Course"><input type="number" class="c-unit form-input" style="flex:1; margin:0;" placeholder="Unit"><select class="c-grade form-input" style="flex:1; margin:0;"><option value="4.0">A</option><option value="3.5">AB</option><option value="3.25">B</option><option value="3.0">BC</option><option value="2.75">C</option><option value="0.0">F</option></select>`;
         document.getElementById('course-list').appendChild(div);
     }
+    // Function to update the Profile Header and pull saved data
+async function syncGPDashboard() {
+    if (!user) return;
+    
+    // 1. Update Profile visuals
+    document.getElementById('gp-pfp').src = user.pic;
+    document.getElementById('gp-user-name').innerText = user.name;
+    
+    // 2. Set Sync Time (Login Time)
+    const now = new Date();
+    document.getElementById('sync-timestamp').innerText = now.toLocaleDateString() + " " + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
-    function calculateGP() {
-        let tp = 0, tu = 0;
-        document.querySelectorAll('.c-unit').forEach((u, i) => {
-            const unit = parseFloat(u.value);
-            if(unit > 0) { tp += (unit * parseFloat(document.querySelectorAll('.c-grade')[i].value)); tu += unit; }
-        });
-        document.getElementById('gp-res').innerText = tu > 0 ? (tp/tu).toFixed(2) : "0.00";
+    // 3. Fetch latest CGPA from Firebase
+    const doc = await db.collection("users").doc(user.id).get();
+    if(doc.exists && doc.data().cgpa) {
+        const savedGP = doc.data().cgpa;
+        updateGPAVisuals(savedGP);
     }
+}
+
+// Enhanced Calculation with Firebase Saving
+async function calculateGP() {
+    let tp = 0, tu = 0;
+    document.querySelectorAll('.c-unit').forEach((u, i) => {
+        const unit = parseFloat(u.value);
+        if(unit > 0) { 
+            tp += (unit * parseFloat(document.querySelectorAll('.c-grade')[i].value)); 
+            tu += unit; 
+        }
+    });
+    
+    const finalGP = tu > 0 ? (tp/tu) : 0;
+    
+    // Update local UI
+    updateGPAVisuals(finalGP);
+
+    // Sync to Firebase for persistence
+    try {
+        await db.collection("users").doc(user.id).update({
+            cgpa: finalGP.toFixed(2),
+            lastGpCalc: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        if (navigator.vibrate) navigator.vibrate(50);
+    } catch (e) {
+        console.error("Sync failed:", e);
+    }
+}
+
+function updateGPAVisuals(value) {
+    const numValue = parseFloat(value);
+    document.getElementById('recent-gp-badge').innerText = numValue.toFixed(2);
+    document.getElementById('cgpa-display').innerText = numValue.toFixed(2);
+    
+    // Update Progress Bar (assuming 4.0 scale)
+    const percentage = (numValue / 4.0) * 100;
+    document.getElementById('cgpa-progress').style.width = Math.min(percentage, 100) + "%";
+
+    // Set Remark
+    let remark = "Pass";
+    if(numValue >= 3.5) remark = "Distinction Candidate";
+    else if(numValue >= 3.0) remark = "Upper Credit Standing";
+    else if(numValue >= 2.5) remark = "Lower Credit Standing";
+    document.getElementById('gp-remark').innerText = "Academic standing: " + remark;
+}
+
+    // function calculateGP() {
+    //     let tp = 0, tu = 0;
+    //     document.querySelectorAll('.c-unit').forEach((u, i) => {
+    //         const unit = parseFloat(u.value);
+    //         if(unit > 0) { tp += (unit * parseFloat(document.querySelectorAll('.c-grade')[i].value)); tu += unit; }
+    //     });
+    //     document.getElementById('gp-res').innerText = tu > 0 ? (tp/tu).toFixed(2) : "0.00";
+    // }
 
     function renderChatList() {
         db.collection("users").onSnapshot(snap => {
@@ -388,8 +789,49 @@
         });
     }
 
-    function openChat(tid, tname) {
-        activeChatId = tid;
+let activeRoomId = null; // Single variable for the room
+
+function openChat(tid, tname) {
+    // 1. Unify the Room ID (Sorting ensures both computers generate 'ID1_ID2')
+    activeRoomId = [user.id, tid].sort().join('_');
+    
+    document.getElementById('chat-target').innerText = tname;
+    document.getElementById('chat-drawer').classList.remove('hidden');
+    
+    const cont = document.getElementById('chat-msgs');
+    cont.innerHTML = `<div style="text-align:center; opacity:0.5; font-size:0.7rem; padding:20px;">Synchronizing secure channel...</div>`;
+
+    // 2. Clear old listener if it exists to prevent double-messages
+    if(activeChatListener) activeChatListener();
+
+    // 3. Real-time Sync (This is what handles the 'two computers' requirement)
+    activeChatListener = db.collection("chats").doc(activeRoomId).collection("m")
+        .orderBy("time", "asc")
+        .onSnapshot(snap => {
+            cont.innerHTML = "";
+            snap.forEach(doc => {
+                const m = doc.data();
+                const isMe = m.sid === user.id;
+                const timeStr = formatRelativeTime(m.time); // Uses your existing helper
+
+                cont.innerHTML += `
+                    <div class="msg-row ${isMe ? 'sent' : 'received'}">
+                        <div class="bubble">
+                            ${m.t}
+                            <div class="msg-meta">
+                                <span>${timeStr}</span>
+                                ${isMe ? `<i data-lucide="${m.read ? 'check-check' : 'check'}" class="${m.read ? 'check-double' : ''}" style="width:11px;"></i>` : ''}
+                            </div>
+                        </div>
+                    </div>`;
+            });
+            cont.scrollTop = cont.scrollHeight;
+            lucide.createIcons();
+            
+            // Mark as read if I am the receiver
+            markAsRead(activeRoomId);
+        });
+}        activeChatId = tid;
         document.getElementById('chat-target').innerText = tname;
         document.getElementById('chat-drawer').classList.remove('hidden');
         const rid = [user.id, tid].sort().join('_');
@@ -403,36 +845,80 @@
             });
             cont.scrollTop = cont.scrollHeight;
         });
-    }
 
-    async function sendMsg() {
-        const val = document.getElementById('msg-input').value;
-        if(!val) return;
-        const rid = [user.id, activeChatId].sort().join('_');
-        await db.collection("chats").doc(rid).collection("m").add({ sid: user.id, t: val, time: firebase.firestore.FieldValue.serverTimestamp() });
-        document.getElementById('msg-input').value = "";
+    
+    
+        async function sendMsg() {
+    const input = document.getElementById('msg-input'); // Matches your HTML ID
+    const val = input.value.trim();
+    
+    if(!val || !activeRoomId) return;
+
+    // Clear UI immediately for a snappy feel
+    input.value = "";
+
+    try {
+        await db.collection("chats").doc(activeRoomId).collection("m").add({
+            sid: user.id,
+            t: val,
+            time: firebase.firestore.FieldValue.serverTimestamp(), // Global Sync Time
+            read: false,
+            type: 'text'
+        });
+    } catch (e) {
+        console.error("Transmission failed:", e);
+        alert("Check your internet connection.");
     }
+}
 
     function closeChat() { document.getElementById('chat-drawer').classList.add('hidden'); }
 
     function switchTab(t) {
-        document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-        document.getElementById('tab-'+t).classList.remove('hidden');
-        event.currentTarget.classList.add('active');
-        if(t === 'profile') updateProfileStats();
-        lucide.createIcons();
-    }
+    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+    document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+    document.getElementById('tab-'+t).classList.remove('hidden');
+    event.currentTarget.classList.add('active');
+    
+    if(t === 'profile') updateProfileStats();
+    if(t === 'gp') syncGPDashboard(); // Add this line
+    
+    lucide.createIcons();
+}
 
-    async function updateProfileStats() {
-        const posts = await db.collection("posts").where("uid", "==", user.id).get();
-        document.getElementById('p-name').innerText = user.name;
-        document.getElementById('p-role').innerText = user.role;
-        document.getElementById('p-img').src = user.pic;
-        document.getElementById('p-matric-display').innerText = "ID: " + user.matric;
-        document.getElementById('stat-posts').innerText = posts.size;
-        document.getElementById('stat-gp').innerText = document.getElementById('gp-res').innerText;
+async function updateProfileStats() {
+    if (!user) return;
+
+    // Set Name and Image
+    document.getElementById('user-profile-name').innerText = user.name;
+    document.getElementById('user-profile-pic').src = user.pic || 'https://via.placeholder.com/150';
+    document.getElementById('user-profile-role').innerText = user.role || 'Member';
+    document.getElementById('profile-matric').innerText = user.id; // Using ID as Matric
+
+    // Fetch the latest CGPA from the "users" collection
+    const userDoc = await db.collection("users").doc(user.id).get();
+    if (userDoc.exists) {
+        const data = userDoc.data();
+        document.getElementById('profile-cgpa').innerText = data.cgpa || "0.00";
+        
+        // Dynamic "Member Since" (optional if you saved join date)
+        if (data.joined) {
+            const joinedYear = new Date(data.joined.seconds * 1000).getFullYear();
+            document.getElementById('member-since').innerText = joinedYear;
+        }
     }
+    
+    lucide.createIcons();
+}
+
+    // async function updateProfileStats() {
+    //     const posts = await db.collection("posts").where("uid", "==", user.id).get();
+    //     document.getElementById('p-name').innerText = user.name;
+    //     document.getElementById('p-role').innerText = user.role;
+    //     document.getElementById('p-img').src = user.pic;
+    //     document.getElementById('p-matric-display').innerText = "ID: " + user.matric;
+    //     document.getElementById('stat-posts').innerText = posts.size;
+    //     document.getElementById('stat-gp').innerText = document.getElementById('gp-res').innerText;
+    // }
 
     function handleMarketFile(input) {
         const reader = new FileReader();
@@ -459,25 +945,117 @@
         document.getElementById('market-progress').innerText = "";
     }
 
-    function renderMarketplace() {
-        db.collection("marketplace").orderBy("time", "desc").onSnapshot(snap => {
-            const m = document.getElementById('market-display');
-            m.innerHTML = "";
-            snap.forEach(doc => {
-                const d = doc.data();
-                m.innerHTML += `
-                    <div class="elite-card">
-                        <div style="display:flex; justify-content:space-between;">
-                            <b style="color:var(--gold);">${d.itemName}</b>
-                            <span class="price-tag">₦${d.itemPrice}</span>
+    const PAYSTACK_PK = 'pk_test_7c7358690ce988034fc366cff33b97a3f1a3bc7b'; 
+
+function renderMarketplace() {
+    db.collection("marketplace").orderBy("time", "desc").onSnapshot(snap => {
+        const m = document.getElementById('market-display');
+        if (!m) return;
+        m.innerHTML = "";
+
+        snap.forEach(doc => {
+            const d = doc.data();
+            
+            // PERMISSION LOGIC
+            const isOwner = d.sellerId === user.id;
+            const isGenSec = user.name === "Obidare Ibrahim"; 
+            const canDelete = isOwner || isGenSec;
+
+            m.innerHTML += `
+                <div class="elite-card" style="position:relative; display:flex; flex-direction:column; gap:10px;">
+                    ${canDelete ? `
+                        <div onclick="deleteMarketItem('${doc.id}')" style="position:absolute; top:10px; right:10px; background:rgba(239, 68, 68, 0.8); padding:5px; border-radius:50%; z-index:10;">
+                            <i data-lucide="trash-2" style="color:white; width:14px;"></i>
                         </div>
-                        ${d.file ? `<img src="${d.file}" class="post-media">` : ''}
-                        <p style="font-size:0.75rem; margin:10px 0;">${d.itemDesc}</p>
-                        <button class="btn-luxury" onclick="openChat('${d.sellerId}', '${d.sellerName}')">Contact Seller</button>
-                    </div>`;
-            });
+                    ` : ''}
+
+                    <img src="${d.file || 'https://via.placeholder.com/300x200?text=No+Image'}" 
+                         style="width:100%; height:160px; object-fit:cover; border-radius:15px;">
+                    
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="price-tag">₦${Number(d.itemPrice).toLocaleString()}</span>
+                        <div class="payment-badge">Paystack / POD</div>
+                    </div>
+
+                    <h3 class="cambria" style="font-size:1rem; margin-top:5px;">${d.itemName}</h3>
+                    <p style="font-size:0.75rem; opacity:0.7;">${d.itemDesc}</p>
+                    
+                    <div style="margin-top:auto; padding-top:10px;">
+                        <button class="market-buy-btn" onclick="initiatePurchase('${doc.id}', ${d.itemPrice}, '${d.itemName}', '${d.sellerId}', '${d.sellerName}')">
+                            PURCHASE ITEM
+                        </button>
+                    </div>
+                </div>`;
         });
+        lucide.createIcons();
+    });
+}
+
+async function initiatePurchase(itemId, amount, itemName, sellerId, sellerName) {
+    const choice = confirm("CHOOSE PAYMENT METHOD:\n\nOK: Paystack (Secure Online)\nCANCEL: Pay on Delivery (POD)");
+
+    if (choice) {
+        // PAYSTACK FLOW
+        const handler = PaystackPop.setup({
+            key: PAYSTACK_PK,
+            email: user.matric.replace('/', '') + "@equity26.com", 
+            amount: amount * 100, // Paystack uses Kobo
+            currency: 'NGN',
+            callback: function(response){
+                alert('Payment successful! Ref: ' + response.reference);
+                notifySeller(sellerId, `PAID: I just paid ₦${amount} for ${itemName} via Paystack. Ref: ${response.reference}`);
+            },
+            onClose: function(){ alert('Transaction cancelled.'); }
+        });
+        handler.openIframe();
+    } else {
+        // POD FLOW
+        if(confirm("Notify seller you want to meet for Pay on Delivery?")) {
+            notifySeller(sellerId, `POD REQUEST: I'm interested in ${itemName} (₦${amount}). Can we meet for Pay on Delivery?`);
+            alert("Seller notified via DM!");
+            switchTab('chat');
+        }
     }
+}
+
+async function deleteMarketItem(itemId) {
+    if(confirm("Remove this listing from the Marketplace?")) {
+        try {
+            await db.collection("marketplace").doc(itemId).delete();
+        } catch (e) {
+            alert("Deletion failed: " + e.message);
+        }
+    }
+}
+
+// Helper to bridge Marketplace to Chat
+async function notifySeller(sellerId, message) {
+    const roomId = [user.id, sellerId].sort().join('_');
+    await db.collection("chats").doc(roomId).collection("m").add({
+        sid: user.id,
+        t: message,
+        time: firebase.firestore.FieldValue.serverTimestamp()
+    });
+}
+    // function renderMarketplace() {
+    //     db.collection("marketplace").orderBy("time", "desc").onSnapshot(snap => {
+    //         const m = document.getElementById('market-display');
+    //         m.innerHTML = "";
+    //         snap.forEach(doc => {
+    //             const d = doc.data();
+    //             m.innerHTML += `
+    //                 <div class="elite-card">
+    //                     <div style="display:flex; justify-content:space-between;">
+    //                         <b style="color:var(--gold);">${d.itemName}</b>
+    //                         <span class="price-tag">₦${d.itemPrice}</span>
+    //                     </div>
+    //                     ${d.file ? `<img src="${d.file}" class="post-media">` : ''}
+    //                     <p style="font-size:0.75rem; margin:10px 0;">${d.itemDesc}</p>
+    //                     <button class="btn-luxury" onclick="openChat('${d.sellerId}', '${d.sellerName}')">Contact Seller</button>
+    //                 </div>`;
+    //         });
+    //     });
+    // }
 
     async function openPublicProfile(uid) {
         const doc = await db.collection("users").doc(uid).get();
@@ -493,6 +1071,181 @@
 
     function closePublicProfile() { document.getElementById('public-profile-modal').classList.add('hidden'); }
     function logout() { localStorage.clear(); location.reload(); }
+
+    async function deletePost(postId) {
+    if(confirm("Permanently delete this post from the Faculty Feed?")) {
+        try {
+            await db.collection("posts").doc(postId).delete();
+        } catch (e) {
+            alert("Error deleting post: " + e.message);
+        }
+    }
+}
+
+let commentPressTimer;
+
+function startCommentLongPress(event, postId, commentIndex) {
+    const el = event.currentTarget;
+    el.classList.add('comment-pressing');
+
+    // 800ms (0.8 seconds) is the standard for a long press
+    commentPressTimer = setTimeout(() => {
+        deleteComment(postId, commentIndex);
+        el.classList.remove('comment-pressing');
+    }, 800);
+}
+
+function cancelCommentLongPress(event) {
+    clearTimeout(commentPressTimer);
+    event.currentTarget.classList.remove('comment-pressing');
+}
+
+async function deleteComment(postId, commentIndex) {
+    if (confirm("Delete this comment permanently?")) {
+        try {
+            const postRef = db.collection("posts").doc(postId);
+            const doc = await postRef.get();
+            const comments = doc.data().comments;
+            
+            // Remove the specific comment by index
+            comments.splice(commentIndex, 1);
+            
+            await postRef.update({ comments: comments });
+            if (navigator.vibrate) navigator.vibrate(50); // Haptic feedback
+        } catch (e) {
+            console.error("Comment delete failed:", e);
+        }
+    }
+
+    // 1. Search Members Logic
+function filterMembers() {
+    let input = document.getElementById('member-search').value.toLowerCase();
+    // Logic to filter your existing member list display
+    // Example: document.querySelectorAll('.member-item').forEach(...)
+}
+
+// 2. Feedback Logic
+function openFeedback() {
+    const fb = prompt("Equity Crew '26 Feedback - How can we improve the hub?");
+    if(fb) {
+        db.collection("feedback").add({
+            uid: user.id,
+            userName: user.name,
+            txt: fb,
+            time: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert("Thank you! The Executives have received your response.");
+    }
+}
+
+function renderMessages(roomId) {
+    db.collection("chats").doc(roomId).collection("m").orderBy("time", "asc").onSnapshot(snap => {
+        const box = document.getElementById('chat-box');
+        if(!box) return;
+        box.innerHTML = "";
+        
+        snap.forEach(doc => {
+            const m = doc.data();
+            const isMe = m.sid === user.id;
+            
+            // This line gets the "Just now" or "2m ago" string
+            const displayTime = formatRelativeTime(m.time);
+            
+            const isRead = m.read === true;
+
+            box.innerHTML += `
+    <div class="msg-row ${isMe ? 'sent' : 'received'}" style="display: flex; width: 100%; margin-bottom: 10px; ${isMe ? 'justify-content: flex-end;' : 'justify-content: flex-start;'}">
+        <div class="bubble" style="max-width: 75%; padding: 10px 14px; border-radius: 18px; position: relative; ${isMe ? 'background: var(--gold); color: #022c22; border-bottom-right-radius: 4px;' : 'background: rgba(255,255,255,0.1); color: white; border-bottom-left-radius: 4px;'}">
+            
+            <div class="msg-content">${m.t || ''}</div>
+            
+            <div class="msg-meta" style="display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 5px; min-width: 50px;">
+                <span style="font-size: 0.6rem; font-weight: 600; opacity: 0.8; color: inherit;">
+                    ${displayTime}
+                </span>
+                ${isMe ? `
+                    <i data-lucide="${m.read ? 'check-check' : 'check'}" 
+                       style="width:11px; opacity: 0.8; ${m.read ? 'color: #38bdf8;' : ''}"></i>
+                ` : ''}
+            </div>
+        </div>
+    </div>`;
+        });
+        
+        lucide.createIcons();
+        box.scrollTop = box.scrollHeight;
+    });
+}
+}
+
+function formatRelativeTime(timestamp) {
+    // 1. Handle the "Just Sent" state where Firebase hasn't synced the time yet
+    if (!timestamp || timestamp === null) {
+        return "Just now";
+    }
+    
+    // 2. Convert Firebase Timestamp to JS Date object
+    let date;
+    if (timestamp.seconds) {
+        date = new Date(timestamp.seconds * 1000);
+    } else if (timestamp instanceof Date) {
+        date = timestamp;
+    } else {
+        date = new Date(timestamp);
+    }
+
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - date) / 1000);
+
+    // 3. Logic for relative strings
+    if (diffInSeconds < 30) return "Just now";
+    if (diffInSeconds < 60) return diffInSeconds + "s ago";
+    
+    const minutes = Math.floor(diffInSeconds / 60);
+    if (minutes < 60) return minutes + "m ago";
+    
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return hours + "h ago";
+    
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+
+
+// Refresh the UI every minute to update relative times
+setInterval(() => {
+    if (activeRoomId) {
+        // Trigger a light refresh or manual timestamp update
+        lucide.createIcons(); 
+    }
+}, 60000);
+
+// Every 30 seconds, refresh the icons and layout to update "Time Ago" strings
+setInterval(() => {
+    if (typeof activeRoomId !== 'undefined' && activeRoomId) {
+        // This triggers a re-render of the relative times 
+        // by slightly pulsing the UI or re-running the format function
+        console.log("Refreshing timestamps...");
+        // If you want it to be super smooth, you could target just the <span> tags
+    }
+}, 30000);
+
+async function sendMessage() {
+    const text = document.getElementById('chat-msg-input').value;
+    if(!text) return;
+
+    await db.collection("chats").doc(activeRoomId).collection("m").add({
+        sid: user.id,
+        t: text,
+        time: firebase.firestore.FieldValue.serverTimestamp(), // THIS IS KEY
+        read: false
+    });
+    
+    document.getElementById('chat-msg-input').value = "";
+}
+
+
+
 </script>
 </body>
 </html>
